@@ -26,6 +26,9 @@
         android:name="android.app.searchable"
         android:resource="@xml/searchable" />
     <!-- провайдер -->
+        <provider
+            android:authorities="com.mihailovalex.taskslist.data.MyContentProvider"
+            android:name=".data.MyContentProvider"/>
     </application>
     <!-- доступ к интернету -->
     <uses-permission android:name="android.permission.INTERNET" />

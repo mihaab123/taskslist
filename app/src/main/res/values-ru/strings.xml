@@ -6,4 +6,9 @@
     <string name="action_search">Поиск</string>
     <string name="pref_title_dark_theme">Темная тема</string>
     <string name="ion_search"></string>
+
+    <string name="group_default_personal">Личное</string>
+    <string name="group_default_work">Работа</string>
+    <string name="group_default_all">Все</string>
+    <string name="group_default_closes">Завершенные</string>
 </resources>

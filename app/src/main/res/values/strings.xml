@@ -5,4 +5,9 @@
     <string name="action_search">Search</string>
     <string name="pref_title_dark_theme">Dark theme</string>
     <string name="ion_search"></string>
+
+    <string name="group_default_personal">Personal</string>
+    <string name="group_default_work">Work</string>
+    <string name="group_default_all">All</string>
+    <string name="group_default_closes">Completed</string>
 </resources>
