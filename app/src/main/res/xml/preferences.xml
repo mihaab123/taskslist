@@ -2,7 +2,7 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory
-        android:title="@string/screen_preference"
+        android:title="@string/action_settings"
         android:key="pref_key_storage_settings">
         <CheckBoxPreference
             android:key="key_dark_theme_cheked"

@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Список дел</string>
-    <string name="search_hint">Поиск</string>
+    <string name="search_hint">Введите текст</string>
+    <string name="action_settings">Настройки</string>
+    <string name="action_search">Поиск</string>
+    <string name="pref_title_dark_theme">Темная тема</string>
+    <string name="ion_search"></string>
 </resources>
