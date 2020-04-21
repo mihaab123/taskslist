@@ -9,9 +9,11 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.ContentUris;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +22,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mihailovalex.taskslist.adapter.TaskAdapter;
 import com.mihailovalex.taskslist.data.TaskSchedulerClass;
 
@@ -36,21 +42,59 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         initToobar();
         initSpinner();
         initRecyclerView();
+        initFab();
         getSupportLoaderManager().initLoader(LOADER_ID, null, this);
+        initADS();
 
     }
 
+    private void initADS() {
+        // подключаем блок рекламы
+        MobileAds.initialize(this, getString(R.string.app_id));
+        AdView adView = findViewById(R.id.banner_ad);
+        adView.loadAd(getAdRequest());
+    }
+
+    private AdRequest getAdRequest() {
+        return new  AdRequest.Builder().build();
+    }
+    private void initFab() {
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, EditTaskActivity.class);
+                startActivity(intent);
+                /*Snackbar.make(view, "Replace with your own action "+view.getId(), Snackbar.LENGTH_LONG)
+                        .setAction("Action", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                            }
+                        }).show();*/
+            }
+        });
+    }
+
     private void initRecyclerView() {
-        RecyclerView recyclerView = findViewById(R.id.lvItems);
+        recyclerView = findViewById(R.id.lvItems);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this,
                 layoutManager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
-
-        mAdapter = new TaskAdapter(null);
+        TaskAdapter.OnTaskClickListener OnTaskClickListener = new TaskAdapter.OnTaskClickListener() {
+            @Override
+            public void onTaskClick(long taskId) {
+                editTask(taskId);
+            }
+        };
+        mAdapter = new TaskAdapter(null, OnTaskClickListener);
         recyclerView.setAdapter(mAdapter);
+
+
+
 
     }
 
@@ -164,5 +208,16 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             c.close();
         }
         return groups;
+    }
+    private void editTask(long taskId) {
+        Intent intent = new Intent(this, EditTaskActivity.class);
+        intent.putExtra(EditTaskActivity.EXTRA_TASK_ID, taskId);
+
+        startActivity(intent);
+    }
+    private void deleteTask(long taskId) {
+        getContentResolver().delete(ContentUris.withAppendedId(TaskSchedulerClass.Tasks.CONTENT_URI, taskId),
+                null,
+                null);
     }
 }

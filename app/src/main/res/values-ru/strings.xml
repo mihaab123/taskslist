@@ -11,4 +11,9 @@
     <string name="group_default_work">Работа</string>
     <string name="group_default_all">Все</string>
     <string name="group_default_closes">Завершенные</string>
+    <string name="hint_title">Уведомление</string>
+    <string name="hint_date">Дата</string>
+    <string name="title_save">Сохранить</string>
+    <string name="error_empty_field">Не заполнено поле</string>
+    <string name="hint_group">Группа</string>
 </resources>

@@ -33,7 +33,7 @@ public class MyContentProvider extends ContentProvider {
     private static HashMap sGroupsProjectionMap;
     private static HashMap sTasksProjectionMap;
     static {
-        sGroupsProjectionMap = new HashMap();
+        /*sGroupsProjectionMap = new HashMap();
         for(int i=0; i < TaskSchedulerClass.Groups.DEFAULT_PROJECTION.length; i++) {
             sGroupsProjectionMap.put(
                     TaskSchedulerClass.Groups.DEFAULT_PROJECTION[i],
@@ -43,8 +43,10 @@ public class MyContentProvider extends ContentProvider {
         for(int i=0; i < TaskSchedulerClass.Tasks.DEFAULT_PROJECTION.length; i++) {
             sTasksProjectionMap.put(
                     TaskSchedulerClass.Tasks.DEFAULT_PROJECTION[i],
-                    TaskSchedulerClass.Tasks.DEFAULT_PROJECTION[i]);
-        }
+                    TaskSchedulerClass.Tasks.DEFAULT_PROJECTION[i]+"1");
+        }*/
+        sGroupsProjectionMap = TaskSchedulerClass.Groups.DEFAULT_PROJECTION_MAP;
+        sTasksProjectionMap = TaskSchedulerClass.Tasks.DEFAULT_PROJECTION_MAP;
     }
 
 
@@ -74,14 +76,24 @@ public class MyContentProvider extends ContentProvider {
                 orderBy = TaskSchedulerClass.Groups.DEFAULT_SORT_ORDER;
                 break;
             case TASKS:
-                qb.setTables(TaskSchedulerClass.Tasks.TABLE_NAME);
+                //qb.setTables(TaskSchedulerClass.Tasks.TABLE_NAME);
+                qb.setTables(TaskSchedulerClass.Tasks.TABLE_NAME+" LEFT JOIN "+TaskSchedulerClass.Groups.TABLE_NAME+
+                        " ON " + TaskSchedulerClass.Tasks.TABLE_NAME+
+                        "." + TaskSchedulerClass.Tasks.COLUMN_NAME_GROUPID+
+                                " = " + TaskSchedulerClass.Groups.TABLE_NAME +
+                                "." + TaskSchedulerClass.Groups._ID);
                 qb.setProjectionMap(sTasksProjectionMap);
                 orderBy = TaskSchedulerClass.Tasks.DEFAULT_SORT_ORDER;
                 break;
             case TASKS_ID:
-                qb.setTables(TaskSchedulerClass.Tasks.TABLE_NAME);
+                //qb.setTables(TaskSchedulerClass.Tasks.TABLE_NAME);
+                qb.setTables(TaskSchedulerClass.Tasks.TABLE_NAME+" LEFT JOIN "+TaskSchedulerClass.Groups.TABLE_NAME+
+                        " ON " + TaskSchedulerClass.Tasks.TABLE_NAME+
+                        "." + TaskSchedulerClass.Tasks.COLUMN_NAME_GROUPID+
+                        " = " + TaskSchedulerClass.Groups.TABLE_NAME +
+                        "." + TaskSchedulerClass.Groups._ID);
                 qb.setProjectionMap(sTasksProjectionMap);
-                qb.appendWhere(TaskSchedulerClass.Tasks._ID + "=" + uri.getPathSegments().get(TaskSchedulerClass.Tasks.TASKS_ID_PATH_POSITION));
+                qb.appendWhere(TaskSchedulerClass.Tasks.TABLE_NAME+"."+TaskSchedulerClass.Tasks._ID + "=" + uri.getPathSegments().get(TaskSchedulerClass.Tasks.TASKS_ID_PATH_POSITION));
                 orderBy = TaskSchedulerClass.Tasks.DEFAULT_SORT_ORDER;
                 break;
 
@@ -114,7 +126,7 @@ public class MyContentProvider extends ContentProvider {
     @Nullable
     @Override
     public Uri insert(Uri uri, ContentValues initialValues) {
-        if (sUriMatcher.match(uri) != GROUPS) {
+        if (sUriMatcher.match(uri) != GROUPS && sUriMatcher.match(uri) != TASKS) {
             throw new IllegalArgumentException("Unknown URI " + uri);
         }
         SQLiteDatabase db = dbHelper.getWritableDatabase();

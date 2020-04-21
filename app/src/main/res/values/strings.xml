@@ -10,4 +10,9 @@
     <string name="group_default_work">Work</string>
     <string name="group_default_all">All</string>
     <string name="group_default_closes">Completed</string>
+    <string name="hint_title">Notification</string>
+    <string name="hint_date">Date</string>
+    <string name="title_save">Save</string>
+    <string name="error_empty_field">Empty field</string>
+    <string name="hint_group">Group</string>
 </resources>
