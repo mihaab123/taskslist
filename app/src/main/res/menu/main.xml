@@ -10,6 +10,16 @@
         android:title="@string/action_search"
         sabd:showAsAction="ifRoom"/>
     <item
+        android:id="@+id/action_edit_group"
+        android:orderInCategory="100"
+        android:title="@string/action_edit_group"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_feedback"
+        android:orderInCategory="100"
+        android:title="@string/action_feedback"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="@string/action_settings"

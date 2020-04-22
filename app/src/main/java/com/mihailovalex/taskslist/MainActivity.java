@@ -34,7 +34,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private RecyclerView recyclerView;
     private static final int LOADER_ID = 1;
     private TaskAdapter mAdapter;
-    String[] data = {"one", "two", "three", "four", "five"};
+    private ArrayAdapter arrayAdapter;
+    private int groupPosition = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,18 +94,19 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mAdapter = new TaskAdapter(null, OnTaskClickListener);
         recyclerView.setAdapter(mAdapter);
 
-
-
-
     }
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        String selection = null;
+        if(groupPosition != 0) {
+            selection = TaskSchedulerClass.Tasks.COLUMN_NAME_GROUPID+" = "+groupPosition;
+        }
         return new CursorLoader(
                 this,  // Контекст
                 TaskSchedulerClass.Tasks.CONTENT_URI, // URI
                 TaskSchedulerClass.Tasks.DEFAULT_PROJECTION, // Столбцы
-                null, // Параметры выборки
+                selection, // Параметры выборки
                 null, // Аргументы выборки
                 null // Сортировка по умолчанию
         );
@@ -127,9 +129,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private void initSpinner() {
         // адаптер
         //ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, data);
-        ArrayAdapter arrayAdapter = new ArrayAdapter(
+        arrayAdapter = new ArrayAdapter(
                 MainActivity.this,
-                android.R.layout.simple_list_item_1);
+                R.layout.spinner_style);
 
             //Получаем список студентов для класса с id = holder.classID
             String[] data = getGroups();
@@ -153,6 +155,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
                 // показываем позиция нажатого элемента
+               groupPosition = position;
+               getSupportLoaderManager().restartLoader(LOADER_ID, null, MainActivity.this);
                 //Toast.makeText(getBaseContext(), "Position = " + position, Toast.LENGTH_SHORT).show();
             }
 
@@ -175,12 +179,46 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_edit_group:
+                editGroup();
+                break;
+            case R.id.action_feedback:
+                sendFeedback();
+                break;
+        }
         /*if(item.getItemId() == R.id.action_search) {
             Intent intent = new Intent(this, SearchUsersActivity.class);
             startActivity(intent);
         }*/
         return true;
     }
+
+    private void sendFeedback() {
+        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"test@test.com"});
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Email subject");
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "Message body");
+        emailIntent.setType("text/plain");
+        startActivity(emailIntent);
+    }
+
+    private void editGroup() {
+        Intent intent = new Intent(this, EditGroupActivity.class);
+        intent.putExtra(EditGroupActivity.EXTRA_GROUP_ID, groupPosition);
+        startActivityForResult(intent,1);
+        //Получаем список студентов для класса с id = holder.classID
+        String[] data = getGroups();
+        //Заполняем ArrayAdapter нашими данными
+        arrayAdapter.clear();
+        if(data != null && data.length > 0) {
+            arrayAdapter.addAll(data);
+        }
+        else {
+            arrayAdapter.add("No group");
+        }
+    }
+
     private String[] getGroups() {
         String[] groups = null;
         Cursor c = null;

@@ -75,9 +75,9 @@ public class TaskAdapter extends CursorRecyclerAdapter<TaskAdapter.ViewHolder>  
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    long noteId = (Long) v.getTag();
+                    long taskId = (Long) v.getTag();
 
-                    OnTaskClickListener.onTaskClick(noteId);
+                    OnTaskClickListener.onTaskClick(taskId);
                 }
             });
         }

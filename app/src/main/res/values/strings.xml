@@ -15,4 +15,10 @@
     <string name="title_save">Save</string>
     <string name="error_empty_field">Empty field</string>
     <string name="hint_group">Group</string>
+    <string name="action_edit_group">Group list</string>
+    <string name="title_add">Add</string>
+    <string name="action_feedback">Send feedback</string>
+    <string name="alert_group_edit">Enter name</string>
+    <string name="alert_group_save">Save</string>
+    <string name="alert_group_cancel">Cancel</string>
 </resources>

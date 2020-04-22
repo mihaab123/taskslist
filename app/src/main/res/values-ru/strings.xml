@@ -16,4 +16,10 @@
     <string name="title_save">Сохранить</string>
     <string name="error_empty_field">Не заполнено поле</string>
     <string name="hint_group">Группа</string>
+    <string name="action_edit_group">Список групп</string>
+    <string name="title_add">Добавить</string>
+    <string name="action_feedback">Отправить отзыв</string>
+    <string name="alert_group_edit">Введите наименование</string>
+    <string name="alert_group_save">Сохранить</string>
+    <string name="alert_group_cancel">Отменить</string>
 </resources>

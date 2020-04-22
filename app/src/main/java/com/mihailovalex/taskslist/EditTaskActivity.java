@@ -107,7 +107,7 @@ public class EditTaskActivity extends AppCompatActivity implements LoaderManager
             ContentValues contentValues = new ContentValues();
 
             contentValues.put(TaskSchedulerClass.Tasks.COLUMN_NAME_TITLE, title);
-            contentValues.put(TaskSchedulerClass.Tasks.COLUMN_NAME_GROUPID, 1);
+            contentValues.put(TaskSchedulerClass.Tasks.COLUMN_NAME_GROUPID, 2);
             contentValues.put(TaskSchedulerClass.Tasks.COLUMN_NAME_TIME, currentTime);
 
             if (taskId == -1) {
