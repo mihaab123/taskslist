@@ -86,5 +86,17 @@ public class TaskAdapter extends CursorRecyclerAdapter<TaskAdapter.ViewHolder>  
     }
     public interface OnTaskClickListener {
         void onTaskClick(long taskId);
+        void onSwypeClick(long taskId);
+    }
+    public void onItemDismiss(long taskId) {
+        // mItems.remove(position);
+        //notifyItemRemoved(position);
+        OnTaskClickListener.onSwypeClick(taskId);
+    }
+
+    public void onItemMove(int fromPosition, int toPosition) {
+        /*String prev = mItems.remove(fromPosition);
+        mItems.add(toPosition > fromPosition ? toPosition - 1 : toPosition, prev);
+        notifyItemMoved(fromPosition, toPosition);*/
     }
 }

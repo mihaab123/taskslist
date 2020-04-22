@@ -94,4 +94,5 @@ public class GroupAdapter extends CursorRecyclerAdapter<GroupAdapter.ViewHolder>
         void onGroupEditClick(long groupId, String name);
         void onGroupDeleteClick(long groupId);
     }
+
 }

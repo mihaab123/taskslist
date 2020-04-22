@@ -6,6 +6,7 @@ import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,6 +27,8 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+import com.mihailovalex.taskslist.adapter.SimpleItemTouchHelperCallback;
 import com.mihailovalex.taskslist.adapter.TaskAdapter;
 import com.mihailovalex.taskslist.data.TaskSchedulerClass;
 
@@ -90,9 +93,18 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             public void onTaskClick(long taskId) {
                 editTask(taskId);
             }
+
+            @Override
+            public void onSwypeClick(long taskId) {
+                deleteTask(taskId);
+            }
         };
         mAdapter = new TaskAdapter(null, OnTaskClickListener);
         recyclerView.setAdapter(mAdapter);
+
+        SimpleItemTouchHelperCallback callback = new SimpleItemTouchHelperCallback(mAdapter);
+        ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(callback);
+        mItemTouchHelper.attachToRecyclerView(recyclerView);
 
     }
 
@@ -257,5 +269,16 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         getContentResolver().delete(ContentUris.withAppendedId(TaskSchedulerClass.Tasks.CONTENT_URI, taskId),
                 null,
                 null);
+        
+        /*Snackbar.make(recyclerView, Long.toString(taskId) + " " + getResources().getString(R.string.removed),
+                Snackbar.LENGTH_LONG).setAction(R.string.alert_group_cancel, new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                undoDelete();
+            }
+        }).show();*/
+    }
+    private void undoDelete() {
+
+        //mAdapter.notifyItemInserted(mRecentlyDeletedItemPosition);
     }
 }
