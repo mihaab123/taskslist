@@ -1,0 +1,14 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="@string/action_settings"
+        android:key="pref_key_storage_settings">
+        <CheckBoxPreference
+            android:key="key_dark_theme_cheked"
+            android:title="@string/pref_title_dark_theme"
+            android:defaultValue="false" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

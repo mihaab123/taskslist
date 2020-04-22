@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,9 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.ContentUris;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,12 +28,13 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.mihailovalex.taskslist.adapter.SimpleItemTouchHelperCallback;
 import com.mihailovalex.taskslist.adapter.TaskAdapter;
 import com.mihailovalex.taskslist.data.TaskSchedulerClass;
+import com.mihailovalex.taskslist.settings.ConstPreference;
+import com.mihailovalex.taskslist.settings.SettingsActivity;
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>, SharedPreferences.OnSharedPreferenceChangeListener{
     private Spinner spinner;
     private RecyclerView recyclerView;
     private static final int LOADER_ID = 1;
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setupSharedPreferences();
         initToobar();
         initSpinner();
         initRecyclerView();
@@ -198,11 +201,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             case R.id.action_feedback:
                 sendFeedback();
                 break;
+            case R.id.action_settings:
+                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(intent);
+                break;
         }
-        /*if(item.getItemId() == R.id.action_search) {
-            Intent intent = new Intent(this, SearchUsersActivity.class);
-            startActivity(intent);
-        }*/
+
         return true;
     }
 
@@ -269,7 +273,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         getContentResolver().delete(ContentUris.withAppendedId(TaskSchedulerClass.Tasks.CONTENT_URI, taskId),
                 null,
                 null);
-        
+        Toast.makeText(this,getResources().getString(R.string.removed),Toast.LENGTH_SHORT).show();
         /*Snackbar.make(recyclerView, Long.toString(taskId) + " " + getResources().getString(R.string.removed),
                 Snackbar.LENGTH_LONG).setAction(R.string.alert_group_cancel, new View.OnClickListener() {
             @Override public void onClick(View v) {
@@ -280,5 +284,23 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private void undoDelete() {
 
         //mAdapter.notifyItemInserted(mRecentlyDeletedItemPosition);
+    }
+    private void setupSharedPreferences() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals(ConstPreference.KEY_DARK_THEME_CHECKED)) {
+            boolean isDarkThemeChecked = sharedPreferences.getBoolean(ConstPreference.KEY_DARK_THEME_CHECKED,false);
+            if (isDarkThemeChecked) setTheme(R.style.AppDarkTheme);
+        }
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        PreferenceManager.getDefaultSharedPreferences(this)
+                .unregisterOnSharedPreferenceChangeListener(this);
     }
 }
