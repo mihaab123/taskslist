@@ -11,7 +11,9 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.SearchManager;
 import android.content.ContentUris;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -21,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -41,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private TaskAdapter mAdapter;
     private ArrayAdapter arrayAdapter;
     private int groupPosition = 0;
+    private String searchString = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +57,27 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         getSupportLoaderManager().initLoader(LOADER_ID, null, this);
         initADS();
 
+    }
+
+    private void initSearchView(Menu menu) {
+        final SearchManager manager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView search = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        search.setSearchableInfo(manager.getSearchableInfo(getComponentName()));
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchString = query;
+                getSupportLoaderManager().restartLoader(LOADER_ID, null, MainActivity.this);
+                return true;
+            }
+            @Override
+            public boolean onQueryTextChange(String query) {
+                //mAdapter.getFilter().filter(query);
+                searchString = query;
+                getSupportLoaderManager().restartLoader(LOADER_ID, null, MainActivity.this);
+                return true;
+            }
+        });
     }
 
     private void initADS() {
@@ -117,6 +142,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         if(groupPosition != 0) {
             selection = TaskSchedulerClass.Tasks.COLUMN_NAME_GROUPID+" = "+groupPosition;
         }
+        if(!searchString.isEmpty()){
+            if(selection == null){
+                selection = TaskSchedulerClass.Tasks.COLUMN_NAME_TITLE+"  LIKE  '%" +searchString + "%' ";
+            }else{
+                selection += " AND "+TaskSchedulerClass.Tasks.COLUMN_NAME_TITLE+"  LIKE  '%" +searchString + "%' ";
+            }
+
+        }
         return new CursorLoader(
                 this,  // Контекст
                 TaskSchedulerClass.Tasks.CONTENT_URI, // URI
@@ -172,7 +205,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 // показываем позиция нажатого элемента
                groupPosition = position;
                getSupportLoaderManager().restartLoader(LOADER_ID, null, MainActivity.this);
-                //Toast.makeText(getBaseContext(), "Position = " + position, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -190,6 +222,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
+        initSearchView(menu);
         return true;
     }
     @Override

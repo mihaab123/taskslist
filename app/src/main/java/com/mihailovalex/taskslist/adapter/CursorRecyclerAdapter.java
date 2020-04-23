@@ -1,6 +1,7 @@
 package com.mihailovalex.taskslist.adapter;
 
 import android.database.Cursor;
+import android.widget.Filter;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,7 +31,7 @@ public abstract class CursorRecyclerAdapter<ViewHolder extends RecyclerView.View
         setHasStableIds(true);
     }
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         // Если данные некорректны — кидаем исключение
         if (!isDataValid) {
             throw new IllegalStateException("Cursor is not valid!");
@@ -92,5 +93,6 @@ public abstract class CursorRecyclerAdapter<ViewHolder extends RecyclerView.View
         return oldCursor;
 
     }
-    public abstract void onBindViewHolder(ViewHolder viewHolder, Cursor cursor);
+    public abstract void onBindViewHolder(RecyclerView.ViewHolder viewHolder, Cursor cursor);
+
 }

@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <!-- для настроек -->
         <activity
             android:name=".settings.SettingsActivity"
             android:label="@string/action_settings"
@@ -32,20 +33,29 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.SEARCH" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- для настроек -->
+        </activity>
         <!-- для рекламы -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="@string/app_id" /> <!-- для строки поиска -->
+            android:value="@string/app_id" />
+        <!-- для строки поиска -->
         <meta-data
             android:name="android.app.searchable"
-            android:resource="@xml/searchable" /> <!-- провайдер -->
+            android:resource="@xml/searchable" />
+        <!-- провайдер -->
         <provider
             android:name=".data.MyContentProvider"
             android:authorities="com.mihailovalex.taskslist.data.MyContentProvider" />
+        <!-- сервис -->
+        <service android:name=".services.TaskService"
+            android:enabled="true"
+            android:isolatedProcess="true"
+            android:stopWithTask="false"/>
+
     </application>
 
 </manifest>
