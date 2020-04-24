@@ -6,29 +6,40 @@ import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.DatePicker;
+import android.widget.TimePicker;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.mihailovalex.taskslist.data.TaskSchedulerClass;
+
+import java.util.Calendar;
 
 public class EditTaskActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>{
     private TextInputLayout titleTil;
     private TextInputLayout dateTil;
     private TextInputEditText titleEt;
     private TextInputEditText dateEt;
+    private TextInputLayout timeTil;
+    private TextInputEditText timeEt;
     private TextInputLayout groupTil;
     private TextInputEditText groupEt;
     public static final String EXTRA_TASK_ID = "task_id";
     private static final int LOADER_ID = 3;
     private long taskId;
+    Calendar dateAndTime= Calendar.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +48,20 @@ public class EditTaskActivity extends AppCompatActivity implements LoaderManager
         setSupportActionBar(toolbar);
         titleEt = findViewById(R.id.title_et);
         dateEt = findViewById(R.id.date_et);
+        dateEt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setDate(v);
+            }
+        });
+        timeTil = findViewById(R.id.time_til);
+        timeEt = findViewById(R.id.time_et);
+        timeEt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setTime(v);
+            }
+        });
 
         titleTil = findViewById(R.id.title_til);
         dateTil = findViewById(R.id.date_til);
@@ -102,13 +127,12 @@ public class EditTaskActivity extends AppCompatActivity implements LoaderManager
         }*/
 
         if (isCorrect) {
-            long currentTime = System.currentTimeMillis();
 
             ContentValues contentValues = new ContentValues();
 
             contentValues.put(TaskSchedulerClass.Tasks.COLUMN_NAME_TITLE, title);
             contentValues.put(TaskSchedulerClass.Tasks.COLUMN_NAME_GROUPID, 2);
-            contentValues.put(TaskSchedulerClass.Tasks.COLUMN_NAME_TIME, currentTime);
+            contentValues.put(TaskSchedulerClass.Tasks.COLUMN_NAME_TIME, dateAndTime.getTimeInMillis());
 
             if (taskId == -1) {
                 getContentResolver().insert(TaskSchedulerClass.Tasks.CONTENT_URI, contentValues);
@@ -118,10 +142,6 @@ public class EditTaskActivity extends AppCompatActivity implements LoaderManager
                         null,
                         null);
             }
-            //contentValues.put(NotesContract.Notes.COLUMN_CREATED_TS, currentTime);
-            //contentValues.put(NotesContract.Notes.COLUMN_UPDATED_TS, currentTime);
-
-            //getContentResolver().insert(TaskSchedulerClass.Tasks.CONTENT_URI, contentValues);
 
             finish();
         }
@@ -161,11 +181,57 @@ public class EditTaskActivity extends AppCompatActivity implements LoaderManager
         }
 
         String title = cursor.getString(cursor.getColumnIndexOrThrow(TaskSchedulerClass.Tasks.COLUMN_NAME_TITLE));
-        String date = cursor.getString(cursor.getColumnIndexOrThrow(TaskSchedulerClass.Tasks.COLUMN_NAME_TIME));
+        Long date = cursor.getLong(cursor.getColumnIndexOrThrow(TaskSchedulerClass.Tasks.COLUMN_NAME_TIME));
         String group = cursor.getString(cursor.getColumnIndexOrThrow(TaskSchedulerClass.Tasks.COLUMN_NAME_GROUP_NAME));
 
         titleEt.setText(title);
-        dateEt.setText(date);
+        dateAndTime.setTimeInMillis(date);
+        setInitialDateTime();
         groupEt.setText(group);
     }
+    // отображаем диалоговое окно для выбора даты
+    public void setDate(View v) {
+        new DatePickerDialog(this, d,
+                dateAndTime.get(Calendar.YEAR),
+                dateAndTime.get(Calendar.MONTH),
+                dateAndTime.get(Calendar.DAY_OF_MONTH))
+                .show();
+    }
+
+    // отображаем диалоговое окно для выбора времени
+    public void setTime(View v) {
+        new TimePickerDialog(this, t,
+                dateAndTime.get(Calendar.HOUR_OF_DAY),
+                dateAndTime.get(Calendar.MINUTE), true)
+                .show();
+    }
+    // установка обработчика выбора времени
+    TimePickerDialog.OnTimeSetListener t=new TimePickerDialog.OnTimeSetListener() {
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            dateAndTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
+            dateAndTime.set(Calendar.MINUTE, minute);
+            setInitialDateTime();
+        }
+    };
+
+    // установка обработчика выбора даты
+    DatePickerDialog.OnDateSetListener d=new DatePickerDialog.OnDateSetListener() {
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            dateAndTime.set(Calendar.YEAR, year);
+            dateAndTime.set(Calendar.MONTH, monthOfYear);
+            dateAndTime.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            setInitialDateTime();
+        }
+    };
+    // установка начальных даты и времени
+    private void setInitialDateTime() {
+
+        dateEt.setText(DateUtils.formatDateTime(this,
+                dateAndTime.getTimeInMillis(),
+                DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR));
+        timeEt.setText(DateUtils.formatDateTime(this,
+                dateAndTime.getTimeInMillis(),
+                 DateUtils.FORMAT_SHOW_TIME));
+    }
+
 }

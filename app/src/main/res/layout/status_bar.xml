@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/black"
+    android:orientation="horizontal"
+    android:padding="3dp">
+
+    <TextView
+        android:id="@+id/text_status_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_weight="10"
+        android:textColor="@color/white" />
+
+    <ImageView
+        android:id="@+id/imAddStatusBar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_add"
+        android:tint="@color/white" />
+
+    <ImageView
+        android:id="@+id/imSettingStatusBar"
+        android:layout_width="35dp"
+        android:layout_height="40dp"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_settings"
+        android:tint="@color/white" />
+</LinearLayout>

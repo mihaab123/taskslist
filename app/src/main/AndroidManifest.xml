@@ -55,6 +55,20 @@
             android:enabled="true"
             android:isolatedProcess="true"
             android:stopWithTask="false"/>
+        <!-- виджет -->
+        <receiver
+            android:name=".widget.WidgetProvider"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/task_widget"/>
+        </receiver>
+        <service
+            android:name=".widget.WidgetRemoteViewsService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"/>
 
     </application>
 

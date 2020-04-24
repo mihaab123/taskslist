@@ -2,6 +2,7 @@ package com.mihailovalex.taskslist;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationCompat;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
@@ -11,7 +12,11 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.SearchManager;
+import android.app.TaskStackBuilder;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
@@ -23,6 +28,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.RemoteViews;
 import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -56,7 +62,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         initFab();
         getSupportLoaderManager().initLoader(LOADER_ID, null, this);
         initADS();
+        //initStatusBar();
 
+    }
+
+    private void initStatusBar() {
+        int pbId = NotificationUtils.getInstance(this).createDownloadNotification("downloading video");
     }
 
     private void initSearchView(Menu menu) {
