@@ -24,6 +24,7 @@ import android.widget.TimePicker;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.mihailovalex.taskslist.data.TaskSchedulerClass;
+import com.mihailovalex.taskslist.widget.TasksListWidget;
 
 import java.util.Calendar;
 
@@ -142,7 +143,8 @@ public class EditTaskActivity extends AppCompatActivity implements LoaderManager
                         null,
                         null);
             }
-
+            // обновление виджета
+            TasksListWidget.sendRefreshBroadcast(this);
             finish();
         }
 

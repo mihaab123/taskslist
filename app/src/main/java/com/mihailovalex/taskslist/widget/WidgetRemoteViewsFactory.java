@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
@@ -65,6 +66,7 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
         dateFormat.format(date);
         rv.setTextViewText(R.id.date_tv_widget, dateFormat.format(date));
         rv.setTextViewText(R.id.title_tv_widget, (CharSequence) cv.get(TaskSchedulerClass.Tasks.COLUMN_NAME_TITLE));
+        rv.setOnClickFillInIntent(R.id.llWidget, createIntent(TasksListWidget.SHARE, cv));
 
         return rv;
     }
@@ -84,6 +86,14 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
     @Override public boolean hasStableIds() {
         return true;
     }
-
+    private Intent createIntent(String cmd, ContentValues wi) {
+        Intent intent = new Intent();
+        intent.setAction(TasksListWidget.ACTION_ON_ITEM_CLICK);
+        Bundle bundle = new Bundle();
+        bundle.putString(TasksListWidget.COMMAND, cmd);
+        bundle.putLong(TasksListWidget.ITEM, wi.getAsLong(TaskSchedulerClass.Tasks._ID));
+        intent.putExtras(bundle);
+        return intent;
+    }
 
 }

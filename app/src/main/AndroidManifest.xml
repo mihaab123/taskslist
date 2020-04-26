@@ -28,7 +28,9 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".EditTaskActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">

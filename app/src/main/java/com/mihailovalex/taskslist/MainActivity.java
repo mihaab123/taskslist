@@ -43,6 +43,7 @@ import com.mihailovalex.taskslist.data.TaskSchedulerClass;
 import com.mihailovalex.taskslist.services.TaskService;
 import com.mihailovalex.taskslist.settings.ConstPreference;
 import com.mihailovalex.taskslist.settings.SettingsActivity;
+import com.mihailovalex.taskslist.widget.TasksListWidget;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>, SharedPreferences.OnSharedPreferenceChangeListener{
     private Spinner spinner;
@@ -320,6 +321,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 null,
                 null);
         Toast.makeText(this,getResources().getString(R.string.removed),Toast.LENGTH_SHORT).show();
+        // обновление виджета
+        TasksListWidget.sendRefreshBroadcast(this);
         /*Snackbar.make(recyclerView, Long.toString(taskId) + " " + getResources().getString(R.string.removed),
                 Snackbar.LENGTH_LONG).setAction(R.string.alert_group_cancel, new View.OnClickListener() {
             @Override public void onClick(View v) {
