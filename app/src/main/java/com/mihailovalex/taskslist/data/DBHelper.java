@@ -42,7 +42,7 @@ public class DBHelper extends SQLiteOpenHelper {
                         + KEY_GROUP_ID + " integer default 0 );";
 
         private Context ctx;
-        DBHelper(Context context) {
+        public DBHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
             ctx = context;
         }
@@ -118,7 +118,7 @@ public class DBHelper extends SQLiteOpenHelper {
                         if (cn == TaskSchedulerClass.Tasks._ID ) {
 
                         } else if (cn == TaskSchedulerClass.Tasks.COLUMN_NAME_TIME||cn == TaskSchedulerClass.Tasks.COLUMN_NAME_TIME_BEFORE||cn == TaskSchedulerClass.Tasks.COLUMN_NAME_GROUPID){
-                            cv.put(cn,c.getInt(index));
+                            cv.put(cn,c.getLong(index));
                         }else cv.put(cn,c.getString(index));
                     }
                     list.add(cv);
@@ -127,4 +127,10 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         return list;
     }
+    public Cursor getAllTasks() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("select * from "+DATABASE_TABLE_TASKS+" order by "+TaskSchedulerClass.Tasks.COLUMN_NAME_TIME, null);
+        return res;
+    }
+
 }

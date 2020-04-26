@@ -54,7 +54,7 @@ public class NotificationUtils {
                 .setContentText(message) // Основной текст уведомления
                 .setContentIntent(PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT))
                 .setWhen(System.currentTimeMillis()) //отображаемое время уведомления
-                .setContentTitle("AppName") //заголовок уведомления
+                .setContentTitle(context.getResources().getString(R.string.app_name)) //заголовок уведомления
                 .setDefaults(Notification.DEFAULT_ALL); // звук, вибро и диодный индикатор выставляются по умолчанию
 
         Notification notification = nb.getNotification(); //генерируем уведомление

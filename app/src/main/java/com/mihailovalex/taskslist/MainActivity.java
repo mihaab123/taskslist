@@ -40,6 +40,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mihailovalex.taskslist.adapter.SimpleItemTouchHelperCallback;
 import com.mihailovalex.taskslist.adapter.TaskAdapter;
 import com.mihailovalex.taskslist.data.TaskSchedulerClass;
+import com.mihailovalex.taskslist.services.TaskService;
 import com.mihailovalex.taskslist.settings.ConstPreference;
 import com.mihailovalex.taskslist.settings.SettingsActivity;
 
@@ -63,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         getSupportLoaderManager().initLoader(LOADER_ID, null, this);
         initADS();
         //initStatusBar();
+        startService(new Intent(this, TaskService.class));
 
     }
 

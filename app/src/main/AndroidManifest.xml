@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mihailovalex.taskslist">
+
     <!-- доступ к интернету -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:allowBackup="true"
@@ -17,10 +19,9 @@
             android:label="@string/action_settings"
             android:launchMode="singleTop"
             android:parentActivityName=".MainActivity">
-
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
+                android:value=".MainActivity" />
         </activity>
         <activity
             android:name=".EditGroupActivity"
@@ -37,39 +38,46 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <!-- для рекламы -->
+        </activity> <!-- для рекламы -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="@string/app_id" />
-        <!-- для строки поиска -->
+            android:value="@string/app_id" /> <!-- для строки поиска -->
         <meta-data
             android:name="android.app.searchable"
-            android:resource="@xml/searchable" />
-        <!-- провайдер -->
+            android:resource="@xml/searchable" /> <!-- провайдер -->
         <provider
             android:name=".data.MyContentProvider"
-            android:authorities="com.mihailovalex.taskslist.data.MyContentProvider" />
-        <!-- сервис -->
-        <service android:name=".services.TaskService"
+            android:authorities="com.mihailovalex.taskslist.data.MyContentProvider" /> <!-- сервис -->
+        <!--<service
+            android:name=".services.TaskService"
             android:enabled="true"
             android:isolatedProcess="true"
-            android:stopWithTask="false"/>
-        <!-- виджет -->
+            android:stopWithTask="false" />
+
         <receiver
-            android:name=".widget.WidgetProvider"
-            android:label="@string/app_name">
+            android:name=".services.MyBroadReceiv"
+            android:enabled="true"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+        </receiver>-->
+        <!-- виджет -->
+        <receiver android:name=".widget.TasksListWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/task_widget"/>
+                android:resource="@xml/tasks_list_widget_info" />
         </receiver>
+
         <service
             android:name=".widget.WidgetRemoteViewsService"
-            android:permission="android.permission.BIND_REMOTEVIEWS"/>
-
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
     </application>
 
 </manifest>

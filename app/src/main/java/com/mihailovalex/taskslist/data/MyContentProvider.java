@@ -3,6 +3,7 @@ package com.mihailovalex.taskslist.data;
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,6 +13,7 @@ import android.net.Uri;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MyContentProvider extends ContentProvider {
@@ -50,7 +52,7 @@ public class MyContentProvider extends ContentProvider {
     }
 
 
-    private DBHelper dbHelper;
+    private static DBHelper dbHelper;
 
     @Override
     public boolean onCreate() {
@@ -229,5 +231,30 @@ public class MyContentProvider extends ContentProvider {
         }
         getContext().getContentResolver().notifyChange(uri, null);
         return count;
+    }
+    public static ArrayList<ContentValues> getAlarmsFromDatabase() {
+        ArrayList<ContentValues> list = new ArrayList<>();
+
+        Cursor c = dbHelper.getAllTasks();
+
+        int index =0;
+        if (c != null) {
+            if (c.moveToFirst()) {
+
+                do {
+                    ContentValues cv = new ContentValues();
+                    for (String cn : c.getColumnNames()) {
+                        index = c.getColumnIndex(cn);
+                        if (cn == TaskSchedulerClass.Tasks._ID ) {
+
+                        } else if (cn == TaskSchedulerClass.Tasks.COLUMN_NAME_TIME||cn == TaskSchedulerClass.Tasks.COLUMN_NAME_TIME_BEFORE||cn == TaskSchedulerClass.Tasks.COLUMN_NAME_GROUPID){
+                            cv.put(cn,c.getLong(index));
+                        }else cv.put(cn,c.getString(index));
+                    }
+                    list.add(cv);
+                } while (c.moveToNext());
+            }
+        }
+        return list;
     }
 }
