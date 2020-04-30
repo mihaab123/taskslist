@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.mihailovalex.taskslist.R;
 
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class DBHelper extends SQLiteOpenHelper {
+        final String LOG_TAG = "MyLogs";
 
         private static final String DATABASE_NAME = "TasksListDB";
 
@@ -128,8 +130,11 @@ public class DBHelper extends SQLiteOpenHelper {
         return list;
     }
     public Cursor getAllTasks() {
-        SQLiteDatabase db = this.getWritableDatabase();
+        Log.d(LOG_TAG, "getAllTasks 1");
+        SQLiteDatabase db = getReadableDatabase();
+        Log.d(LOG_TAG, "getAllTasks 2");
         Cursor res = db.rawQuery("select * from "+DATABASE_TABLE_TASKS+" order by "+TaskSchedulerClass.Tasks.COLUMN_NAME_TIME, null);
+        Log.d(LOG_TAG, "getAllTasks 3");
         return res;
     }
 

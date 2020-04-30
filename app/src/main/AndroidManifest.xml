@@ -43,17 +43,19 @@
         </activity> <!-- для рекламы -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="@string/app_id" /> <!-- для строки поиска -->
+            android:value="@string/app_id" />
+        <!-- для строки поиска -->
         <meta-data
             android:name="android.app.searchable"
-            android:resource="@xml/searchable" /> <!-- провайдер -->
+            android:resource="@xml/searchable" />
+        <!-- провайдер -->
         <provider
             android:name=".data.MyContentProvider"
-            android:authorities="com.mihailovalex.taskslist.data.MyContentProvider" /> <!-- сервис -->
-        <!--<service
+            android:authorities="com.mihailovalex.taskslist.data.MyContentProvider" />
+        <!-- сервис -->
+        <service
             android:name=".services.TaskService"
             android:enabled="true"
-            android:isolatedProcess="true"
             android:stopWithTask="false" />
 
         <receiver
@@ -65,7 +67,7 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-        </receiver>-->
+        </receiver>
         <!-- виджет -->
         <receiver android:name=".widget.TasksListWidget">
             <intent-filter>

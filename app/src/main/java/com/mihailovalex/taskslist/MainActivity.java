@@ -28,6 +28,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.RemoteViews;
 import android.widget.SearchView;
 import android.widget.Spinner;
@@ -53,20 +54,37 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private ArrayAdapter arrayAdapter;
     private int groupPosition = 0;
     private String searchString = "";
+    private LinearLayout AllTasks;
+    private LinearLayout NoTasks;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        AllTasks = findViewById(R.id.tasksLL);
+        NoTasks = findViewById(R.id.noTasks);
+
+
         setupSharedPreferences();
         initToobar();
         initSpinner();
         initRecyclerView();
         initFab();
         getSupportLoaderManager().initLoader(LOADER_ID, null, this);
+        setVisibleTasks();
         initADS();
         //initStatusBar();
         startService(new Intent(this, TaskService.class));
 
+    }
+
+    private void setVisibleTasks() {
+        /*if(mAdapter.getItemCount() == 0) {
+            AllTasks.setVisibility(View.VISIBLE);
+            NoTasks.setVisibility(View.GONE);
+        } else{
+            NoTasks.setVisibility(View.VISIBLE);
+            AllTasks.setVisibility(View.GONE);
+        }*/
     }
 
     private void initStatusBar() {
@@ -147,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         SimpleItemTouchHelperCallback callback = new SimpleItemTouchHelperCallback(mAdapter);
         ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(callback);
         mItemTouchHelper.attachToRecyclerView(recyclerView);
-
+        setVisibleTasks();
     }
 
     @Override
@@ -219,6 +237,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 // показываем позиция нажатого элемента
                groupPosition = position;
                getSupportLoaderManager().restartLoader(LOADER_ID, null, MainActivity.this);
+                setVisibleTasks();
             }
 
             @Override

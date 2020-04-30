@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MyContentProvider extends ContentProvider {
+    final static String LOG_TAG = "MyLogs";
     // возможным типам запроса к нашей БД
     private static final int GROUPS = 1;
     private static final int GROUPS_ID = 2;
@@ -56,7 +58,7 @@ public class MyContentProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-        dbHelper = new DBHelper(getContext());
+        if (dbHelper == null) dbHelper = new DBHelper(getContext());
         return true;
     }
 
@@ -234,9 +236,7 @@ public class MyContentProvider extends ContentProvider {
     }
     public static ArrayList<ContentValues> getAlarmsFromDatabase() {
         ArrayList<ContentValues> list = new ArrayList<>();
-
         Cursor c = dbHelper.getAllTasks();
-
         int index =0;
         if (c != null) {
             if (c.moveToFirst()) {
@@ -254,7 +254,38 @@ public class MyContentProvider extends ContentProvider {
                     list.add(cv);
                 } while (c.moveToNext());
             }
+            c.close();
         }
+        return list;
+    }
+    public static ArrayList<ContentValues> getTasksFromDatabase(Context context) {
+
+        Log.d(LOG_TAG, "getTasksFromDatabase");
+        ArrayList<ContentValues> list = new ArrayList<>();
+        if (dbHelper ==null) dbHelper = new DBHelper(context);
+        if (dbHelper ==null) Log.d(LOG_TAG, "dbHelper ==null");
+        Cursor c = dbHelper.getAllTasks();
+        Log.d(LOG_TAG, "getAllTasks");
+        int index =0;
+        if (c != null) {
+            if (c.moveToFirst()) {
+
+                do {
+                    ContentValues cv = new ContentValues();
+                    for (String cn : c.getColumnNames()) {
+                        index = c.getColumnIndex(cn);
+                        if (cn == TaskSchedulerClass.Tasks._ID ) {
+
+                        } else if (cn == TaskSchedulerClass.Tasks.COLUMN_NAME_TIME||cn == TaskSchedulerClass.Tasks.COLUMN_NAME_TIME_BEFORE||cn == TaskSchedulerClass.Tasks.COLUMN_NAME_GROUPID){
+                            cv.put(cn,c.getLong(index));
+                        }else cv.put(cn,c.getString(index));
+                    }
+                    list.add(cv);
+                } while (c.moveToNext());
+            }
+            c.close();
+        }
+
         return list;
     }
 }
