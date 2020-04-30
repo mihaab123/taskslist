@@ -2,10 +2,12 @@ package com.mihailovalex.taskslist.adapter;
 
 import android.database.Cursor;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,24 +35,7 @@ public class TaskAdapter extends CursorRecyclerAdapter<RecyclerView.ViewHolder> 
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, Cursor cursor) {
         switch (viewHolder.getItemViewType()) {
             case TYPE_ITEM:
-                ItemViewHolder viewHolder1  = (ItemViewHolder)viewHolder;
-                // заголовок уведомления
-                int titleColumnIndex = cursor.getColumnIndexOrThrow(TaskSchedulerClass.Tasks.COLUMN_NAME_TITLE);
-                String title = cursor.getString(titleColumnIndex);
-                viewHolder1.titleTv.setText(title);
-                // дате уведомления
-                int dateColumnIndex = cursor.getColumnIndexOrThrow(TaskSchedulerClass.Tasks.COLUMN_NAME_TIME);
-                long updatedTs = cursor.getLong(dateColumnIndex);
-                Date date = new Date(updatedTs);
-                viewHolder1.dateTv.setText(viewHolder1.SDF.format(date));
-                // заголовок уведомления
-                int groupColumnIndex = cursor.getColumnIndexOrThrow(TaskSchedulerClass.Tasks.COLUMN_NAME_GROUP_NAME);
-                String group = cursor.getString(groupColumnIndex);
-                viewHolder1.groupTv.setText(group);
-                // ид уведомления
-                int idColumnIndex = cursor.getColumnIndexOrThrow(TaskSchedulerClass.Tasks._ID);
-                long taskid = cursor.getLong(idColumnIndex);
-                viewHolder1.itemView.setTag(taskid);
+                setTypeItem((ItemViewHolder) viewHolder, cursor);
                 break;
             case TYPE_HEADER:
                 HeaderViewHolder viewHolder2  = (HeaderViewHolder)viewHolder;
@@ -63,6 +48,34 @@ public class TaskAdapter extends CursorRecyclerAdapter<RecyclerView.ViewHolder> 
         }
     }
 
+    private void setTypeItem(ItemViewHolder viewHolder, Cursor cursor) {
+        ItemViewHolder viewHolder1 = viewHolder;
+        // заголовок уведомления
+        int titleColumnIndex = cursor.getColumnIndexOrThrow(TaskSchedulerClass.Tasks.COLUMN_NAME_TITLE);
+        String title = cursor.getString(titleColumnIndex);
+        viewHolder1.titleTv.setText(title);
+        // дате уведомления
+        int dateColumnIndex = cursor.getColumnIndexOrThrow(TaskSchedulerClass.Tasks.COLUMN_NAME_TIME);
+        long updatedTs = cursor.getLong(dateColumnIndex);
+        Date date = new Date(updatedTs);
+        viewHolder1.dateTv.setText(viewHolder1.SDF.format(date));
+        // заголовок уведомления
+        int groupColumnIndex = cursor.getColumnIndexOrThrow(TaskSchedulerClass.Tasks.COLUMN_NAME_GROUP_NAME);
+        String group = cursor.getString(groupColumnIndex);
+        viewHolder1.groupTv.setText(group);
+        // ид уведомления
+        int idColumnIndex = cursor.getColumnIndexOrThrow(TaskSchedulerClass.Tasks._ID);
+        long taskid = cursor.getLong(idColumnIndex);
+        viewHolder1.itemView.setTag(taskid);
+        // завершенные
+        int ComplitedColumnIndex = cursor.getColumnIndexOrThrow(TaskSchedulerClass.Tasks.COLUMN_NAME_COMPLITED);
+        long complited = cursor.getLong(ComplitedColumnIndex);
+        if (complited == 1){
+            viewHolder.titleTv.setPaintFlags(viewHolder.titleTv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            viewHolder.llTaskItem.setBackgroundColor(Color.parseColor("#E1E1E1"));
+        }
+
+    }
 
 
     @Override
@@ -91,6 +104,7 @@ public class TaskAdapter extends CursorRecyclerAdapter<RecyclerView.ViewHolder> 
         private final TextView titleTv;
         private final TextView dateTv;
         private final TextView groupTv;
+        private final LinearLayout llTaskItem;
         final SimpleDateFormat SDF = new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault());
 
         public ItemViewHolder(View itemView) {
@@ -99,6 +113,7 @@ public class TaskAdapter extends CursorRecyclerAdapter<RecyclerView.ViewHolder> 
             this.titleTv = itemView.findViewById(R.id.title_tv);
             this.dateTv = itemView.findViewById(R.id.date_tv);
             this.groupTv = itemView.findViewById(R.id.group_tv);
+            this.llTaskItem = itemView.findViewById(R.id.llTaskItem);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -152,6 +167,7 @@ public class TaskAdapter extends CursorRecyclerAdapter<RecyclerView.ViewHolder> 
         }
         return TYPE_ITEM;
     }
+
     private boolean isPositionHeader(int position) {
         return false;//position == 0;
     }

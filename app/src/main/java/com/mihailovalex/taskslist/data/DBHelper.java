@@ -26,6 +26,7 @@ public class DBHelper extends SQLiteOpenHelper {
         public static final String KEY_GROUP_ID   = "group_id";
         public static final String KEY_TIME   = "time_alert";
         public static final String KEY_TIME_BEFORE   = "time_alert_before";
+        public static final String KEY_COMPLITED   = "complited";
 
 
         private static final String DATABASE_CREATE_TABLE_GROUPS =
@@ -33,7 +34,7 @@ public class DBHelper extends SQLiteOpenHelper {
                         + KEY_ROWID + " integer primary key autoincrement, "
                         + KEY_NAME + " string default '');";
 
-        private static final int DATABASE_VERSION = 8;
+        private static final int DATABASE_VERSION = 9;
 
         private static final String DATABASE_CREATE_TABLE_TASKS =
                 "create table "+ DATABASE_TABLE_TASKS + " ("
@@ -41,6 +42,7 @@ public class DBHelper extends SQLiteOpenHelper {
                         + KEY_TITLE + " string default '', "
                         + KEY_TIME + " integer default 0, "
                         + KEY_TIME_BEFORE + " integer default 0, "
+                        + KEY_COMPLITED + " integer default 0, "
                         + KEY_GROUP_ID + " integer default 0 );";
 
         private Context ctx;
@@ -68,7 +70,10 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            if (oldVersion < DATABASE_VERSION && newVersion == DATABASE_VERSION) {
+            if (oldVersion < 9 && newVersion == 9) {
+                db.execSQL("ALTER TABLE "+DATABASE_TABLE_TASKS+" ADD COLUMN "+KEY_COMPLITED+" INTEGER DEFAULT 0");
+            }
+            else if (oldVersion < 8 && newVersion == 8) {
                 db.beginTransaction();
                 try {
                     // сохраняем данные
@@ -130,11 +135,11 @@ public class DBHelper extends SQLiteOpenHelper {
         return list;
     }
     public Cursor getAllTasks() {
-        Log.d(LOG_TAG, "getAllTasks 1");
+        //og.d(LOG_TAG, "getAllTasks 1");
         SQLiteDatabase db = getReadableDatabase();
-        Log.d(LOG_TAG, "getAllTasks 2");
-        Cursor res = db.rawQuery("select * from "+DATABASE_TABLE_TASKS+" order by "+TaskSchedulerClass.Tasks.COLUMN_NAME_TIME, null);
-        Log.d(LOG_TAG, "getAllTasks 3");
+        //Log.d(LOG_TAG, "getAllTasks 2");
+        Cursor res = db.rawQuery("select * from "+DATABASE_TABLE_TASKS+" WHERE "+TaskSchedulerClass.Tasks.COLUMN_NAME_COMPLITED+" = 0 ORDER BY "+TaskSchedulerClass.Tasks.COLUMN_NAME_TIME, null);
+        //Log.d(LOG_TAG, "getAllTasks 3");
         return res;
     }
 

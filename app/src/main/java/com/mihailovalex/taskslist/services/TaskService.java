@@ -31,28 +31,28 @@ public class TaskService extends Service {
         super.onCreate();
         context = getApplicationContext();
         h = new Handler();
-        Log.d(LOG_TAG, "onCreate");
+        //Log.d(LOG_TAG, "onCreate");
     }
 
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d(LOG_TAG, "onStartCommand");
-        //h.post(checkTasksRun);
-        checkTasks();
+        //Log.d(LOG_TAG, "onStartCommand");
+        h.post(checkTasksRun);
+        //checkTasks();
         return super.onStartCommand(intent, flags, startId);
     }
 
     public void onDestroy() {
         super.onDestroy();
-        Log.d(LOG_TAG, "onDestroy");
+        //Log.d(LOG_TAG, "onDestroy");
     }
 
     public IBinder onBind(Intent intent) {
-        Log.d(LOG_TAG, "onBind");
+       // Log.d(LOG_TAG, "onBind");
         return null;
     }
 
     void checkTasks() {
-        Log.d(LOG_TAG, "checkTasks");
+       // Log.d(LOG_TAG, "checkTasks");
         DBHelper myDBHelper = new DBHelper(context);
         Cursor c = myDBHelper.getAllTasks();
         ArrayList<ContentValues> listadd = new ArrayList<>();
@@ -77,10 +77,11 @@ public class TaskService extends Service {
         }
        // ArrayList<ContentValues> listadd = MyContentProvider.getTasksFromDatabase(this);
         for(ContentValues cv : listadd){
-            Log.d(LOG_TAG, "for");
+            //Log.d(LOG_TAG, "for");
             String Name = cv.getAsString(TaskSchedulerClass.Tasks.COLUMN_NAME_TITLE);
-            int pbId = NotificationUtils.getInstance(this).createInfoNotification(Name);}
-        Log.d(LOG_TAG, "createInfoNotification");
+            //int pbId = NotificationUtils.getInstance(this).createInfoNotification(Name);
+            }
+       // Log.d(LOG_TAG, "createInfoNotification");
     }
     // проверка срабатывания уведомлений
     Runnable checkTasksRun = new Runnable() {

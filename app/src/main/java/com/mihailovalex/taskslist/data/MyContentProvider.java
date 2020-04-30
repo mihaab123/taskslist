@@ -260,12 +260,12 @@ public class MyContentProvider extends ContentProvider {
     }
     public static ArrayList<ContentValues> getTasksFromDatabase(Context context) {
 
-        Log.d(LOG_TAG, "getTasksFromDatabase");
+        //Log.d(LOG_TAG, "getTasksFromDatabase");
         ArrayList<ContentValues> list = new ArrayList<>();
         if (dbHelper ==null) dbHelper = new DBHelper(context);
-        if (dbHelper ==null) Log.d(LOG_TAG, "dbHelper ==null");
+        //if (dbHelper ==null) Log.d(LOG_TAG, "dbHelper ==null");
         Cursor c = dbHelper.getAllTasks();
-        Log.d(LOG_TAG, "getAllTasks");
+        //Log.d(LOG_TAG, "getAllTasks");
         int index =0;
         if (c != null) {
             if (c.moveToFirst()) {
@@ -287,5 +287,11 @@ public class MyContentProvider extends ContentProvider {
         }
 
         return list;
+    }
+    public static void setComplited(Long taskId, Integer complited){
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        db.execSQL("UPDATE "+TaskSchedulerClass.Tasks.TABLE_NAME+" SET "+TaskSchedulerClass.Tasks.COLUMN_NAME_COMPLITED+" = "+complited+" WHERE "+TaskSchedulerClass.Tasks._ID+" = "+taskId);
+
     }
 }

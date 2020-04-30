@@ -48,13 +48,15 @@ public final class TaskSchedulerClass {
         public static final String COLUMN_NAME_GROUP_NAME   = "name";
         public static final String COLUMN_NAME_TIME   = "time_alert";
         public static final String COLUMN_NAME_TIME_BEFORE   = "time_alert_before";
+        public static final String COLUMN_NAME_COMPLITED   = "complited";
         public static final String[] DEFAULT_PROJECTION = new String[] {
                 TaskSchedulerClass.Tasks._ID,
                 TaskSchedulerClass.Tasks.COLUMN_NAME_TITLE,
                 TaskSchedulerClass.Tasks.COLUMN_NAME_GROUPID,
                 TaskSchedulerClass.Tasks.COLUMN_NAME_TIME,
                 TaskSchedulerClass.Tasks.COLUMN_NAME_TIME_BEFORE,
-                TaskSchedulerClass.Tasks.COLUMN_NAME_GROUP_NAME
+                TaskSchedulerClass.Tasks.COLUMN_NAME_GROUP_NAME,
+                TaskSchedulerClass.Tasks.COLUMN_NAME_COMPLITED
         };
         public static final HashMap<String,String> DEFAULT_PROJECTION_MAP = new HashMap<>();
         static {
@@ -64,6 +66,7 @@ public final class TaskSchedulerClass {
             DEFAULT_PROJECTION_MAP.put(TaskSchedulerClass.Tasks.COLUMN_NAME_GROUPID,TaskSchedulerClass.Tasks.COLUMN_NAME_GROUPID);
             DEFAULT_PROJECTION_MAP.put(TaskSchedulerClass.Tasks.COLUMN_NAME_TIME,TaskSchedulerClass.Tasks.COLUMN_NAME_TIME);
             DEFAULT_PROJECTION_MAP.put(TaskSchedulerClass.Tasks.COLUMN_NAME_TIME_BEFORE,TaskSchedulerClass.Tasks.COLUMN_NAME_TIME_BEFORE);
+            DEFAULT_PROJECTION_MAP.put(TaskSchedulerClass.Tasks.COLUMN_NAME_COMPLITED,TaskSchedulerClass.Tasks.COLUMN_NAME_COMPLITED);
              /*   //TaskSchedulerClass.Tasks._ID,
                 TaskSchedulerClass.Tasks.COLUMN_NAME_TITLE,
                 TaskSchedulerClass.Tasks.COLUMN_NAME_GROUPID,

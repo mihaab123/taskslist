@@ -40,6 +40,7 @@ import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mihailovalex.taskslist.adapter.SimpleItemTouchHelperCallback;
 import com.mihailovalex.taskslist.adapter.TaskAdapter;
+import com.mihailovalex.taskslist.data.MyContentProvider;
 import com.mihailovalex.taskslist.data.TaskSchedulerClass;
 import com.mihailovalex.taskslist.services.TaskService;
 import com.mihailovalex.taskslist.settings.ConstPreference;
@@ -172,7 +173,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         String selection = null;
         if(groupPosition != 0) {
-            selection = TaskSchedulerClass.Tasks.COLUMN_NAME_GROUPID+" = "+groupPosition;
+            if (groupPosition != arrayAdapter.getCount()-1) {
+                selection = TaskSchedulerClass.Tasks.COLUMN_NAME_GROUPID+" = "+groupPosition + " AND "+TaskSchedulerClass.Tasks.COLUMN_NAME_COMPLITED+" = "+0;
+            }else {
+                selection = TaskSchedulerClass.Tasks.COLUMN_NAME_COMPLITED+" = "+1;
+            }
         }
         if(!searchString.isEmpty()){
             if(selection == null){
@@ -336,10 +341,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         startActivity(intent);
     }
     private void deleteTask(long taskId) {
-        getContentResolver().delete(ContentUris.withAppendedId(TaskSchedulerClass.Tasks.CONTENT_URI, taskId),
+        MyContentProvider.setComplited(taskId,1);
+        mAdapter.notifyDataSetChanged();
+        /*getContentResolver().delete(ContentUris.withAppendedId(TaskSchedulerClass.Tasks.CONTENT_URI, taskId),
                 null,
                 null);
-        Toast.makeText(this,getResources().getString(R.string.removed),Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,getResources().getString(R.string.removed),Toast.LENGTH_SHORT).show();*/
         // обновление виджета
         TasksListWidget.sendRefreshBroadcast(this);
         /*Snackbar.make(recyclerView, Long.toString(taskId) + " " + getResources().getString(R.string.removed),
