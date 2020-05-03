@@ -27,4 +27,12 @@
     <string name="add_widget">Add widget</string>
     <string name="no_tasks_add">Add task</string>
     <string name="no_tasks_list">No tasks in list</string>
+    <string name="dialog_title">Add group</string>
+    <string name="group_title">Title</string>
+    <array name="array_color">
+        <item>BLACK</item>
+        <item>RED</item>
+        <item>YELLOW</item>
+        <item>GREEN</item>
+    </array>
 </resources>

@@ -16,12 +16,17 @@ import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.mihailovalex.taskslist.adapter.GroupAdapter;
 import com.mihailovalex.taskslist.adapter.TaskAdapter;
 import com.mihailovalex.taskslist.data.TaskSchedulerClass;
@@ -33,6 +38,7 @@ public class EditGroupActivity extends AppCompatActivity implements LoaderManage
     private static final int LOADER_ID = 4;
     private RecyclerView recyclerView;
     private GroupAdapter mAdapter;
+    private ArrayAdapter arrayAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +48,10 @@ public class EditGroupActivity extends AppCompatActivity implements LoaderManage
         initRecyclerView();
         getSupportLoaderManager().initLoader(LOADER_ID, null, this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        arrayAdapter = new ArrayAdapter(
+                this,
+                R.layout.support_simple_spinner_dropdown_item);
+        arrayAdapter.addAll(getResources().getStringArray(R.array.array_color));
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -67,25 +77,7 @@ public class EditGroupActivity extends AppCompatActivity implements LoaderManage
     }
 
     private void createGroup() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(getResources().getString(R.string.alert_group_edit));
-        final EditText input = new EditText(this);
-        input.setSingleLine(true);
-        builder.setView(input);
-        builder.setPositiveButton(getResources().getString(R.string.alert_group_save), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                String title = input.getText().toString();
-                ContentValues contentValues = new ContentValues();
-                contentValues.put(TaskSchedulerClass.Groups.COLUMN_NAME_NAME, title);
-                getContentResolver().insert(TaskSchedulerClass.Groups.CONTENT_URI, contentValues);
-            }
-        });
-        builder.setNegativeButton(getResources().getString(R.string.alert_group_cancel), new DialogInterface.OnClickListener() {
-            @Override public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        AlertDialog alert = builder.create(); alert.show();
+        addEditGroupGialog(-1, "", 0);
     }
     private void initRecyclerView() {
         recyclerView = findViewById(R.id.lvGroupEdit);
@@ -102,8 +94,8 @@ public class EditGroupActivity extends AppCompatActivity implements LoaderManage
             }
 
             @Override
-            public void onGroupEditClick(long groupId, String name) {
-                editGroup(groupId,name);
+            public void onGroupEditClick(long groupId, String name, int color) {
+                editGroup(groupId,name, color);
             }
 
             @Override
@@ -122,22 +114,71 @@ public class EditGroupActivity extends AppCompatActivity implements LoaderManage
                 null);
     }
 
-    private void editGroup(final long groupId,final String name) {
+    private void editGroup(final long groupId,final String name, int color) {
+
+        addEditGroupGialog(groupId, name, color);
+    }
+
+    private void addEditGroupGialog(final long groupId, String name, int color) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(getResources().getString(R.string.alert_group_edit));
-        final EditText input = new EditText(this);
-        input.setText(name);
-        input.setSingleLine(true);
-        builder.setView(input);
+        builder.setTitle(R.string.dialog_title);
+        LayoutInflater inflater = getLayoutInflater();
+        View container = inflater.inflate(R.layout.dialog_group,null);
+        final TextInputLayout tilTitle = container.findViewById(R.id.tilDialogGroupTitle);
+        final EditText etTitle = tilTitle.getEditText();
+        final Spinner spinner = container.findViewById(R.id.spDialogGroupColor);
+        tilTitle.setHint(getResources().getString(R.string.group_title));
+        etTitle.setText(name);
+        builder.setView(container);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(arrayAdapter);
+        // выделяем элемент
+        switch (color){
+            case R.color.black:
+                spinner.setSelection(0);
+                break;
+            case R.color.group_color1:
+                spinner.setSelection(1);
+                break;
+            case R.color.group_color2:
+                spinner.setSelection(2);
+                break;
+            case R.color.group_color3:
+                spinner.setSelection(3);
+                break;
+            default:
+                spinner.setSelection(0);
+        }
+
         builder.setPositiveButton(getResources().getString(R.string.alert_group_save), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                String title = input.getText().toString();
+                String title = etTitle.getText().toString();
                 ContentValues contentValues = new ContentValues();
                 contentValues.put(TaskSchedulerClass.Groups.COLUMN_NAME_NAME, title);
-                getContentResolver().update(ContentUris.withAppendedId(TaskSchedulerClass.Groups.CONTENT_URI, groupId),
-                        contentValues,
-                        null,
-                        null);
+                switch ((int) spinner.getSelectedItemId()){
+                    case 0:
+                        contentValues.put(TaskSchedulerClass.Groups.COLUMN_NAME_GROUP_COLOR, R.color.black);
+                        break;
+                    case 1:
+                        contentValues.put(TaskSchedulerClass.Groups.COLUMN_NAME_GROUP_COLOR, R.color.group_color1);
+                        break;
+                    case 2:
+                        contentValues.put(TaskSchedulerClass.Groups.COLUMN_NAME_GROUP_COLOR, R.color.group_color2);
+                        break;
+                    case 3:
+                        contentValues.put(TaskSchedulerClass.Groups.COLUMN_NAME_GROUP_COLOR, R.color.group_color3);
+                        break;
+                    default:
+                        contentValues.put(TaskSchedulerClass.Groups.COLUMN_NAME_GROUP_COLOR, R.color.black);
+                }
+                if(groupId!=-1){
+                    getContentResolver().update(ContentUris.withAppendedId(TaskSchedulerClass.Groups.CONTENT_URI, groupId),
+                            contentValues,
+                            null,
+                            null);
+                } else {
+                    getContentResolver().insert(TaskSchedulerClass.Groups.CONTENT_URI, contentValues);
+                }
             }
         });
         builder.setNegativeButton(getResources().getString(R.string.alert_group_cancel), new DialogInterface.OnClickListener() {
@@ -145,7 +186,8 @@ public class EditGroupActivity extends AppCompatActivity implements LoaderManage
                 dialog.dismiss();
             }
         });
-        AlertDialog alert = builder.create(); alert.show();
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     @Override

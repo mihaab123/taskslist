@@ -27,14 +27,18 @@ public class DBHelper extends SQLiteOpenHelper {
         public static final String KEY_TIME   = "time_alert";
         public static final String KEY_TIME_BEFORE   = "time_alert_before";
         public static final String KEY_COMPLITED   = "complited";
+        public static final String KEY_GROUP_COLOR   = "group_color";
+        public static final String KEY_GROUP_COLOR_CHECK   = "group_color_check";
 
 
         private static final String DATABASE_CREATE_TABLE_GROUPS =
                 "create table "+ DATABASE_TABLE_GROUPS + " ("
                         + KEY_ROWID + " integer primary key autoincrement, "
+                        + KEY_GROUP_COLOR + " integer default 0, "
+                        + KEY_GROUP_COLOR_CHECK + " integer default 0, "
                         + KEY_NAME + " string default '');";
 
-        private static final int DATABASE_VERSION = 9;
+        private static final int DATABASE_VERSION = 10;
 
         private static final String DATABASE_CREATE_TABLE_TASKS =
                 "create table "+ DATABASE_TABLE_TASKS + " ("
@@ -56,8 +60,12 @@ public class DBHelper extends SQLiteOpenHelper {
             db.execSQL(DATABASE_CREATE_TABLE_GROUPS);
             ContentValues cv = new ContentValues();
             cv.put(TaskSchedulerClass.Groups.COLUMN_NAME_NAME, ctx.getResources().getString(R.string.group_default_personal));
+            cv.put(TaskSchedulerClass.Groups.COLUMN_NAME_GROUP_COLOR,R.color.group_color1);
+            cv.put(TaskSchedulerClass.Groups.COLUMN_NAME_GROUP_COLOR_CHECK,R.color.group_color1_check);
             db.insert(DATABASE_TABLE_GROUPS, null, cv);
             cv.put(TaskSchedulerClass.Groups.COLUMN_NAME_NAME, ctx.getResources().getString(R.string.group_default_work));
+            cv.put(TaskSchedulerClass.Groups.COLUMN_NAME_GROUP_COLOR,R.color.group_color2);
+            cv.put(TaskSchedulerClass.Groups.COLUMN_NAME_GROUP_COLOR_CHECK,R.color.group_color2_check);
             db.insert(DATABASE_TABLE_GROUPS, null, cv);
             // создаем базу задач
             db.execSQL(DATABASE_CREATE_TABLE_TASKS);
@@ -70,6 +78,19 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+            if (oldVersion < 10 && newVersion == 10) {
+                db.execSQL("ALTER TABLE "+DATABASE_TABLE_GROUPS+" ADD COLUMN "+KEY_GROUP_COLOR+" INTEGER DEFAULT 0");
+                db.execSQL("ALTER TABLE "+DATABASE_TABLE_GROUPS+" ADD COLUMN "+KEY_GROUP_COLOR_CHECK+" INTEGER DEFAULT 0");
+                ContentValues cv = new ContentValues();
+                cv.put(TaskSchedulerClass.Groups.COLUMN_NAME_NAME, ctx.getResources().getString(R.string.group_default_personal));
+                cv.put(TaskSchedulerClass.Groups.COLUMN_NAME_GROUP_COLOR,R.color.group_color1);
+                cv.put(TaskSchedulerClass.Groups.COLUMN_NAME_GROUP_COLOR_CHECK,R.color.group_color1_check);
+                db.update(DATABASE_TABLE_GROUPS, cv, TaskSchedulerClass.Groups._ID+" = ?", new String[] { "0" });
+                cv.put(TaskSchedulerClass.Groups.COLUMN_NAME_NAME, ctx.getResources().getString(R.string.group_default_work));
+                cv.put(TaskSchedulerClass.Groups.COLUMN_NAME_GROUP_COLOR,R.color.group_color2);
+                cv.put(TaskSchedulerClass.Groups.COLUMN_NAME_GROUP_COLOR_CHECK,R.color.group_color2_check);
+                db.update(DATABASE_TABLE_GROUPS, cv, TaskSchedulerClass.Groups._ID+" = ?", new String[] { "1" });
+            }
             if (oldVersion < 9 && newVersion == 9) {
                 db.execSQL("ALTER TABLE "+DATABASE_TABLE_TASKS+" ADD COLUMN "+KEY_COMPLITED+" INTEGER DEFAULT 0");
             }

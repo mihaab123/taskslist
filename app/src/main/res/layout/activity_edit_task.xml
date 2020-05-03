@@ -22,57 +22,78 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/date_til"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/date_et"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/hint_date"
-                    android:inputType="date"></com.google.android.material.textfield.TextInputEditText>
-            </com.google.android.material.textfield.TextInputLayout>
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/time_til"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/time_et"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/hint_time"
-                    android:inputType="time"></com.google.android.material.textfield.TextInputEditText>
-            </com.google.android.material.textfield.TextInputLayout>
-            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/title_til"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <com.google.android.material.textfield.TextInputEditText
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp">
+                <EditText
                     android:id="@+id/title_et"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/hint_title"
-                    android:inputType="textCapSentences"></com.google.android.material.textfield.TextInputEditText>
+                    android:inputType="textCapSentences"></EditText>
             </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/date_til"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/title_til"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp">
+
+                <EditText
+                    android:id="@+id/date_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_date"
+                    android:inputType="none"
+                    android:focusable="false"
+                    android:cursorVisible="false"></EditText>
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/time_til"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/title_til"
+                android:layout_alignRight="@id/title_til"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp">
+
+                <EditText
+                    android:id="@+id/time_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_time"
+                    android:inputType="none"
+                    android:focusable="false"
+                    android:cursorVisible="false"></EditText>
+            </com.google.android.material.textfield.TextInputLayout>
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/group_til"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <com.google.android.material.textfield.TextInputEditText
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_below="@id/date_til">
+            <EditText
                 android:id="@+id/group_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_group"
-                android:inputType="textCapSentences"></com.google.android.material.textfield.TextInputEditText>
+                android:inputType="textCapSentences"></EditText>
         </com.google.android.material.textfield.TextInputLayout>
-    </LinearLayout>
+    </RelativeLayout>
 
     </ScrollView>
 

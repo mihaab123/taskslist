@@ -1,5 +1,6 @@
 package com.mihailovalex.taskslist.adapter;
 
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,10 +31,14 @@ public class GroupAdapter extends CursorRecyclerAdapter<RecyclerView.ViewHolder>
 
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, Cursor cursor) {
         ViewHolder viewHolder1 = (ViewHolder)viewHolder;
+        final Resources resources =viewHolder1.itemView.getResources();
         // заголовок группы
         int nameColumnIndex = cursor.getColumnIndexOrThrow(TaskSchedulerClass.Groups.COLUMN_NAME_NAME);
         final String name = cursor.getString(nameColumnIndex);
         viewHolder1.nameTv.setText(name);
+        int GroupColorColumnIndex = cursor.getColumnIndexOrThrow(TaskSchedulerClass.Tasks.COLUMN_NAME_GROUP_COLOR);
+        final int groupColor = cursor.getInt(GroupColorColumnIndex);
+        viewHolder1.nameTv.setTextColor(resources.getColor(groupColor));
 
         // ид уведомления
         int idColumnIndex = cursor.getColumnIndexOrThrow(TaskSchedulerClass.Groups._ID);
@@ -42,7 +47,7 @@ public class GroupAdapter extends CursorRecyclerAdapter<RecyclerView.ViewHolder>
         viewHolder1.imEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                OnGroupClickListener.onGroupEditClick(groupId,name);
+                OnGroupClickListener.onGroupEditClick(groupId,name,groupColor);
             }
         });
         viewHolder1.imDel.setOnClickListener(new View.OnClickListener() {
@@ -93,7 +98,7 @@ public class GroupAdapter extends CursorRecyclerAdapter<RecyclerView.ViewHolder>
     }
     public interface OnGroupClickListener {
         void onGroupClick(long groupId);
-        void onGroupEditClick(long groupId, String name);
+        void onGroupEditClick(long groupId, String name, int color);
         void onGroupDeleteClick(long groupId);
     }
 

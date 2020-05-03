@@ -1,5 +1,9 @@
 package com.mihailovalex.taskslist.adapter;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -13,12 +17,15 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mihailovalex.taskslist.R;
+import com.mihailovalex.taskslist.data.MyContentProvider;
 import com.mihailovalex.taskslist.data.TaskSchedulerClass;
 
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class TaskAdapter extends CursorRecyclerAdapter<RecyclerView.ViewHolder>  {
     private static final int TYPE_HEADER = 0;
@@ -44,12 +51,15 @@ public class TaskAdapter extends CursorRecyclerAdapter<RecyclerView.ViewHolder> 
                 long datedTs = cursor.getLong(dateHeaderColumnIndex);
                 Date dateHeader = new Date(datedTs);
                 viewHolder2.dateHeaderTv.setText(viewHolder2.SDF.format(dateHeader));
+
                 break;
         }
     }
 
-    private void setTypeItem(ItemViewHolder viewHolder, Cursor cursor) {
+    private void setTypeItem(final ItemViewHolder viewHolder, Cursor cursor) {
         ItemViewHolder viewHolder1 = viewHolder;
+        final View itemView = viewHolder.itemView;
+        final Resources resources =itemView.getResources();
         // заголовок уведомления
         int titleColumnIndex = cursor.getColumnIndexOrThrow(TaskSchedulerClass.Tasks.COLUMN_NAME_TITLE);
         String title = cursor.getString(titleColumnIndex);
@@ -61,19 +71,159 @@ public class TaskAdapter extends CursorRecyclerAdapter<RecyclerView.ViewHolder> 
         viewHolder1.dateTv.setText(viewHolder1.SDF.format(date));
         // заголовок уведомления
         int groupColumnIndex = cursor.getColumnIndexOrThrow(TaskSchedulerClass.Tasks.COLUMN_NAME_GROUP_NAME);
-        String group = cursor.getString(groupColumnIndex);
+        final String group = cursor.getString(groupColumnIndex);
         viewHolder1.groupTv.setText(group);
         // ид уведомления
         int idColumnIndex = cursor.getColumnIndexOrThrow(TaskSchedulerClass.Tasks._ID);
-        long taskid = cursor.getLong(idColumnIndex);
+        final long taskid = cursor.getLong(idColumnIndex);
         viewHolder1.itemView.setTag(taskid);
         // завершенные
         int ComplitedColumnIndex = cursor.getColumnIndexOrThrow(TaskSchedulerClass.Tasks.COLUMN_NAME_COMPLITED);
         long complited = cursor.getLong(ComplitedColumnIndex);
+        int GroupColorColumnIndex = cursor.getColumnIndexOrThrow(TaskSchedulerClass.Tasks.COLUMN_NAME_GROUP_COLOR);
+        int groupColor = cursor.getInt(GroupColorColumnIndex);
+        viewHolder1.groupTv.setTextColor(resources.getColor(groupColor));
+        //viewHolder.cvTaskGroupColor.setColorFilter(resources.getColor(groupColor));
+        //viewHolder.cvTaskGroupColor.setImageResource(R.drawable.ic_circle_blank);
         if (complited == 1){
             viewHolder.titleTv.setPaintFlags(viewHolder.titleTv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             viewHolder.llTaskItem.setBackgroundColor(Color.parseColor("#E1E1E1"));
+            //GroupColorColumnIndex = cursor.getColumnIndexOrThrow(TaskSchedulerClass.Tasks.COLUMN_NAME_GROUP_COLOR_CHECK);
+            //groupColor = cursor.getInt(GroupColorColumnIndex);
+            //viewHolder1.groupTv.setTextColor(resources.getColor(groupColor));
+            //viewHolder.cvTaskGroupColor.setColorFilter(resources.getColor(groupColor));
+            //viewHolder.cvTaskGroupColor.setImageResource(R.drawable.ic_circle_check);
+
         }
+            /*viewHolder.cvTaskGroupColor.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    /f (complited == 0) {
+                        MyContentProvider.setComplited(taskid, 1);
+                        notifyDataSetChanged();
+
+
+                        final ObjectAnimator flipin = ObjectAnimator.ofFloat(viewHolder.cvTaskGroupColor, "rotationY", -180f, 0f);
+                        flipin.addListener(new Animator.AnimatorListener() {
+                            @Override
+                            public void onAnimationStart(Animator animation) {
+
+                            }
+
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+
+                                    viewHolder.cvTaskGroupColor.setImageResource(R.drawable.ic_circle_check);
+                                    if (group != resources.getString(R.string.group_default_all)) {
+                                        ObjectAnimator translationX = ObjectAnimator.ofFloat(itemView, "translationX", 0f, itemView.getWidth());
+                                        ObjectAnimator translationXBack = ObjectAnimator.ofFloat(itemView, "translationX", itemView.getWidth(), 0f);
+                                        translationX.addListener(new Animator.AnimatorListener() {
+                                            @Override
+                                            public void onAnimationStart(Animator animation) {
+
+                                            }
+
+                                            @Override
+                                            public void onAnimationEnd(Animator animation) {
+                                                //itemView.setVisibility(View.GONE);
+                                                //getTaskFragment().moveTask(task);
+                                                //removeItem(taskViewHolder.getLayoutPosition());
+                                            }
+
+                                            @Override
+                                            public void onAnimationCancel(Animator animation) {
+
+                                            }
+
+                                            @Override
+                                            public void onAnimationRepeat(Animator animation) {
+
+                                            }
+                                        });
+                                        AnimatorSet animatorSet = new AnimatorSet();
+                                        animatorSet.play(translationX).before(translationXBack);
+                                        animatorSet.start();
+                                    }
+
+                            }
+
+                            @Override
+                            public void onAnimationCancel(Animator animation) {
+
+                            }
+
+                            @Override
+                            public void onAnimationRepeat(Animator animation) {
+
+                            }
+                        });
+                        flipin.start();
+                    }else {
+                        MyContentProvider.setComplited(taskid, 0);
+                        notifyDataSetChanged();
+
+
+                        final ObjectAnimator flipin = ObjectAnimator.ofFloat(viewHolder.cvTaskGroupColor, "rotationY", -180f, 0f);
+                        flipin.addListener(new Animator.AnimatorListener() {
+                            @Override
+                            public void onAnimationStart(Animator animation) {
+
+                            }
+
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+
+                                viewHolder.cvTaskGroupColor.setImageResource(R.drawable.ic_circle_blank);
+                                if (group != resources.getString(R.string.group_default_all)) {
+                                    ObjectAnimator translationX = ObjectAnimator.ofFloat(itemView, "translationX", 0f, itemView.getWidth());
+                                    ObjectAnimator translationXBack = ObjectAnimator.ofFloat(itemView, "translationX", itemView.getWidth(), 0f);
+                                    translationX.addListener(new Animator.AnimatorListener() {
+                                        @Override
+                                        public void onAnimationStart(Animator animation) {
+
+                                        }
+
+                                        @Override
+                                        public void onAnimationEnd(Animator animation) {
+                                            //itemView.setVisibility(View.GONE);
+                                            //getTaskFragment().moveTask(task);
+                                            //removeItem(taskViewHolder.getLayoutPosition());
+                                        }
+
+                                        @Override
+                                        public void onAnimationCancel(Animator animation) {
+
+                                        }
+
+                                        @Override
+                                        public void onAnimationRepeat(Animator animation) {
+
+                                        }
+                                    });
+                                    AnimatorSet animatorSet = new AnimatorSet();
+                                    animatorSet.play(translationX).before(translationXBack);
+                                    animatorSet.start();
+                                }
+
+                            }
+
+                            @Override
+                            public void onAnimationCancel(Animator animation) {
+
+                            }
+
+                            @Override
+                            public void onAnimationRepeat(Animator animation) {
+
+                            }
+                        });
+                        flipin.start();
+                    }
+
+                }
+            });*/
+
+
 
     }
 
@@ -104,6 +254,7 @@ public class TaskAdapter extends CursorRecyclerAdapter<RecyclerView.ViewHolder> 
         private final TextView titleTv;
         private final TextView dateTv;
         private final TextView groupTv;
+        //private final CircleImageView cvTaskGroupColor;
         private final LinearLayout llTaskItem;
         final SimpleDateFormat SDF = new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault());
 
@@ -114,6 +265,7 @@ public class TaskAdapter extends CursorRecyclerAdapter<RecyclerView.ViewHolder> 
             this.dateTv = itemView.findViewById(R.id.date_tv);
             this.groupTv = itemView.findViewById(R.id.group_tv);
             this.llTaskItem = itemView.findViewById(R.id.llTaskItem);
+           //this.cvTaskGroupColor = itemView.findViewById(R.id.cvTaskGroupColor);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

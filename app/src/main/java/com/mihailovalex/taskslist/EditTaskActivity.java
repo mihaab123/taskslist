@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.TimePicker;
 
 import com.google.android.material.textfield.TextInputEditText;
@@ -31,12 +32,12 @@ import java.util.Calendar;
 public class EditTaskActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>{
     private TextInputLayout titleTil;
     private TextInputLayout dateTil;
-    private TextInputEditText titleEt;
-    private TextInputEditText dateEt;
+    private EditText titleEt;
+    private EditText dateEt;
     private TextInputLayout timeTil;
-    private TextInputEditText timeEt;
+    private EditText timeEt;
     private TextInputLayout groupTil;
-    private TextInputEditText groupEt;
+    private EditText groupEt;
     public static final String EXTRA_TASK_ID = "task_id";
     private static final int LOADER_ID = 3;
     private long taskId;

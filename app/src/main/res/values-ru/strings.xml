@@ -26,4 +26,12 @@
     <string name="hint_time">Время</string>
     <string name="no_tasks_add">Add task</string>
     <string name="no_tasks_list">No tasks in list</string>
+    <string name="dialog_title">Add group</string>
+    <string name="group_title">Title</string>
+    <array name="array_color">
+        <item>Черный</item>
+        <item>Красный</item>
+        <item>Желтый</item>
+        <item>Зеленый</item>
+    </array>
 </resources>
