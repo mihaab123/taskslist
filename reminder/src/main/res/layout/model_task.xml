@@ -3,32 +3,37 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/selectableItemBackground"
-    android:clickable="true">
-
-    <TextView
-        android:id="@+id/tvTaskTitle"
+    android:background="@color/gray_50">
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="72dp"
-        android:layout_marginTop="16dp"
-        android:textColor="@color/design_default_color_primary" />
+        android:background="?attr/selectableItemBackground">
+        <TextView
+            android:id="@+id/tvTaskTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="72dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:textColor="@color/design_default_color_primary" />
 
-    <TextView
-        android:id="@+id/tvTaskDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_margin="16dp"
-        android:layout_marginTop="19dp"
-        android:gravity="right" />
+        <TextView
+            android:id="@+id/tvTaskDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_margin="16dp"
+            android:layout_marginTop="19dp"
+            android:gravity="right" />
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/cvTaskPriority"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
-        android:src="@color/colorPrimary" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/cvTaskPriority"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:src="@color/colorPrimary" />
+    </RelativeLayout>
 </RelativeLayout>

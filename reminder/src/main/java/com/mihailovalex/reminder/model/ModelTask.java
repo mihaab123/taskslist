@@ -19,6 +19,7 @@ public class ModelTask implements Item {
     private long timeStamp;
     private int priority;
     private int status;
+    private int dateStatus;
 
     public ModelTask(){
         status = -1;
@@ -77,6 +78,15 @@ public class ModelTask implements Item {
     public void setStatus(int status) {
         this.status = status;
     }
+
+    public int getDateStatus() {
+        return dateStatus;
+    }
+
+    public void setDateStatus(int dateStatus) {
+        this.dateStatus = dateStatus;
+    }
+
     public int getPriorityColor(){
         switch (getPriority()){
             case PRIORITY_HIGH:

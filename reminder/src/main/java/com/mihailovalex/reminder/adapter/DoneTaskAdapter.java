@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.res.Resources;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,16 +63,32 @@ public class DoneTaskAdapter extends TaskAdapter {
                 taskViewHolder.date.setText(Utils.getFullDate(task.getDate()));
             } else taskViewHolder.date.setText(null);
             itemView.setVisibility(View.VISIBLE);
-            itemView.setBackgroundColor(resources.getColor(R.color.gray_200));
+            taskViewHolder.priority.setEnabled(true);
+            //itemView.setBackgroundColor(resources.getColor(R.color.gray_200));
             taskViewHolder.title.setTextColor(resources.getColor(R.color.design_default_color_primary));
             taskViewHolder.date.setTextColor(resources.getColor(R.color.design_default_color_secondary));
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            getTaskFragment().removeTaskDialog(taskViewHolder.getLayoutPosition());
+                        }
+                    },1000);
+                    return true;
+                }
+            });
             taskViewHolder.priority.setColorFilter(resources.getColor(task.getPriorityColor()));
             taskViewHolder.priority.setImageResource(R.drawable.ic_circle_check);
             taskViewHolder.priority.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    task.setStatus(ModelTask.STATUS_DONE);
-                    itemView.setBackgroundColor(resources.getColor(R.color.gray_50));
+                    taskViewHolder.priority.setEnabled(false);
+                    task.setStatus(ModelTask.STATUS_CURRENT);
+                    getTaskFragment().activity.dbHelper.update().status(task.getTimeStamp(),ModelTask.STATUS_CURRENT);
+                    //itemView.setBackgroundColor(resources.getColor(R.color.gray_50));
                     // change color later
                     taskViewHolder.title.setTextColor(resources.getColor(R.color.design_default_color_primary));
                     taskViewHolder.date.setTextColor(resources.getColor(R.color.design_default_color_secondary));
@@ -87,7 +104,7 @@ public class DoneTaskAdapter extends TaskAdapter {
 
                         @Override
                         public void onAnimationEnd(Animator animation) {
-                            if(task.getStatus()==ModelTask.STATUS_DONE){
+                            if(task.getStatus()==ModelTask.STATUS_CURRENT){
 
                                 ObjectAnimator translationX = ObjectAnimator.ofFloat(itemView,"translationX",0f,-itemView.getWidth());
                                 ObjectAnimator translationXBack = ObjectAnimator.ofFloat(itemView,"translationX",-itemView.getWidth(),0f);

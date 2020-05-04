@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!--<string name="app_id">ca-app-pub-4028112048339858~2902041809</string>
-    <string name="banner_id">ca-app-pub-4028112048339858/7312060101</string>
-    <string name="interstitial_id">ca-app-pub-4028112048339858/1022818072</string> -->
-    <string name="app_id" translatable="false">ca-app-pub-3940256099942544~3347511713</string>
-    <string name="banner_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="interstitial_id" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
-    <string name="rewarded_video_id" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="app_id" translatable="false">ca-app-pub-5225363231001108~9617036079</string>
+    <string name="banner_id" translatable="false">ca-app-pub-5225363231001108/1982088631</string>
+    <!--<string name="interstitial_id" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="rewarded_video_id" translatable="false">ca-app-pub-3940256099942544/1033173712</string>-->
 </resources>

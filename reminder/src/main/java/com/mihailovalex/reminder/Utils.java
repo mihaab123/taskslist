@@ -8,11 +8,11 @@ public class Utils {
         return dateFormat.format(date);
     }
     public static String getTime(Long time){
-        SimpleDateFormat timeFormat = new SimpleDateFormat("HH.mm");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
         return timeFormat.format(time);
     }
     public static String getFullDate(Long date){
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yy HH.mm");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yy HH:mm");
         return dateFormat.format(date);
     }
 }

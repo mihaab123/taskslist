@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Reminder</string>
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -16,4 +16,12 @@
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Cancel</string>
     <string name="dialog_error_title_empty">Please, enter title task.</string>
+    <string name="dialog_removing_mess">Deleted task?</string>
+    <string name="removed">Removed</string>
+    <string name="separator_overdue">Overdue</string>
+    <string name="separator_today">Today</string>
+    <string name="separator_tomorrow">Tomorrow</string>
+    <string name="separator_future">Future</string>
+    <string name="edit_dialog_title">Edit task</string>
+
 </resources>

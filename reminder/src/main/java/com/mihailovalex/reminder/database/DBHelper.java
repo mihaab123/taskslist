@@ -26,9 +26,25 @@ public class DBHelper extends SQLiteOpenHelper {
             + TASK_PRIORITY_COLUMN + " integer default 0, "
             + TASK_STATUS_COLUMN + " integer default 0, "
             + TASK_TIMESTAMP_COLUMN + " long default 0 );";
+    public static final String SELECTION_STATUS = TASK_STATUS_COLUMN+" =?";
+    public static final String SELECTION_TIMESTAMP = TASK_TIMESTAMP_COLUMN+" =?";
+    public static final String SELECTION_LIKE_TITLE = TASK_TITLE_COLUMN+" LIKE ?";
+
+    private DBQueryManager dbQueryManager;
+    private DBUpdateManager dbUpdateManager;
+
+    public DBQueryManager query() {
+        return dbQueryManager;
+    }
+
+    public DBUpdateManager update() {
+        return dbUpdateManager;
+    }
 
     public DBHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        dbQueryManager = new DBQueryManager(getReadableDatabase());
+        dbUpdateManager = new DBUpdateManager(getWritableDatabase());
     }
 
     @Override
@@ -49,5 +65,8 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(TASK_STATUS_COLUMN,task.getStatus());
         contentValues.put(TASK_TIMESTAMP_COLUMN,task.getTimeStamp());
         getWritableDatabase().insert(TASKS_TABLE,null, contentValues);
+    }
+    public void deleteTask(long timestamp){
+        getWritableDatabase().delete(TASKS_TABLE,SELECTION_TIMESTAMP, new String[]{Long.toString(timestamp)});
     }
 }
