@@ -1,0 +1,73 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewmodel"
+            type="com.mihailovalex.reminder_room.ui.currenttasks.CurrentTasksViewModel" />
+
+    </data>
+
+        <RelativeLayout
+            android:id="@+id/tasksContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/tasksLL"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="@{viewmodel.empty ? View.GONE : View.VISIBLE}">
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/tasks_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:items="@{viewmodel.items}" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/noTasks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="vertical"
+                android:visibility="@{viewmodel.empty ? View.VISIBLE : View.GONE}">
+
+
+                <ImageView
+                    android:id="@+id/noTasksIcon"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center"
+                    android:src="@{viewmodel.noTaskIconRes}" />
+
+                <TextView
+                    android:id="@+id/noTasksMain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@{viewmodel.noTasksLabel}"
+                    android:layout_marginBottom="@dimen/list_item_padding"/>
+
+                <TextView
+                    android:id="@+id/noTasksAdd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/touch_feedback"
+                    android:gravity="center"
+                    android:text="@string/no_tasks_add"
+                    android:onClick="@{() -> viewmodel.addNewTask()}"
+                    android:visibility="@{viewmodel.tasksAddViewVisible ? View.VISIBLE : View.GONE}" />
+
+            </LinearLayout>
+        </RelativeLayout>
+  </layout>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_current_tasks"
+            android:icon="@drawable/ic_menu_current_tasks"
+            android:title="@string/menu_current_tasks" />
+        <item
+            android:id="@+id/nav_birthdays"
+            android:icon="@drawable/ic_menu_birthdays"
+            android:title="@string/menu_birthdays" />
+        <item
+            android:id="@+id/nav_done_tasks"
+            android:icon="@drawable/ic_menu_done_tasks"
+            android:title="@string/menu_done_tasks" />
+    </group>
+</menu>

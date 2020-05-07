@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <data>
+        <import type="android.view.View.OnClickListener" />
+        <import type="com.mihailovalex.reminder_room.utils.DateUtils" />
+
+        <variable
+            name="task"
+            type="com.mihailovalex.reminder_room.data.Task" />
+
+        <variable
+            name="listener"
+            type="com.mihailovalex.reminder_room.ui.currenttasks.TaskItemUserActionsListener" />
+    </data>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/gray_50">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@{task.completed ? @drawable/list_completed_touch_feedback : @drawable/touch_feedback}"
+            android:onClick="@{() -> listener.onTaskClicked(task)}">
+            <TextView
+                android:id="@+id/tvTaskTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="72dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:textColor="@color/design_default_color_primary"
+                android:text="@{task.title}"/>
+
+            <TextView
+                android:id="@+id/tvTaskDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_margin="16dp"
+                android:layout_marginTop="19dp"
+                android:gravity="right"
+                android:text="@{DateUtils.getFullDate(task.date)}"/>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/cvTaskPriority"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:src="@{task}"
+                android:onClick="@{(view) -> listener.onCompleteChanged(task, view)}"/>
+        </RelativeLayout>
+    </RelativeLayout>
+</layout>

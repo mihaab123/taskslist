@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+
+    <color name="priority_high">#EF9A9A</color>
+    <color name="priority_normal">#FFF59D</color>
+    <color name="priority_low">#A5D6A7</color>
+
+    <color name="priority_high_selected">#FFCDD2</color>
+    <color name="priority_normal_selected">#FFF9C4</color>
+    <color name="priority_low_selected">#C8E6C9</color>
+    <color name="gray_50">#FAFAFA</color>
+    <color name="gray_200">#EEEEEE</color>
+    <drawable name="touchFeedback">#CFD8DC</drawable>
+    <drawable name="completedTaskBackground">#CCCCCC</drawable>
+</resources>

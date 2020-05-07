@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_current_tasks">
+
+    <fragment
+        android:id="@+id/nav_current_tasks"
+        android:name="com.mihailovalex.reminder_room.ui.currenttasks.CurrentTasksFragment"
+        android:label="@string/menu_current_tasks"
+        tools:layout="@layout/fragment_current_tasks">
+
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/nav_birthdays"
+        android:name="com.mihailovalex.reminder_room.ui.birthdays.GalleryFragment"
+        android:label="@string/menu_birthdays"
+        tools:layout="@layout/fragment_birthdays" />
+
+    <fragment
+        android:id="@+id/nav_done_tasks"
+        android:name="com.mihailovalex.reminder_room.ui.donetasks.SlideshowFragment"
+        android:label="@string/menu_done_tasks"
+        tools:layout="@layout/fragment_done_tasks" />
+</navigation>
