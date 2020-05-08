@@ -1,5 +1,7 @@
 package com.mihailovalex.reminder_room.adapter;
 
+import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -9,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.mihailovalex.reminder_room.data.Item;
 import com.mihailovalex.reminder_room.data.Task;
+import com.mihailovalex.reminder_room.databinding.TaskItemBinding;
 import com.mihailovalex.reminder_room.ui.TaskFragment;
 import com.mihailovalex.reminder_room.ui.currenttasks.CurrentTasksViewModel;
 
@@ -29,7 +32,7 @@ public abstract class TaskAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     public TaskAdapter(List<Item> tasks,
                         CurrentTasksViewModel tasksViewModel) {
-        tasksViewModel = tasksViewModel;
+        this.tasksViewModel = tasksViewModel;
         setList(tasks);
 
     }
@@ -108,17 +111,17 @@ public abstract class TaskAdapter extends RecyclerView.Adapter<RecyclerView.View
     public int getItemCount() {
         return items.size();
     }
-    protected class TaskViewHolder extends RecyclerView.ViewHolder{
-        protected TextView title;
-        protected TextView date;
-        protected CircleImageView priority;
 
-        public TaskViewHolder(@NonNull View itemView, TextView title, TextView date, CircleImageView priority) {
-            super(itemView);
-            this.title = title;
-            this.date = date;
-            this.priority = priority;
+    protected class TaskViewHolder extends RecyclerView.ViewHolder{
+        protected Context context;
+        protected TaskItemBinding taskItemBinding;
+
+        public TaskViewHolder(TaskItemBinding  binding) {
+            super(binding.getRoot());
+            context = itemView.getContext();
+            taskItemBinding = binding;
         }
+
     }
     protected class SeparatorViewHolder extends RecyclerView.ViewHolder{
         protected TextView type;

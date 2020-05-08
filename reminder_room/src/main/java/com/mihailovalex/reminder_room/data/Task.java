@@ -1,10 +1,21 @@
 package com.mihailovalex.reminder_room.data;
 
 import androidx.annotation.NonNull;
-import androidx.room.*;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
+import com.mihailovalex.reminder_room.R;
+
 
 @Entity(tableName = "tasks")
 public final class Task implements Item {
+    @Ignore
+    public final static int PRIORITY_LOW = 0;
+    @Ignore
+    public final static int PRIORITY_NORMAL = 1;
+    @Ignore
+    public final static int PRIORITY_HIGH = 2;
 
     @PrimaryKey(autoGenerate = true)
     @NonNull
@@ -100,20 +111,20 @@ public final class Task implements Item {
     }
     public int getPriorityColor(){
         switch (getPriority()){
-            /*case PRIORITY_HIGH:
-                if(getStatus()==STATUS_CURRENT||getStatus()==STATUS_OVERDUE){
+            case PRIORITY_HIGH:
+                if(isActive()){
                     return R.color.priority_high;
                 } else return R.color.priority_high_selected;
             case PRIORITY_NORMAL:
-                if(getStatus()==STATUS_CURRENT||getStatus()==STATUS_OVERDUE){
+                if(isActive()){
                     return R.color.priority_normal;
                 } else return R.color.priority_normal_selected;
             case PRIORITY_LOW:
-                if(getStatus()==STATUS_CURRENT||getStatus()==STATUS_OVERDUE){
+                if(isActive()){
                     return R.color.priority_low;
-                } else return R.color.priority_low_selected;*/
+                } else return R.color.priority_low_selected;
             default:
-                return  0;
+                return  R.color.priority_high;//0;
         }
     }
 

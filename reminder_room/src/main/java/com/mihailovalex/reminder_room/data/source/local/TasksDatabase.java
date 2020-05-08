@@ -32,7 +32,7 @@ import java.util.Date;
 /**
  * The Room Database that contains the Task table.
  */
-@Database(entities = {Task.class}, version = 1)
+@Database(entities = {Task.class}, version = 2)
 public abstract class TasksDatabase extends RoomDatabase {
 
     private static TasksDatabase INSTANCE;

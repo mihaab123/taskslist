@@ -73,9 +73,9 @@ public class CurrentTasksViewModel extends AndroidViewModel {
     public void setFiltering() {
 
                 noTasksLabel.set(mContext.getResources().getString(R.string.no_tasks_all));
-                //noTaskIconRes.set(mContext.getResources().getDrawable(
-                 //       R.drawable.ic_assignment_turned_in_24dp));
-                tasksAddViewVisible.set(true);
+                noTaskIconRes.set(mContext.getResources().getDrawable(
+                        R.drawable.ic_assignment_turned_in_24dp));
+                tasksAddViewVisible.set(false);
 
     }
 
@@ -146,13 +146,13 @@ public class CurrentTasksViewModel extends AndroidViewModel {
         mTasksRepository.getTasks(new TasksDataSource.LoadTasksCallback() {
             @Override
             public void onTasksLoaded(List<Task> tasks) {
-                List<Task> tasksToShow = new ArrayList<>();
+                List<Item> tasksToShow = new ArrayList<>();
 
                 // We filter the tasks based on the requestType
                 for (Task task : tasks) {
-                    if (task.isActive()) {
+                    //if (task.isActive()) {
                         tasksToShow.add(task);
-                    }
+                    //}
                 }
                 /*if (showLoadingUI) {
                     dataLoading.set(false);

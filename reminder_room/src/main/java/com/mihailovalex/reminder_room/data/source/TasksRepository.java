@@ -242,7 +242,7 @@ public class TasksRepository implements TasksDataSource {
 
     @Override
     public void refreshTasks() {
-        mCacheIsDirty = true;
+        //mCacheIsDirty = true;
     }
 
     @Override

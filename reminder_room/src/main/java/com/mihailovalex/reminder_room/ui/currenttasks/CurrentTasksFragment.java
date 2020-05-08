@@ -12,13 +12,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mihailovalex.reminder_room.R;
 import com.mihailovalex.reminder_room.ViewModelFactory;
 import com.mihailovalex.reminder_room.adapter.CurrentTasksAdapter;
 import com.mihailovalex.reminder_room.data.Item;
 import com.mihailovalex.reminder_room.data.Task;
+import com.mihailovalex.reminder_room.databinding.FragmentCurrentTasksBinding;
 import com.mihailovalex.reminder_room.ui.TaskFragment;
 
 import java.util.ArrayList;
@@ -27,7 +30,7 @@ public class CurrentTasksFragment extends TaskFragment {
 
     private CurrentTasksViewModel currentTasksViewModel;
 
-    private CurrentTasksListBindings tasksFragBinding;
+    private FragmentCurrentTasksBinding tasksFragBinding;
     private CurrentTasksAdapter adapter;
 
 
@@ -36,19 +39,13 @@ public class CurrentTasksFragment extends TaskFragment {
 
 
         // Use a Factory to inject dependencies into the ViewModel
-        ViewModelFactory factory = ViewModelFactory.getInstance(this.getActivity().getApplication());
+        ViewModelFactory factory = ViewModelFactory.getInstance(getActivity().getApplication());
 
         currentTasksViewModel=
-                ViewModelProviders.of(this.getActivity(), factory).get(CurrentTasksViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_current_tasks, container, false);
-        setupListAdapter(root);
-        /*final TextView textView = root.findViewById(R.id.text_home);
-        currentTasksViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });*/
+                ViewModelProviders.of(getActivity(), factory).get(CurrentTasksViewModel.class);
+        tasksFragBinding = FragmentCurrentTasksBinding.inflate(inflater, container, false);
+        tasksFragBinding.setViewmodel(currentTasksViewModel);
+        //setupListAdapter(tasksFragBinding);
 
         // Subscribe to "open task" event
         currentTasksViewModel.getOpenTaskEvent().observe(this, new Observer<Long>() {
@@ -67,7 +64,7 @@ public class CurrentTasksFragment extends TaskFragment {
                 addNewTask();
             }
         });
-        return root;
+        return tasksFragBinding.getRoot();
     }
 
     public void openTaskDetails(long taskId) {
@@ -111,13 +108,37 @@ public class CurrentTasksFragment extends TaskFragment {
         currentTasksViewModel.start();
     }
 
-    private void setupListAdapter(View view) {
-        RecyclerView listView = view.findViewById(R.id.tasks_list);//tasksFragBinding.tasksList;
-
+    private void setupListAdapter() {
+        recyclerView = tasksFragBinding.recyclerView;
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new CurrentTasksAdapter(
                 new ArrayList<Item>(0),
                 currentTasksViewModel
         );
-        listView.setAdapter(adapter);
+        recyclerView.setAdapter(adapter);
+    }
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        //setupSnackbar();
+
+        setupFab();
+
+        setupListAdapter();
+
+        //setupRefreshLayout();
+    }
+    private void setupFab() {
+        FloatingActionButton fab =
+                (FloatingActionButton) getActivity().findViewById(R.id.fab);
+
+        fab.setImageResource(R.drawable.ic_add);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentTasksViewModel.addNewTask();
+            }
+        });
     }
 }
