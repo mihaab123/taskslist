@@ -61,6 +61,8 @@ public class CurrentTasksViewModel extends AndroidViewModel {
         setFiltering();
     }
 
+
+
     public void start() {
         loadTasks(false);
     }
@@ -100,11 +102,11 @@ public class CurrentTasksViewModel extends AndroidViewModel {
         return mSnackbarText;
     }
     */
-    SingleLiveEvent<Long> getOpenTaskEvent() {
+    public SingleLiveEvent<Long> getOpenTaskEvent() {
         return mOpenTaskEvent;
     }
 
-    SingleLiveEvent<Void> getNewTaskEvent() {
+    public SingleLiveEvent<Void> getNewTaskEvent() {
         return mNewTaskEvent;
     }
     /*

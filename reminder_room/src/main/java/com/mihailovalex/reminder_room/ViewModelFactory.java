@@ -30,6 +30,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.mihailovalex.reminder_room.data.source.TasksRepository;
 import com.mihailovalex.reminder_room.data.source.local.TasksDatabase;
 import com.mihailovalex.reminder_room.data.source.local.TasksLocalDataSource;
+import com.mihailovalex.reminder_room.ui.addedittask.AddEditTaskViewModel;
 import com.mihailovalex.reminder_room.ui.currenttasks.CurrentTasksViewModel;
 import com.mihailovalex.reminder_room.utils.AppExecutors;
 
@@ -75,6 +76,9 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         if (modelClass.isAssignableFrom(CurrentTasksViewModel.class)) {
             return (T) new CurrentTasksViewModel(mApplication,mTasksRepository);
+        }
+        if (modelClass.isAssignableFrom(AddEditTaskViewModel.class)) {
+            return (T) new AddEditTaskViewModel(mApplication,mTasksRepository);
         }
         //noinspection unchecked
         throw new IllegalArgumentException("Unknown ViewModel class");

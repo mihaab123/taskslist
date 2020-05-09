@@ -1,15 +1,9 @@
 package com.mihailovalex.reminder_room.adapter;
 
-import android.animation.Animator;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
-import android.content.res.Resources;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.TextView;
+
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -19,14 +13,13 @@ import com.mihailovalex.reminder_room.R;
 import com.mihailovalex.reminder_room.data.Item;
 import com.mihailovalex.reminder_room.data.Task;
 import com.mihailovalex.reminder_room.databinding.TaskItemBinding;
-import com.mihailovalex.reminder_room.ui.currenttasks.CurrentTasksFragment;
+
 import com.mihailovalex.reminder_room.ui.currenttasks.CurrentTasksViewModel;
 import com.mihailovalex.reminder_room.ui.currenttasks.TaskItemUserActionsListener;
-import com.mihailovalex.reminder_room.utils.DateUtils;
+
 
 import java.util.List;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class CurrentTasksAdapter extends TaskAdapter {
@@ -65,7 +58,6 @@ public class CurrentTasksAdapter extends TaskAdapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder rawHolder, int position) {
         final Item item = getItem(position);
-        final Resources resources =rawHolder.itemView.getResources();
         if(item.isTask()){
             final TaskViewHolder holder = (TaskViewHolder) rawHolder;
             TaskItemUserActionsListener userActionsListener = new TaskItemUserActionsListener() {
@@ -78,7 +70,7 @@ public class CurrentTasksAdapter extends TaskAdapter {
 
                 @Override
                 public void onTaskClicked(Task task) {
-                    //tasksViewModel.getOpenTaskEvent().setValue(task.getId());
+                    tasksViewModel.getOpenTaskEvent().setValue(task.getId());
                 }
             };
             holder.taskItemBinding.setTask((Task) item);

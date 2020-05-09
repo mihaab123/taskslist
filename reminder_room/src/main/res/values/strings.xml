@@ -31,4 +31,6 @@
     <string name="edit_dialog_title">Edit task</string>
     <string name="no_tasks_all">You have no tasks!</string>
     <string name="no_tasks_add">Add a task item +</string>
+    <string name="add_task">New task</string>
+    <string name="edit_task">Edit task</string>
 </resources>

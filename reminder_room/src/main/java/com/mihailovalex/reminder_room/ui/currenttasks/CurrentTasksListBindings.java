@@ -19,10 +19,16 @@ package com.mihailovalex.reminder_room.ui.currenttasks;
 
 import android.graphics.Color;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.databinding.BindingAdapter;
+import androidx.databinding.InverseBindingAdapter;
+import androidx.databinding.InverseBindingListener;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mihailovalex.reminder_room.R;

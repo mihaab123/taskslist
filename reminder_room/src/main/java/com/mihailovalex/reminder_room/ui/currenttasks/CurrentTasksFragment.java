@@ -23,6 +23,8 @@ import com.mihailovalex.reminder_room.data.Item;
 import com.mihailovalex.reminder_room.data.Task;
 import com.mihailovalex.reminder_room.databinding.FragmentCurrentTasksBinding;
 import com.mihailovalex.reminder_room.ui.TaskFragment;
+import com.mihailovalex.reminder_room.ui.addedittask.AddEditTaskActivity;
+import com.mihailovalex.reminder_room.ui.addedittask.AddEditTaskFragment;
 
 import java.util.ArrayList;
 
@@ -68,14 +70,14 @@ public class CurrentTasksFragment extends TaskFragment {
     }
 
     public void openTaskDetails(long taskId) {
-        /*Intent intent = new Intent(this, TaskDetailActivity.class);
-        intent.putExtra(TaskDetailActivity.EXTRA_TASK_ID, taskId);
-        startActivityForResult(intent, AddEditTaskActivity.REQUEST_CODE);*/
+        Intent intent = new Intent(getActivity(), AddEditTaskActivity.class);
+        intent.putExtra(AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID, taskId);
+        startActivityForResult(intent, AddEditTaskActivity.REQUEST_CODE);
 
     }
     public void addNewTask() {
-       // Intent intent = new Intent(this, AddEditTaskActivity.class);
-       // startActivityForResult(intent, AddEditTaskActivity.REQUEST_CODE);
+        Intent intent = new Intent(getActivity(), AddEditTaskActivity.class);
+        startActivityForResult(intent, AddEditTaskActivity.REQUEST_CODE);
     }
     @Override
     public void addTask(Task newTask, boolean saveToDB) {
