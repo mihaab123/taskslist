@@ -1,19 +1,18 @@
-package com.mihailovalex.reminder_room.ui.currenttasks;
+package com.mihailovalex.reminder_room.ui.donetasks;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mihailovalex.reminder_room.R;
@@ -25,27 +24,26 @@ import com.mihailovalex.reminder_room.databinding.FragmentCurrentTasksBinding;
 import com.mihailovalex.reminder_room.ui.TaskFragment;
 import com.mihailovalex.reminder_room.ui.addedittask.AddEditTaskActivity;
 import com.mihailovalex.reminder_room.ui.addedittask.AddEditTaskFragment;
+import com.mihailovalex.reminder_room.ui.currenttasks.CurrentTasksViewModel;
+import com.mihailovalex.reminder_room.ui.currenttasks.TasksFilterType;
 
 import java.util.ArrayList;
 
-public class CurrentTasksFragment extends TaskFragment {
+public class DoneTasksFragment extends TaskFragment {
 
     private CurrentTasksViewModel currentTasksViewModel;
 
     private FragmentCurrentTasksBinding tasksFragBinding;
     private CurrentTasksAdapter adapter;
 
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
-
         // Use a Factory to inject dependencies into the ViewModel
         ViewModelFactory factory = ViewModelFactory.getInstance(getActivity().getApplication());
 
         currentTasksViewModel=
                 ViewModelProviders.of(getActivity(), factory).get(CurrentTasksViewModel.class);
-        currentTasksViewModel.setFiltering(TasksFilterType.ACTIVE_TASKS);
+        currentTasksViewModel.setFiltering(TasksFilterType.COMPLETED_TASKS);
         tasksFragBinding = FragmentCurrentTasksBinding.inflate(inflater, container, false);
         tasksFragBinding.setViewmodel(currentTasksViewModel);
         //setupListAdapter(tasksFragBinding);
@@ -69,7 +67,6 @@ public class CurrentTasksFragment extends TaskFragment {
         });
         return tasksFragBinding.getRoot();
     }
-
     public void openTaskDetails(long taskId) {
         Intent intent = new Intent(getActivity(), AddEditTaskActivity.class);
         intent.putExtra(AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID, taskId);
@@ -80,31 +77,6 @@ public class CurrentTasksFragment extends TaskFragment {
         Intent intent = new Intent(getActivity(), AddEditTaskActivity.class);
         startActivityForResult(intent, AddEditTaskActivity.REQUEST_CODE);
     }
-    @Override
-    public void addTask(Task newTask, boolean saveToDB) {
-
-    }
-
-    @Override
-    public void moveTask(Task task) {
-
-    }
-
-    @Override
-    public void addTaskFromDB() {
-
-    }
-
-    @Override
-    public void checkAdapter() {
-
-    }
-
-    @Override
-    public void findTasks(String title) {
-
-    }
-
     @Override
     public void onResume() {
         super.onResume();
@@ -132,6 +104,32 @@ public class CurrentTasksFragment extends TaskFragment {
 
         //setupRefreshLayout();
     }
+
+    @Override
+    public void addTask(Task newTask, boolean saveToDB) {
+
+    }
+
+    @Override
+    public void moveTask(Task task) {
+
+    }
+
+    @Override
+    public void addTaskFromDB() {
+
+    }
+
+    @Override
+    public void checkAdapter() {
+
+    }
+
+    @Override
+    public void findTasks(String title) {
+
+    }
+
     private void setupFab() {
         FloatingActionButton fab =
                 (FloatingActionButton) getActivity().findViewById(R.id.fab);
@@ -143,6 +141,6 @@ public class CurrentTasksFragment extends TaskFragment {
                 currentTasksViewModel.addNewTask();
             }
         });
-        fab.setVisibility(View.VISIBLE);
+        fab.setVisibility(View.GONE);
     }
 }

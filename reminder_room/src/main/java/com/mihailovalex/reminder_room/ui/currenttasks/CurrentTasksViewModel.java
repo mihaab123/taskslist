@@ -50,6 +50,8 @@ public class CurrentTasksViewModel extends AndroidViewModel {
 
     private final SingleLiveEvent<Void> mNewTaskEvent = new SingleLiveEvent<>();
 
+    private TasksFilterType mCurrentFiltering = TasksFilterType.ALL_TASKS;
+
     public CurrentTasksViewModel(
             Application context,
             TasksRepository repository) {
@@ -58,7 +60,7 @@ public class CurrentTasksViewModel extends AndroidViewModel {
         mTasksRepository = repository;
 
         // Set initial state
-        setFiltering();
+        //setFiltering(TasksFilterType.ALL_TASKS);
     }
 
 
@@ -72,12 +74,33 @@ public class CurrentTasksViewModel extends AndroidViewModel {
     }
 
 
-    public void setFiltering() {
+    public void setFiltering(TasksFilterType requestType) {
 
                 noTasksLabel.set(mContext.getResources().getString(R.string.no_tasks_all));
                 noTaskIconRes.set(mContext.getResources().getDrawable(
                         R.drawable.ic_assignment_turned_in_24dp));
                 tasksAddViewVisible.set(false);
+        mCurrentFiltering = requestType;
+        switch (requestType) {
+            case ALL_TASKS:
+                noTasksLabel.set(mContext.getResources().getString(R.string.no_tasks_all));
+                noTaskIconRes.set(mContext.getResources().getDrawable(
+                        R.drawable.ic_assignment_turned_in_24dp));
+                tasksAddViewVisible.set(true);
+                break;
+            case ACTIVE_TASKS:
+                noTasksLabel.set(mContext.getResources().getString(R.string.no_tasks_active));
+                noTaskIconRes.set(mContext.getResources().getDrawable(
+                        R.drawable.ic_check_circle_24dp));
+                tasksAddViewVisible.set(false);
+                break;
+            case COMPLETED_TASKS:
+                noTasksLabel.set(mContext.getResources().getString(R.string.no_tasks_completed));
+                noTaskIconRes.set(mContext.getResources().getDrawable(
+                        R.drawable.ic_verified_user_24dp));
+                tasksAddViewVisible.set(false);
+                break;
+        }
 
     }
 
@@ -152,9 +175,24 @@ public class CurrentTasksViewModel extends AndroidViewModel {
 
                 // We filter the tasks based on the requestType
                 for (Task task : tasks) {
-                    //if (task.isActive()) {
-                        tasksToShow.add(task);
-                    //}
+                    switch (mCurrentFiltering) {
+                        case ALL_TASKS:
+                            tasksToShow.add(task);
+                            break;
+                        case ACTIVE_TASKS:
+                            if (task.isActive()) {
+                                tasksToShow.add(task);
+                            }
+                            break;
+                        case COMPLETED_TASKS:
+                            if (task.isCompleted()) {
+                                tasksToShow.add(task);
+                            }
+                            break;
+                        default:
+                            tasksToShow.add(task);
+                            break;
+                    }
                 }
                 /*if (showLoadingUI) {
                     dataLoading.set(false);

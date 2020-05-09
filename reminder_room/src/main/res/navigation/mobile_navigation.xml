@@ -20,7 +20,7 @@
 
     <fragment
         android:id="@+id/nav_done_tasks"
-        android:name="com.mihailovalex.reminder_room.ui.donetasks.SlideshowFragment"
+        android:name="com.mihailovalex.reminder_room.ui.donetasks.DoneTasksFragment"
         android:label="@string/menu_done_tasks"
         tools:layout="@layout/fragment_done_tasks" />
 </navigation>

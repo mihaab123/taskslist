@@ -26,6 +26,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
 import androidx.databinding.BindingAdapter;
 import androidx.databinding.InverseBindingAdapter;
 import androidx.databinding.InverseBindingListener;
@@ -60,8 +61,7 @@ public class CurrentTasksListBindings {
     @SuppressWarnings("unchecked")
     @BindingAdapter("android:src")
     public static void setPriorityColor(CircleImageView priority, Task task) {
-        //priority.setColorFilter(task.getPriorityColor());
-        priority.setColorFilter(Color.RED);
+        priority.setColorFilter(ContextCompat.getColor(priority.getContext(),task.getPriorityColor()));
         if(!task.isCompleted()) {
             priority.setImageResource(R.drawable.ic_circle_blank);
         } else {

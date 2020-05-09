@@ -75,10 +75,10 @@ public class TasksRepository implements TasksDataSource {
         checkNotNull(callback);
 
         // Respond immediately with cache if available and not dirty
-        if (mCachedTasks != null && !mCacheIsDirty) {
+        /*if (mCachedTasks != null && !mCacheIsDirty) {
             callback.onTasksLoaded(new ArrayList<>(mCachedTasks.values()));
             return;
-        }
+        }*/
 
         //EspressoIdlingResource.increment(); // App is busy until further notice
 

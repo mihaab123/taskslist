@@ -30,6 +30,8 @@
     <string name="separator_future">Future</string>
     <string name="edit_dialog_title">Edit task</string>
     <string name="no_tasks_all">You have no tasks!</string>
+    <string name="no_tasks_active">You have no active tasks!</string>
+    <string name="no_tasks_completed">You have no completed tasks!</string>
     <string name="no_tasks_add">Add a task item +</string>
     <string name="add_task">New task</string>
     <string name="edit_task">Edit task</string>

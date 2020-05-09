@@ -1,5 +1,8 @@
 package com.mihailovalex.reminder_room.adapter;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,11 +63,67 @@ public class CurrentTasksAdapter extends TaskAdapter {
         final Item item = getItem(position);
         if(item.isTask()){
             final TaskViewHolder holder = (TaskViewHolder) rawHolder;
+            holder.itemView.setEnabled(true);
+            final Task task = (Task) item;
+
+            final View itemView = holder.itemView;
             TaskItemUserActionsListener userActionsListener = new TaskItemUserActionsListener() {
                 @Override
                 public void onCompleteChanged(Task task, View v) {
                     boolean checked = task.isActive();
                     tasksViewModel.completeTask(task, checked);
+                    ObjectAnimator flipin = ObjectAnimator.ofFloat(holder.taskItemBinding.cvTaskPriority,"rotationY",-180f,0f);
+                    flipin.addListener(new Animator.AnimatorListener() {
+                        @Override
+                        public void onAnimationStart(Animator animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            if(task.isActive()){
+                                holder.taskItemBinding.cvTaskPriority.setImageResource(R.drawable.ic_circle_check);
+                                ObjectAnimator translationX = ObjectAnimator.ofFloat(itemView,"translationX",0f,itemView.getWidth());
+                                ObjectAnimator translationXBack = ObjectAnimator.ofFloat(itemView,"translationX",itemView.getWidth(),0f);
+                                translationX.addListener(new Animator.AnimatorListener() {
+                                    @Override
+                                    public void onAnimationStart(Animator animation) {
+
+                                    }
+
+                                    @Override
+                                    public void onAnimationEnd(Animator animation) {
+                                        itemView.setVisibility(View.GONE);
+
+                                    }
+
+                                    @Override
+                                    public void onAnimationCancel(Animator animation) {
+
+                                    }
+
+                                    @Override
+                                    public void onAnimationRepeat(Animator animation) {
+
+                                    }
+                                });
+                                AnimatorSet animatorSet = new AnimatorSet();
+                                animatorSet.play(translationX).before(translationXBack);
+                                animatorSet.start();
+                            }
+                        }
+
+                        @Override
+                        public void onAnimationCancel(Animator animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animator animation) {
+
+                        }
+                    });
+                    flipin.start();
                     notifyItemChanged(position);
                 }
 
