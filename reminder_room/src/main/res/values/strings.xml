@@ -35,4 +35,13 @@
     <string name="no_tasks_add">Add a task item +</string>
     <string name="add_task">New task</string>
     <string name="edit_task">Edit task</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="design_header">Design</string>
+    <string name="font_title">Font</string>
+    <string name="time_format_title">24 hour time</string>
+    <string name="lang_title">Language</string>
+    <string name="LangSummary">Application language. \nYou must restart to accept the changes.</string>
 </resources>

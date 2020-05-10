@@ -7,11 +7,13 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
 
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
@@ -41,6 +43,7 @@ public class AddEditTaskFragment extends Fragment {
     private AddEditTaskViewModel mViewModel;
 
     private AddEditTaskFragmentBinding mViewDataBinding;
+    private SharedPreferences sPref;
 
 
     public static AddEditTaskFragment newInstance() {
@@ -63,6 +66,8 @@ public class AddEditTaskFragment extends Fragment {
 
         setHasOptionsMenu(true);
         setRetainInstance(false);
+        sPref = PreferenceManager.getDefaultSharedPreferences(mViewModel.getApplication());
+        String fontText = sPref.getString("font", "middle");
 
         return mViewDataBinding.getRoot();
     }
@@ -93,7 +98,7 @@ public class AddEditTaskFragment extends Fragment {
                 mViewModel.dateAndTime.set(Calendar.HOUR,hourOfDay);
                 mViewModel.dateAndTime.set(Calendar.MINUTE,minute);
                 mViewModel.dateAndTime.set(Calendar.SECOND,0);
-                mViewModel.time.set(DateUtils.getTime(mViewModel.dateAndTime.getTimeInMillis()));
+                mViewModel.time.set(DateUtils.getTime(mViewModel.dateAndTime.getTimeInMillis(),mViewModel.get24TimeFormat()));
             }
         };
 
@@ -126,9 +131,10 @@ public class AddEditTaskFragment extends Fragment {
                     mViewDataBinding.etTime.setText(" ");
                 }
                 new TimePickerDialog(getActivity(),t,
-                        mViewModel.dateAndTime.get(Calendar.HOUR)+1,
+                        mViewModel.dateAndTime.get(Calendar.HOUR),
                         mViewModel.dateAndTime.get(Calendar.MINUTE),
-                        DateFormat.is24HourFormat(getActivity()))
+                        mViewModel.get24TimeFormat())
+                        //DateFormat.is24HourFormat(getActivity()))
                         .show();
             }
         });

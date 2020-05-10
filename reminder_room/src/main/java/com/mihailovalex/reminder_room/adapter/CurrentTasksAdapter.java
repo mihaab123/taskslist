@@ -5,7 +5,9 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Handler;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -33,6 +36,7 @@ public class CurrentTasksAdapter extends TaskAdapter {
 
     private static final int TYPE_TASK = 0;
     private static final int TYPE_SEPARATOR = 1;
+    SharedPreferences sPref;
 
 
     public CurrentTasksAdapter(List<Item> tasks,
@@ -78,6 +82,19 @@ public class CurrentTasksAdapter extends TaskAdapter {
                     return true;
                 }
             });
+            sPref = PreferenceManager.getDefaultSharedPreferences(holder.context);
+            String fontText = sPref.getString("font", "middle");
+            switch (fontText){
+                case "small":
+                    holder.taskItemBinding.tvTaskTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+                    break;
+                case "middle":
+                    holder.taskItemBinding.tvTaskTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+                    break;
+                case "big":
+                    holder.taskItemBinding.tvTaskTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
+                    break;
+            }
             TaskItemUserActionsListener userActionsListener = new TaskItemUserActionsListener() {
                 @Override
                 public void onCompleteChanged(Task task, View v) {
@@ -180,6 +197,7 @@ public class CurrentTasksAdapter extends TaskAdapter {
                 }
             };
             holder.taskItemBinding.setTask((Task) item);
+            holder.taskItemBinding.setViewmodel(tasksViewModel);
             holder.taskItemBinding.setListener(userActionsListener);
            // holder.taskItemBinding.executePendingBindings();
         } else {

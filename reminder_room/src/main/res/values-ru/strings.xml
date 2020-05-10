@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">Напоминалка</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Настройки</string>
+
+    <string name="menu_current_tasks">Текущие задачи</string>
+    <string name="menu_birthdays">Дни рождения</string>
+    <string name="menu_done_tasks">Завершенные задачи</string>
+
+    <string name="home_second">Home Second</string>
+    <string name="action_search">Поиск</string>
+    <string name="search_hint">Введите текст</string>
+
+    <string name="task_title">Заголовок</string>
+    <string name="task_date">Дата</string>
+    <string name="task_time">Время</string>
+    <string name="dialog_title">Добавить задачу</string>
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_cancel">Отмена</string>
+    <string name="dialog_error_title_empty">Пожалуйста, введите заголовок задачи.</string>
+    <string name="dialog_removing_mess">Удалить задачу?</string>
+    <string name="removed">Удалена</string>
+    <string name="separator_overdue">Прошедшие</string>
+    <string name="separator_today">Сегодня</string>
+    <string name="separator_tomorrow">Завтра</string>
+    <string name="separator_future">Будущие</string>
+    <string name="edit_dialog_title">Редактировать задачу</string>
+    <string name="no_tasks_all">You have no tasks!</string>
+    <string name="no_tasks_active">У Вас нет текущих задач!</string>
+    <string name="no_tasks_completed">У вас нет завершенных задач!</string>
+    <string name="no_tasks_add">Добавить новую задачу +</string>
+    <string name="add_task">Новая задача</string>
+    <string name="edit_task">Редактировать задачу</string>
+    <string name="title_activity_settings">Настройки</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="design_header">Оформление</string>
+    <string name="font_title">Шрифт</string>
+    <string name="time_format_title">24-часовой формат</string>
+    <string name="lang_title">Язык</string>
+    <string name="LangSummary">Язык приложения.\nНеобходимо перезапустить приложение для принятия изменений.</string>
+</resources>

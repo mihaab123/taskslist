@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 
@@ -15,6 +16,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.preference.PreferenceManager;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.mihailovalex.reminder_room.R;
@@ -56,18 +58,24 @@ public class CurrentTasksViewModel extends AndroidViewModel {
 
     private TasksFilterType mCurrentFiltering = TasksFilterType.ALL_TASKS;
 
+    private SharedPreferences sPref;
+
     public CurrentTasksViewModel(
             Application context,
             TasksRepository repository) {
         super(context);
         mContext = context.getApplicationContext(); // Force use of Application Context.
         mTasksRepository = repository;
+        sPref = PreferenceManager.getDefaultSharedPreferences(mContext);
 
         // Set initial state
         //setFiltering(TasksFilterType.ALL_TASKS);
     }
 
-
+    public boolean get24TimeFormat(){
+        boolean time_format = sPref.getBoolean("time_format", false);
+        return time_format;
+    }
 
     public void start() {
         loadTasks(false);

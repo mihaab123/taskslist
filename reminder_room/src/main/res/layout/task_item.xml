@@ -12,6 +12,9 @@
         <variable
             name="listener"
             type="com.mihailovalex.reminder_room.ui.currenttasks.TaskItemUserActionsListener" />
+        <variable
+            name="viewmodel"
+            type="com.mihailovalex.reminder_room.ui.currenttasks.CurrentTasksViewModel" />
     </data>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -41,7 +44,7 @@
                 android:layout_margin="16dp"
                 android:layout_marginTop="19dp"
                 android:gravity="right"
-                android:text="@{DateUtils.getFullDate(task.date)}"/>
+                android:text="@{DateUtils.getFullDate(task.date,viewmodel.get24TimeFormat())}"/>
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/cvTaskPriority"

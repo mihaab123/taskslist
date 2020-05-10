@@ -1,11 +1,13 @@
 package com.mihailovalex.reminder_room.ui.addedittask;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 
 import androidx.annotation.Nullable;
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.preference.PreferenceManager;
 
 import com.mihailovalex.reminder_room.SingleLiveEvent;
 import com.mihailovalex.reminder_room.data.Task;
@@ -43,13 +45,18 @@ public class AddEditTaskViewModel extends AndroidViewModel implements TasksDataS
     private boolean mIsDataLoaded = false;
 
     private boolean mTaskCompleted = false;
+    private SharedPreferences sPref;
 
     public AddEditTaskViewModel(Application context,
                                 TasksRepository tasksRepository) {
         super(context);
         mTasksRepository = tasksRepository;
+        sPref = PreferenceManager.getDefaultSharedPreferences(context);
     }
-
+    public boolean get24TimeFormat(){
+        boolean time_format = sPref.getBoolean("time_format", false);
+        return time_format;
+    }
     public void start(Long taskId) {
         if (dataLoading.get()) {
             // Already loading, ignore.
@@ -76,7 +83,7 @@ public class AddEditTaskViewModel extends AndroidViewModel implements TasksDataS
         title.set(task.getTitle());
         dateAndTime.setTimeInMillis(task.getDate());
         date.set(DateUtils.getDate(task.getDate()));
-        time.set(DateUtils.getTime(task.getDate()));
+        time.set(DateUtils.getTime(task.getDate(),get24TimeFormat()));
         priority.set(task.getPriority());
         mTaskCompleted = task.isCompleted();
         dataLoading.set(false);
