@@ -6,6 +6,7 @@ import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Handler;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.mihailovalex.reminder_room.R;
 import com.mihailovalex.reminder_room.data.Item;
 import com.mihailovalex.reminder_room.data.Task;
+import com.mihailovalex.reminder_room.databinding.SeparatorItemBinding;
 import com.mihailovalex.reminder_room.databinding.TaskItemBinding;
 
 import com.mihailovalex.reminder_room.ui.currenttasks.CurrentTasksViewModel;
@@ -56,11 +58,12 @@ public class CurrentTasksAdapter extends TaskAdapter {
                 TaskViewHolder holder = new TaskViewHolder(binding);
                 return holder;
             case TYPE_SEPARATOR:
-                /*View separator = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.model_separator,parent,false);
-                TextView type = separator.findViewById(R.id.tvSeparatorName);
+                SeparatorItemBinding binding1 = DataBindingUtil.inflate(
+                        LayoutInflater.from(parent.getContext()),
+                        R.layout.separator_item, parent, false);
 
-                return new SeparatorViewHolder(separator,type);*/
+                SeparatorViewHolder holder1 = new SeparatorViewHolder(binding1);
+                return holder1;
             default:
                 return null;
         }
@@ -69,6 +72,7 @@ public class CurrentTasksAdapter extends TaskAdapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder rawHolder, int position) {
         final Item item = getItem(position);
+        final Resources resources =rawHolder.itemView.getResources();
         if(item.isTask()){
             final TaskViewHolder holder = (TaskViewHolder) rawHolder;
             holder.itemView.setEnabled(true);
@@ -201,9 +205,10 @@ public class CurrentTasksAdapter extends TaskAdapter {
             holder.taskItemBinding.setListener(userActionsListener);
            // holder.taskItemBinding.executePendingBindings();
         } else {
-           /* ModelSeparator separator = (ModelSeparator) item;
-            SeparatorViewHolder separatorViewHolder = (SeparatorViewHolder) holder;
-            separatorViewHolder.type.setText(resources.getString(separator.getType()));*/
+            Separator separator = (Separator) item;
+            SeparatorViewHolder separatorViewHolder = (SeparatorViewHolder) rawHolder;
+            separatorViewHolder.separatorItemBinding.setTask((Separator) item);
+            //separatorViewHolder.type.setText(resources.getString(separator.getType()));
         }
     }
 

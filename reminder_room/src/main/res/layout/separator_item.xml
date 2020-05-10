@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <data>
+        <variable
+            name="task"
+            type="com.mihailovalex.reminder_room.adapter.Separator" />
+    </data>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvSeparatorName"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="16dp"
+            android:textColor="@color/design_default_color_on_secondary"
+            android:textSize="16sp"
+            android:text="@{task.type}"/>
+
+    </RelativeLayout>
+</layout>

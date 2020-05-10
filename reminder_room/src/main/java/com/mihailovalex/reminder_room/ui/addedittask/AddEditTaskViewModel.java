@@ -111,6 +111,7 @@ public class AddEditTaskViewModel extends AndroidViewModel implements TasksDataS
             task = new Task(mTaskId,title.get(), dateAndTime.getTimeInMillis(), priority.get(), mTaskCompleted);
             updateTask(task);
         }
+
     }
 
     /*SnackbarMessage getSnackbarMessage() {
