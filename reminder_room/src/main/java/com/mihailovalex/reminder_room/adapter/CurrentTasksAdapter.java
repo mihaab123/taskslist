@@ -3,6 +3,9 @@ package com.mihailovalex.reminder_room.adapter;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.mihailovalex.reminder_room.R;
 import com.mihailovalex.reminder_room.data.Item;
 import com.mihailovalex.reminder_room.data.Task;
@@ -67,6 +71,13 @@ public class CurrentTasksAdapter extends TaskAdapter {
             final Task task = (Task) item;
 
             final View itemView = holder.itemView;
+            holder.taskItemBinding.tvTaskTitle.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    removeTaskDialog(v,task);
+                    return true;
+                }
+            });
             TaskItemUserActionsListener userActionsListener = new TaskItemUserActionsListener() {
                 @Override
                 public void onCompleteChanged(Task task, View v) {
@@ -94,7 +105,36 @@ public class CurrentTasksAdapter extends TaskAdapter {
                                     @Override
                                     public void onAnimationEnd(Animator animation) {
                                         itemView.setVisibility(View.GONE);
+                                        removeItem(position);
+                                    }
 
+                                    @Override
+                                    public void onAnimationCancel(Animator animation) {
+
+                                    }
+
+                                    @Override
+                                    public void onAnimationRepeat(Animator animation) {
+
+                                    }
+                                });
+                                AnimatorSet animatorSet = new AnimatorSet();
+                                animatorSet.play(translationX).before(translationXBack);
+                                animatorSet.start();
+                            }else {
+                                holder.taskItemBinding.cvTaskPriority.setImageResource(R.drawable.ic_circle_blank);
+                                ObjectAnimator translationX = ObjectAnimator.ofFloat(itemView,"translationX",0f,-itemView.getWidth());
+                                ObjectAnimator translationXBack = ObjectAnimator.ofFloat(itemView,"translationX",-itemView.getWidth(),0f);
+                                translationX.addListener(new Animator.AnimatorListener() {
+                                    @Override
+                                    public void onAnimationStart(Animator animation) {
+
+                                    }
+
+                                    @Override
+                                    public void onAnimationEnd(Animator animation) {
+                                        itemView.setVisibility(View.GONE);
+                                        removeItem(position);
                                     }
 
                                     @Override
@@ -124,17 +164,24 @@ public class CurrentTasksAdapter extends TaskAdapter {
                         }
                     });
                     flipin.start();
-                    notifyItemChanged(position);
+                    //notifyItemChanged(position);
+                    //notifyDataSetChanged();
+
                 }
 
                 @Override
                 public void onTaskClicked(Task task) {
                     tasksViewModel.getOpenTaskEvent().setValue(task.getId());
                 }
+
+                @Override
+                public void onLongTaskClicked(View v, Task task) {
+                    removeTaskDialog(v,task);
+                }
             };
             holder.taskItemBinding.setTask((Task) item);
             holder.taskItemBinding.setListener(userActionsListener);
-            holder.taskItemBinding.executePendingBindings();
+           // holder.taskItemBinding.executePendingBindings();
         } else {
            /* ModelSeparator separator = (ModelSeparator) item;
             SeparatorViewHolder separatorViewHolder = (SeparatorViewHolder) holder;
@@ -148,5 +195,60 @@ public class CurrentTasksAdapter extends TaskAdapter {
         if (getItem(position).isTask()) return TYPE_TASK;
         else return TYPE_SEPARATOR;
     }
+    public void removeTaskDialog(View v,final Task task){
+        final AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext());
+        Item item = task;
+        if(item.isTask()){
+            Task removingTask = (Task)item;
+            final long taksId = removingTask.getId();
+            final boolean[] isRemoved = {false};
+            builder.setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    tasksViewModel.getTasksRepository().deleteTask(taksId);
+                    isRemoved[0] = true;
+                    Snackbar snackbar = Snackbar.make(v.getRootView(),
+                            R.string.removed, Snackbar.LENGTH_LONG);
+                    snackbar.setAction(R.string.dialog_cancel, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    tasksViewModel.getTasksRepository().saveTask(task);
+                                }
+                            },1000);
+                            //tasksViewModel.getTasksRepository().saveTask(task);
+                            isRemoved[0] =false;
+                        }
+                    });
+                    snackbar.getView().addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
+                        @Override
+                        public void onViewAttachedToWindow(View v) {
 
+                        }
+
+                        @Override
+                        public void onViewDetachedFromWindow(View v) {
+                            if(isRemoved[0]){
+                                //activity.dbHelper.deleteTask(taksId);
+                                //alarmHelper.removeAlarm(taksId);
+                            }
+                        }
+                    });
+                    snackbar.show();
+                    dialog.dismiss();
+                }
+            });
+            builder.setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+        }
+        builder.setMessage(R.string.dialog_removing_mess);
+        builder.show();
+    }
 }

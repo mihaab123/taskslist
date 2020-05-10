@@ -29,4 +29,6 @@ public interface TaskItemUserActionsListener {
     void onCompleteChanged(Task task, View v);
 
     void onTaskClicked(Task task);
+
+    void onLongTaskClicked(View v,Task task);
 }

@@ -1,8 +1,11 @@
 package com.mihailovalex.reminder_room.ui.currenttasks;
 
+import android.app.AlertDialog;
 import android.app.Application;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
+import android.view.View;
 
 import androidx.databinding.ObservableArrayList;
 import androidx.databinding.ObservableBoolean;
@@ -13,6 +16,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.mihailovalex.reminder_room.R;
 import com.mihailovalex.reminder_room.SingleLiveEvent;
 import com.mihailovalex.reminder_room.data.Item;
@@ -209,5 +213,9 @@ public class CurrentTasksViewModel extends AndroidViewModel {
                 mIsDataLoadingError.set(true);
             }
         });
+    }
+
+    public TasksRepository getTasksRepository() {
+        return mTasksRepository;
     }
 }
