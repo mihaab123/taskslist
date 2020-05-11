@@ -24,6 +24,7 @@ import com.mihailovalex.reminder_room.data.Task;
 import com.mihailovalex.reminder_room.data.source.TasksDataSource;
 import com.mihailovalex.reminder_room.utils.AppExecutors;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -64,22 +65,38 @@ public class TasksLocalDataSource implements TasksDataSource {
      * or the table is empty.
      */
     @Override
-    public void getTasks(@NonNull final LoadTasksCallback callback) {
+    public void getTasks(@NonNull final LoadTasksCallback callback, String searchString) {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                final List<Task> tasks = mTasksDao.getTasks();
-                mAppExecutors.mainThread().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (tasks.isEmpty()) {
-                            // This will be called if the table is new or just empty.
-                            callback.onDataNotAvailable();
-                        } else {
-                            callback.onTasksLoaded(tasks);
+                if(searchString.isEmpty()) {
+                    final List<Task> tasks = mTasksDao.getTasks();
+                    mAppExecutors.mainThread().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (tasks.isEmpty()) {
+                                // This will be called if the table is new or just empty.
+                                callback.onDataNotAvailable();
+                            } else {
+                                callback.onTasksLoaded(tasks);
+                            }
                         }
-                    }
-                });
+                    });
+                }else {
+                    final List<Task> tasks = mTasksDao.getTasksByTitle(searchString);
+                    mAppExecutors.mainThread().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (tasks.isEmpty()) {
+                                // This will be called if the table is new or just empty.
+                                callback.onDataNotAvailable();
+                            } else {
+                                callback.onTasksLoaded(tasks);
+                            }
+                        }
+                    });
+                }
+
             }
         };
 

@@ -71,7 +71,7 @@ public class TasksRepository implements TasksDataSource {
 
 
     @Override
-    public void getTasks(@NonNull final LoadTasksCallback callback) {
+    public void getTasks(@NonNull final LoadTasksCallback callback, String searchString) {
         checkNotNull(callback);
 
         // Respond immediately with cache if available and not dirty
@@ -100,7 +100,7 @@ public class TasksRepository implements TasksDataSource {
                 public void onDataNotAvailable() {
                     getTasksFromRemoteDataSource(callback);
                 }
-            });
+            },searchString);
         }
     }
 

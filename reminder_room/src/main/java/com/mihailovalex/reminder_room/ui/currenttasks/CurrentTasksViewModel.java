@@ -60,6 +60,8 @@ public class CurrentTasksViewModel extends AndroidViewModel {
 
     private SharedPreferences sPref;
 
+    public final SingleLiveEvent<String> searchString = new SingleLiveEvent<>();;
+
     public CurrentTasksViewModel(
             Application context,
             TasksRepository repository) {
@@ -220,10 +222,16 @@ public class CurrentTasksViewModel extends AndroidViewModel {
             public void onDataNotAvailable() {
                 mIsDataLoadingError.set(true);
             }
-        });
+        },searchString.getValue());
     }
 
     public TasksRepository getTasksRepository() {
         return mTasksRepository;
     }
+
+    public SingleLiveEvent<String> getSearchString() {
+        return searchString;
+    }
+
+
 }

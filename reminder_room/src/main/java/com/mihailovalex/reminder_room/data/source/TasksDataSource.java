@@ -40,7 +40,7 @@ public interface TasksDataSource {
         void onDataNotAvailable();
     }
 
-    void getTasks(@NonNull LoadTasksCallback callback);
+    void getTasks(@NonNull LoadTasksCallback callback, String searchString);
 
     void getTask(@NonNull long taskId, @NonNull GetTaskCallback callback);
 

@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -63,6 +64,33 @@ public class DoneTasksFragment extends TaskFragment {
             @Override
             public void onChanged(@Nullable Void _) {
                 addNewTask();
+            }
+        });
+        // Subscribe to "search task" event
+        currentTasksViewModel.searchString.setValue("");
+        currentTasksViewModel.getSearchString().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String taskId) {
+                //if (!taskId.isEmpty()) {
+                currentTasksViewModel.loadTasks(true);
+                //}
+            }
+        });
+        SearchView searchView = getActivity().findViewById(R.id.search_view);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (newText.isEmpty()){
+                    currentTasksViewModel.searchString.setValue("");
+                } else {
+                    currentTasksViewModel.searchString.setValue("%"+newText+"%");
+                }
+                return true;
             }
         });
         return tasksFragBinding.getRoot();
