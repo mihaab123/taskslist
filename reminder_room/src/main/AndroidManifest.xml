@@ -18,7 +18,7 @@
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:configChanges="locale"></activity>
+            android:configChanges="locale"/>
         <activity android:name=".ui.addedittask.AddEditTaskActivity"
             android:configChanges="locale"/>
         <activity
@@ -46,6 +46,14 @@
         <service
             android:name=".widget.WidgetRemoteViewsService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
+        <!-- уведомления -->
+        <receiver android:name=".alarm.AlarmReceiver"
+            android:process=":remote"/>
+        <receiver android:name=".alarm.AlarmSetter">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

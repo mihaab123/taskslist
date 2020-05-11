@@ -13,6 +13,7 @@ import android.view.Menu;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
+import com.mihailovalex.reminder_room.alarm.AlarmHelper;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
@@ -59,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        AlarmHelper.getInstance().init(getApplicationContext());
     }
 
 

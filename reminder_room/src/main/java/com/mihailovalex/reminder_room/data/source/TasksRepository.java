@@ -7,6 +7,7 @@ package com.mihailovalex.reminder_room.data.source;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.mihailovalex.reminder_room.alarm.AlarmHelper;
 import com.mihailovalex.reminder_room.data.Task;
 
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ public class TasksRepository implements TasksDataSource {
 
 
     private boolean mCacheIsDirty = false;
+    private static AlarmHelper alarmHelper;
 
     // Prevent direct instantiation.
     /*private TasksRepository(@NonNull TasksDataSource tasksRemoteDataSource,
@@ -61,6 +63,7 @@ public class TasksRepository implements TasksDataSource {
                 }
             }
         }
+        alarmHelper = AlarmHelper.getInstance();
         return INSTANCE;
     }
 
@@ -115,6 +118,11 @@ public class TasksRepository implements TasksDataSource {
             mCachedTasks = new LinkedHashMap<>();
         }
         mCachedTasks.put(task.getId(), task);
+        if(task.isActive()) {
+            alarmHelper.setAlarm(task);
+        } else {
+            alarmHelper.removeAlarm(task.getId());
+        }
     }
 
     @Override
@@ -130,6 +138,7 @@ public class TasksRepository implements TasksDataSource {
             mCachedTasks = new LinkedHashMap<>();
         }
         mCachedTasks.put(task.getId(), completedTask);
+        alarmHelper.removeAlarm(task.getId());
     }
 
     @Override
@@ -151,6 +160,7 @@ public class TasksRepository implements TasksDataSource {
             mCachedTasks = new LinkedHashMap<>();
         }
         mCachedTasks.put(task.getId(), activeTask);
+        alarmHelper.setAlarm(task);
     }
 
     @Override
@@ -262,6 +272,7 @@ public class TasksRepository implements TasksDataSource {
         mTasksLocalDataSource.deleteTask(checkNotNull(taskId));
 
         mCachedTasks.remove(taskId);
+        alarmHelper.removeAlarm(taskId);
     }
 
     private void getTasksFromRemoteDataSource(@NonNull final LoadTasksCallback callback) {
