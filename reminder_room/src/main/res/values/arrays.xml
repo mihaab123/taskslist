@@ -25,4 +25,9 @@
         <item>ru</item>
         <item>uk</item>
     </string-array>
+    <string-array name="priority_values">
+        <item>Low priority</item>
+        <item>Normal priority</item>
+        <item>High priority</item>
+    </string-array>
 </resources>

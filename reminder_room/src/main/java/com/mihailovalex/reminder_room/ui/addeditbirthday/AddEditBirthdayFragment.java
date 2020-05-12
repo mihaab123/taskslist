@@ -16,6 +16,7 @@ import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -23,12 +24,14 @@ import androidx.preference.PreferenceManager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mihailovalex.reminder_room.R;
+import com.mihailovalex.reminder_room.SnackbarMessage;
 import com.mihailovalex.reminder_room.data.Task;
 import com.mihailovalex.reminder_room.databinding.AddEditBirthdayFragmentBinding;
 import com.mihailovalex.reminder_room.databinding.AddEditTaskFragmentBinding;
 import com.mihailovalex.reminder_room.ui.addedittask.AddEditTaskActivity;
 import com.mihailovalex.reminder_room.ui.addedittask.AddEditTaskViewModel;
 import com.mihailovalex.reminder_room.utils.DateUtils;
+import com.mihailovalex.reminder_room.utils.SnackbarUtils;
 
 import java.util.Calendar;
 
@@ -146,12 +149,12 @@ public class AddEditBirthdayFragment extends Fragment {
         }
     }
     private void setupSnackbar() {
-        /*mViewModel.getSnackbarMessage().observe(this, new SnackbarMessage.SnackbarObserver() {
+        mViewModel.getSnackbarMessage().observe(this, new SnackbarMessage.SnackbarObserver() {
             @Override
             public void onNewMessage(@StringRes int snackbarMessageResourceId) {
                 SnackbarUtils.showSnackbar(getView(), getString(snackbarMessageResourceId));
             }
-        });*/
+        });
     }
 
     private void setupFab() {

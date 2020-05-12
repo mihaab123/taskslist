@@ -9,7 +9,9 @@ import androidx.databinding.ObservableField;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.preference.PreferenceManager;
 
+import com.mihailovalex.reminder_room.R;
 import com.mihailovalex.reminder_room.SingleLiveEvent;
+import com.mihailovalex.reminder_room.SnackbarMessage;
 import com.mihailovalex.reminder_room.data.Task;
 import com.mihailovalex.reminder_room.data.source.TasksDataSource;
 import com.mihailovalex.reminder_room.data.source.TasksRepository;
@@ -28,7 +30,7 @@ public class AddEditTaskViewModel extends AndroidViewModel implements TasksDataS
 
     public final ObservableBoolean dataLoading = new ObservableBoolean(false);
 
-    //private final SnackbarMessage mSnackbarText = new SnackbarMessage();
+    private final SnackbarMessage mSnackbarText = new SnackbarMessage();
 
     private final SingleLiveEvent<Void> mTaskUpdated = new SingleLiveEvent<>();
 
@@ -102,7 +104,7 @@ public class AddEditTaskViewModel extends AndroidViewModel implements TasksDataS
     void saveTask() {
         Task task = new Task(title.get(), dateAndTime.getTimeInMillis(),priority.get());
         if (task.isEmpty()) {
-            //mSnackbarText.setValue(R.string.empty_task_message);
+            mSnackbarText.setValue(R.string.empty_task_message);
             return;
         }
         if (isNewTask() || mTaskId == 0) {
@@ -114,9 +116,9 @@ public class AddEditTaskViewModel extends AndroidViewModel implements TasksDataS
 
     }
 
-    /*SnackbarMessage getSnackbarMessage() {
+    SnackbarMessage getSnackbarMessage() {
         return mSnackbarText;
-    }*/
+    }
 
     SingleLiveEvent<Void> getTaskUpdatedEvent() {
         return mTaskUpdated;

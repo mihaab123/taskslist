@@ -1,6 +1,7 @@
 package com.mihailovalex.reminder_room.ui.addedittask;
 
 
+import androidx.annotation.StringRes;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -27,10 +28,12 @@ import android.widget.TimePicker;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mihailovalex.reminder_room.R;
+import com.mihailovalex.reminder_room.SnackbarMessage;
 import com.mihailovalex.reminder_room.data.Task;
 import com.mihailovalex.reminder_room.databinding.AddEditTaskActivityBinding;
 import com.mihailovalex.reminder_room.databinding.AddEditTaskFragmentBinding;
 import com.mihailovalex.reminder_room.utils.DateUtils;
+import com.mihailovalex.reminder_room.utils.SnackbarUtils;
 
 import java.util.Calendar;
 
@@ -143,7 +146,7 @@ public class AddEditTaskFragment extends Fragment {
 
     private void setupPriorityAdapter() {
         Spinner spPriprity = mViewDataBinding.spDialogTaskPriority;
-        ArrayAdapter<String> priorityAdapter = new ArrayAdapter<String>(getActivity(),R.layout.support_simple_spinner_dropdown_item, Task.PRIORITY_LEVELS);
+        ArrayAdapter<String> priorityAdapter = new ArrayAdapter<String>(getActivity(),R.layout.support_simple_spinner_dropdown_item, getResources().getStringArray(R.array.priority_values));
         spPriprity.setAdapter(priorityAdapter);
         spPriprity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -170,12 +173,12 @@ public class AddEditTaskFragment extends Fragment {
         }
     }
     private void setupSnackbar() {
-        /*mViewModel.getSnackbarMessage().observe(this, new SnackbarMessage.SnackbarObserver() {
+        mViewModel.getSnackbarMessage().observe(this, new SnackbarMessage.SnackbarObserver() {
             @Override
             public void onNewMessage(@StringRes int snackbarMessageResourceId) {
                 SnackbarUtils.showSnackbar(getView(), getString(snackbarMessageResourceId));
             }
-        });*/
+        });
     }
 
     private void setupFab() {

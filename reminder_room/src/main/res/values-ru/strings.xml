@@ -50,4 +50,6 @@
     <string name="task_comment">Комментарий</string>
     <string name="no_birthdays_add">Добавить новый день рождения</string>
     <string name="dialog_removing_mess_birthday">Удалить день рождения?</string>
+    <string name="empty_task_message">Enter task title</string>
+    <string name="empty_birthday_message">Enter birthday title</string>
 </resources>

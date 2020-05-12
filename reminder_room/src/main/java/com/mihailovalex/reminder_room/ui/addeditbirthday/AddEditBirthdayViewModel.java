@@ -9,7 +9,9 @@ import androidx.databinding.ObservableField;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.preference.PreferenceManager;
 
+import com.mihailovalex.reminder_room.R;
 import com.mihailovalex.reminder_room.SingleLiveEvent;
+import com.mihailovalex.reminder_room.SnackbarMessage;
 import com.mihailovalex.reminder_room.data.Birthday;
 import com.mihailovalex.reminder_room.data.Task;
 import com.mihailovalex.reminder_room.data.source.BirthdaysDataSource;
@@ -29,7 +31,7 @@ public class AddEditBirthdayViewModel extends AndroidViewModel implements Birthd
 
     public final ObservableBoolean dataLoading = new ObservableBoolean(false);
 
-    //private final SnackbarMessage mSnackbarText = new SnackbarMessage();
+    private final SnackbarMessage mSnackbarText = new SnackbarMessage();
 
     private final SingleLiveEvent<Void> mBirthdayUpdated = new SingleLiveEvent<>();
 
@@ -103,7 +105,7 @@ public class AddEditBirthdayViewModel extends AndroidViewModel implements Birthd
     void saveBirthday() {
         Birthday birthday = new Birthday(title.get(), dateAndTime.getTimeInMillis(),comment.get());
         if (birthday.isEmpty()) {
-            //mSnackbarText.setValue(R.string.empty_task_message);
+            mSnackbarText.setValue(R.string.empty_birthday_message);
             return;
         }
         if (isNewBirthday() || mBirthdayId == 0) {
@@ -115,9 +117,9 @@ public class AddEditBirthdayViewModel extends AndroidViewModel implements Birthd
 
     }
 
-    /*SnackbarMessage getSnackbarMessage() {
+    SnackbarMessage getSnackbarMessage() {
         return mSnackbarText;
-    }*/
+    }
 
     SingleLiveEvent<Void> getBirthdayUpdatedEvent() {
         return mBirthdayUpdated;

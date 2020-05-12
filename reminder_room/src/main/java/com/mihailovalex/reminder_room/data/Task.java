@@ -16,8 +16,6 @@ public final class Task implements Item {
     public final static int PRIORITY_NORMAL = 1;
     @Ignore
     public final static int PRIORITY_HIGH = 2;
-    @Ignore
-    public final static String[] PRIORITY_LEVELS = {"Low priority","Normal priority","High priority"};
 
     @PrimaryKey(autoGenerate = true)
     @NonNull
@@ -109,7 +107,7 @@ public final class Task implements Item {
     }
 
     public boolean isEmpty() {
-        return title.isEmpty(); //Strings.isNullOrEmpty(title);
+        return (title == null || title.isEmpty()); //Strings.isNullOrEmpty(title);
     }
     public int getPriorityColor(){
         switch (getPriority()){
