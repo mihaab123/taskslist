@@ -23,8 +23,10 @@ import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.mihailovalex.reminder_room.data.Birthday;
 import com.mihailovalex.reminder_room.data.Task;
 
 import java.util.Date;
@@ -32,12 +34,13 @@ import java.util.Date;
 /**
  * The Room Database that contains the Task table.
  */
-@Database(entities = {Task.class}, version = 2)
+@Database(entities = {Task.class, Birthday.class}, version = 3)
 public abstract class TasksDatabase extends RoomDatabase {
 
     private static TasksDatabase INSTANCE;
 
     public abstract TasksDao taskDao();
+    public abstract BirthdaysDao birthdayDao();
 
 
     public synchronized static TasksDatabase getInstance(Context context) {
@@ -47,6 +50,8 @@ public abstract class TasksDatabase extends RoomDatabase {
                     TasksDatabase.class, "Tasks.db")
                     .addCallback(roomCallback)
                     .fallbackToDestructiveMigration()
+                    //.addMigrations(TasksDatabase.MIGRATION_2_3)
+                    //.allowMainThreadQueries()
                     .build();
         }
         return INSTANCE;
@@ -56,7 +61,7 @@ public abstract class TasksDatabase extends RoomDatabase {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
-            new PopulateDBAsyncTask(INSTANCE).execute();
+            //new PopulateDBAsyncTask(INSTANCE).execute();
         }
     };
     private static class PopulateDBAsyncTask extends AsyncTask<Void,Void,Void>{
@@ -74,5 +79,12 @@ public abstract class TasksDatabase extends RoomDatabase {
             return null;
         }
     }
+    public static final Migration MIGRATION_2_3 = new Migration(2, 3) {
+        @Override
+        public void migrate(final SupportSQLiteDatabase database) {
+            // проблема с типом
+            database.execSQL("CREATE TABLE Birthdays (id integer NOT NULL PRIMARY KEY AUTOINCREMENT DEFAULT 0, title text default '' not null, comment text default '' not null, date long default 0, completed boolean)");
+        }
+    };
 
 }

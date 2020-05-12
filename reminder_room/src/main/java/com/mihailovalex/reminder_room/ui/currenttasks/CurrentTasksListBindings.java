@@ -33,6 +33,7 @@ import androidx.databinding.InverseBindingListener;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mihailovalex.reminder_room.R;
+import com.mihailovalex.reminder_room.adapter.BirthdayAdapter;
 import com.mihailovalex.reminder_room.adapter.TaskAdapter;
 import com.mihailovalex.reminder_room.data.Item;
 import com.mihailovalex.reminder_room.data.Task;
@@ -56,6 +57,18 @@ public class CurrentTasksListBindings {
         {
             //Log.d("MyLogs", String.valueOf(items.size()));
             adapter.replaceData(items);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    @BindingAdapter("app:birthdays")
+    public static void setBirthdays(RecyclerView recyclerView, List<Item> birthdays) {
+        //Log.d("MyLogs","setItems");
+        BirthdayAdapter adapter = (BirthdayAdapter) recyclerView.getAdapter();
+        if (adapter != null)
+        {
+            //Log.d("MyLogs", String.valueOf(items.size()));
+            adapter.replaceData(birthdays);
         }
     }
     @SuppressWarnings("unchecked")

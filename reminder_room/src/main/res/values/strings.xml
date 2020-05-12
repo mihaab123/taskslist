@@ -31,6 +31,7 @@
     <string name="edit_dialog_title">Edit task</string>
     <string name="no_tasks_all">You have no tasks!</string>
     <string name="no_tasks_active">You have no active tasks!</string>
+    <string name="no_birthdays_active">You have no birthdays!</string>
     <string name="no_tasks_completed">You have no completed tasks!</string>
     <string name="no_tasks_add">Add a task item +</string>
     <string name="add_task">New task</string>
@@ -44,4 +45,9 @@
     <string name="time_format_title">24 hour time</string>
     <string name="lang_title">Language</string>
     <string name="LangSummary">Application language. \nYou must restart to accept the changes.</string>
+    <string name="edit_birthday">Edit birthday</string>
+    <string name="add_birthday">Add birthday</string>
+    <string name="task_comment">Comment</string>
+    <string name="no_birthdays_add">Add a new birthday</string>
+    <string name="dialog_removing_mess_birthday">Delete birthday?</string>
 </resources>

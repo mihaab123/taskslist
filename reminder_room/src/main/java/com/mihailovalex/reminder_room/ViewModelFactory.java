@@ -27,10 +27,14 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 
+import com.mihailovalex.reminder_room.data.source.BirthdaysRepository;
 import com.mihailovalex.reminder_room.data.source.TasksRepository;
+import com.mihailovalex.reminder_room.data.source.local.BirthdaysLocalDataSource;
 import com.mihailovalex.reminder_room.data.source.local.TasksDatabase;
 import com.mihailovalex.reminder_room.data.source.local.TasksLocalDataSource;
+import com.mihailovalex.reminder_room.ui.addeditbirthday.AddEditBirthdayViewModel;
 import com.mihailovalex.reminder_room.ui.addedittask.AddEditTaskViewModel;
+import com.mihailovalex.reminder_room.ui.birthdays.BirthdayViewModel;
 import com.mihailovalex.reminder_room.ui.currenttasks.CurrentTasksViewModel;
 import com.mihailovalex.reminder_room.utils.AppExecutors;
 
@@ -44,6 +48,7 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
     @SuppressLint("StaticFieldLeak")
     private static volatile ViewModelFactory INSTANCE;
     private final TasksRepository mTasksRepository;
+    private final BirthdaysRepository mBirthdaysRepository;
     private final Application mApplication;
     public static ViewModelFactory getInstance(Application application) {
 
@@ -53,7 +58,9 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
                     TasksDatabase database = TasksDatabase.getInstance(application.getApplicationContext());
                     INSTANCE = new ViewModelFactory(application,
                             TasksRepository.getInstance(TasksLocalDataSource.getInstance(new AppExecutors(),
-                                    database.taskDao())));
+                                    database.taskDao())),
+                            BirthdaysRepository.getInstance(BirthdaysLocalDataSource.getInstance(new AppExecutors(),
+                                    database.birthdayDao())));
                 }
             }
         }
@@ -65,8 +72,9 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
         INSTANCE = null;
     }
 
-    public ViewModelFactory(Application application,TasksRepository tasksRepository) {
+    public ViewModelFactory(Application application,TasksRepository tasksRepository, BirthdaysRepository birthdaysRepository) {
         mTasksRepository = tasksRepository;
+        mBirthdaysRepository = birthdaysRepository;
         mApplication = application;
 
     }
@@ -79,6 +87,12 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
         }
         if (modelClass.isAssignableFrom(AddEditTaskViewModel.class)) {
             return (T) new AddEditTaskViewModel(mApplication,mTasksRepository);
+        }
+        if (modelClass.isAssignableFrom(AddEditBirthdayViewModel.class)) {
+            return (T) new AddEditBirthdayViewModel(mApplication,mBirthdaysRepository);
+        }
+        if (modelClass.isAssignableFrom(BirthdayViewModel.class)) {
+            return (T) new BirthdayViewModel(mApplication,mBirthdaysRepository);
         }
         //noinspection unchecked
         throw new IllegalArgumentException("Unknown ViewModel class");

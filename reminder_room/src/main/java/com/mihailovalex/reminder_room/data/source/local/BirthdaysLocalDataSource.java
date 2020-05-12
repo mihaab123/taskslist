@@ -22,10 +22,9 @@ import androidx.annotation.VisibleForTesting;
 
 import com.mihailovalex.reminder_room.data.Birthday;
 import com.mihailovalex.reminder_room.data.Task;
-import com.mihailovalex.reminder_room.data.source.TasksDataSource;
+import com.mihailovalex.reminder_room.data.source.BirthdaysDataSource;
 import com.mihailovalex.reminder_room.utils.AppExecutors;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -34,65 +33,62 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * Concrete implementation of a data source as a db.
  */
-public class TasksLocalDataSource implements TasksDataSource {
+public class BirthdaysLocalDataSource implements BirthdaysDataSource {
 
-    private static volatile TasksLocalDataSource INSTANCE;
+    private static volatile BirthdaysLocalDataSource INSTANCE;
 
-    private TasksDao mTasksDao;
+    private BirthdaysDao mBirthdaysDao;
 
     private AppExecutors mAppExecutors;
 
     // Prevent direct instantiation.
-    private TasksLocalDataSource(@NonNull AppExecutors appExecutors,
-            @NonNull TasksDao tasksDao) {
+    private BirthdaysLocalDataSource(@NonNull AppExecutors appExecutors,
+                                     @NonNull BirthdaysDao birthdaysDao) {
         mAppExecutors = appExecutors;
-        mTasksDao = tasksDao;
+        mBirthdaysDao = birthdaysDao;
     }
 
-    public static TasksLocalDataSource getInstance(@NonNull AppExecutors appExecutors,
-            @NonNull TasksDao tasksDao) {
+    public static BirthdaysLocalDataSource getInstance(@NonNull AppExecutors appExecutors,
+                                                       @NonNull BirthdaysDao birthdaysDao) {
         if (INSTANCE == null) {
-            synchronized (TasksLocalDataSource.class) {
+            synchronized (BirthdaysLocalDataSource.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = new TasksLocalDataSource(appExecutors, tasksDao);
+                    INSTANCE = new BirthdaysLocalDataSource(appExecutors, birthdaysDao);
                 }
             }
         }
         return INSTANCE;
     }
 
-    /**
-     * Note: {@link LoadTasksCallback#onDataNotAvailable()} is fired if the database doesn't exist
-     * or the table is empty.
-     */
+
     @Override
-    public void getTasks(@NonNull final LoadTasksCallback callback, String searchString) {
+    public void getBirthdays(@NonNull final LoadBirthdaysCallback callback, String searchString) {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
                 if(searchString.isEmpty()) {
-                    final List<Task> tasks = mTasksDao.getTasks();
+                    final List<Birthday> birthdays = mBirthdaysDao.getBirthdays();
                     mAppExecutors.mainThread().execute(new Runnable() {
                         @Override
                         public void run() {
-                            if (tasks.isEmpty()) {
+                            if (birthdays.isEmpty()) {
                                 // This will be called if the table is new or just empty.
                                 callback.onDataNotAvailable();
                             } else {
-                                callback.onTasksLoaded(tasks);
+                                callback.onBirthdaysLoaded(birthdays);
                             }
                         }
                     });
                 }else {
-                    final List<Task> tasks = mTasksDao.getTasksByTitle(searchString);
+                    final List<Birthday> birthdays = mBirthdaysDao.getBirthdaysByTitle(searchString);
                     mAppExecutors.mainThread().execute(new Runnable() {
                         @Override
                         public void run() {
-                            if (tasks.isEmpty()) {
+                            if (birthdays.isEmpty()) {
                                 // This will be called if the table is new or just empty.
                                 callback.onDataNotAvailable();
                             } else {
-                                callback.onTasksLoaded(tasks);
+                                callback.onBirthdaysLoaded(birthdays);
                             }
                         }
                     });
@@ -104,22 +100,19 @@ public class TasksLocalDataSource implements TasksDataSource {
         mAppExecutors.diskIO().execute(runnable);
     }
 
-    /**
-     * Note: {@link GetTaskCallback#onDataNotAvailable()} is fired if the {@link Task} isn't
-     * found.
-     */
+
     @Override
-    public void getTask(@NonNull final long taskId, @NonNull final GetTaskCallback callback) {
+    public void getBirthday(@NonNull final long birthdayId, @NonNull final GetBirthdayCallback callback) {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                final Task task = mTasksDao.getTaskById(taskId);
+                final Birthday birthday = mBirthdaysDao.getBirthdayById(birthdayId);
 
                 mAppExecutors.mainThread().execute(new Runnable() {
                     @Override
                     public void run() {
-                        if (task != null) {
-                            callback.onTaskLoaded(task);
+                        if (birthday != null) {
+                            callback.onBirthdayLoaded(birthday);
                         } else {
                             callback.onDataNotAvailable();
                         }
@@ -132,23 +125,23 @@ public class TasksLocalDataSource implements TasksDataSource {
     }
 
     @Override
-    public void saveTask(@NonNull final Task task) {
-        checkNotNull(task);
+    public void saveBirthday(@NonNull final Birthday birthday) {
+        checkNotNull(birthday);
         Runnable saveRunnable = new Runnable() {
             @Override
             public void run() {
-                mTasksDao.insertTask(task);
+                mBirthdaysDao.insertBirthday(birthday);
             }
         };
         mAppExecutors.diskIO().execute(saveRunnable);
     }
 
     @Override
-    public void completeTask(@NonNull final Task task) {
+    public void completeBirthday(@NonNull final Birthday birthday) {
         Runnable completeRunnable = new Runnable() {
             @Override
             public void run() {
-                mTasksDao.updateCompleted(task.getId(), true);
+                mBirthdaysDao.updateCompleted(birthday.getId(), true);
             }
         };
 
@@ -156,65 +149,55 @@ public class TasksLocalDataSource implements TasksDataSource {
     }
 
     @Override
-    public void completeTask(@NonNull long taskId) {
+    public void completeBirthday(@NonNull long birthdayId) {
         // Not required for the local data source because the {@link TasksRepository} handles
         // converting from a {@code taskId} to a {@link task} using its cached data.
     }
 
     @Override
-    public void activateTask(@NonNull final Task task) {
+    public void activateBirthday(@NonNull final Birthday birthday) {
         Runnable activateRunnable = new Runnable() {
             @Override
             public void run() {
-                mTasksDao.updateCompleted(task.getId(), false);
+                mBirthdaysDao.updateCompleted(birthday.getId(), false);
             }
         };
         mAppExecutors.diskIO().execute(activateRunnable);
     }
 
     @Override
-    public void activateTask(@NonNull long taskId) {
+    public void activateBirthday(@NonNull long birthdayId) {
         // Not required for the local data source because the {@link TasksRepository} handles
         // converting from a {@code taskId} to a {@link task} using its cached data.
     }
 
-    @Override
-    public void clearCompletedTasks() {
-        Runnable clearTasksRunnable = new Runnable() {
-            @Override
-            public void run() {
-                mTasksDao.deleteCompletedTasks();
 
-            }
-        };
-
-        mAppExecutors.diskIO().execute(clearTasksRunnable);
-    }
 
     @Override
-    public void refreshTasks() {
+    public void refreshBirthdays() {
         // Not required because the {@link TasksRepository} handles the logic of refreshing the
         // tasks from all the available data sources.
     }
 
     @Override
-    public void deleteAllTasks() {
-        Runnable deleteRunnable = new Runnable() {
+    public void deleteAllBirthdays() {
+        /*Runnable deleteRunnable = new Runnable() {
             @Override
             public void run() {
-                mTasksDao.deleteTasks();
+                mBirthdaysDao.deleteTasks();
             }
         };
 
-        mAppExecutors.diskIO().execute(deleteRunnable);
+        mAppExecutors.diskIO().execute(deleteRunnable);*/
     }
 
+
     @Override
-    public void deleteTask(@NonNull final long taskId) {
+    public void deleteBirthday(@NonNull final long birthdayId) {
         Runnable deleteRunnable = new Runnable() {
             @Override
             public void run() {
-                mTasksDao.deleteTaskById(taskId);
+                mBirthdaysDao.deleteBirthdayById(birthdayId);
             }
         };
 

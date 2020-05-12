@@ -8,7 +8,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.mihailovalex.reminder_room.alarm.AlarmHelper;
+import com.mihailovalex.reminder_room.data.Birthday;
 import com.mihailovalex.reminder_room.data.Task;
+import com.mihailovalex.reminder_room.widget.TasksListWidget;
 
 import java.util.ArrayList;
 import java.util.Iterator;

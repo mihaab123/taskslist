@@ -31,7 +31,8 @@
     <string name="edit_dialog_title">Редактировать задачу</string>
     <string name="no_tasks_all">You have no tasks!</string>
     <string name="no_tasks_active">У Вас нет текущих задач!</string>
-    <string name="no_tasks_completed">У вас нет завершенных задач!</string>
+    <string name="no_birthdays_active">У Вас нет дней рождения!</string>
+    <string name="no_tasks_completed">У Вас нет завершенных задач!</string>
     <string name="no_tasks_add">Добавить новую задачу +</string>
     <string name="add_task">Новая задача</string>
     <string name="edit_task">Редактировать задачу</string>
@@ -44,4 +45,9 @@
     <string name="time_format_title">24-часовой формат</string>
     <string name="lang_title">Язык</string>
     <string name="LangSummary">Язык приложения.\nНеобходимо перезапустить приложение для принятия изменений.</string>
+    <string name="edit_birthday">Редактировать ДР</string>
+    <string name="add_birthday">Добавить день рождения</string>
+    <string name="task_comment">Комментарий</string>
+    <string name="no_birthdays_add">Добавить новый день рождения</string>
+    <string name="dialog_removing_mess_birthday">Удалить день рождения?</string>
 </resources>

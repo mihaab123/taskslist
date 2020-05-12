@@ -14,7 +14,7 @@
 
     <fragment
         android:id="@+id/nav_birthdays"
-        android:name="com.mihailovalex.reminder_room.ui.birthdays.GalleryFragment"
+        android:name="com.mihailovalex.reminder_room.ui.birthdays.BirthdayFragment"
         android:label="@string/menu_birthdays"
         tools:layout="@layout/fragment_birthdays" />
 
@@ -22,5 +22,5 @@
         android:id="@+id/nav_done_tasks"
         android:name="com.mihailovalex.reminder_room.ui.donetasks.DoneTasksFragment"
         android:label="@string/menu_done_tasks"
-        tools:layout="@layout/fragment_done_tasks" />
+        tools:layout="@layout/fragment_current_tasks" />
 </navigation>
