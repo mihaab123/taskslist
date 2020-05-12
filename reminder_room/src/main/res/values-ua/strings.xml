@@ -1,0 +1,55 @@
+<resources>
+    <string name="app_name">Нагадування</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Налаштування</string>
+
+    <string name="menu_current_tasks">Поточні завдання</string>
+    <string name="menu_birthdays">Дні народження</string>
+    <string name="menu_done_tasks">Завершення завдання</string>
+
+    <string name="home_second">Home Second</string>
+    <string name="action_search">Пошук</string>
+    <string name="search_hint">Введіть текст</string>
+
+    <string name="task_title">Заголовок</string>
+    <string name="task_date">Дата</string>
+    <string name="task_time">Час</string>
+    <string name="dialog_title">Додати завдання</string>
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_cancel">Відміна</string>
+    <string name="dialog_error_title_empty">Будь ласка, введіть заголовок завдання.</string>
+    <string name="dialog_removing_mess">Видалити завдання?</string>
+    <string name="removed">Вилучена</string>
+    <string name="separator_overdue">Минулі</string>
+    <string name="separator_today">Сьогодні</string>
+    <string name="separator_tomorrow">Завтра</string>
+    <string name="separator_future">Майбутні</string>
+    <string name="edit_dialog_title">Редагувати завдання</string>
+    <string name="no_tasks_all">You have no tasks!</string>
+    <string name="no_tasks_active">У Вас немає поточних завдань!</string>
+    <string name="no_birthdays_active">У Вас немає днів народження!</string>
+    <string name="no_tasks_completed">У Вас немає завершених завдань!</string>
+    <string name="no_tasks_add">Додати нове завдання +</string>
+    <string name="add_task">Нове завдання</string>
+    <string name="edit_task">Редагувати завдання</string>
+    <string name="title_activity_settings">Налаштування</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="design_header">Оформлення</string>
+    <string name="font_title">Шрифт</string>
+    <string name="time_format_title">24-годинний формат</string>
+    <string name="lang_title">Мова</string>
+    <string name="LangSummary">Мова додатка. \n Необходімо перезапустити програму для прийняття змін.</string>
+    <string name="edit_birthday">Редагувати ДН</string>
+    <string name="add_birthday">Додати день народження</string>
+    <string name="task_comment">Коментар</string>
+    <string name="no_birthdays_add">Додати новий день народження</string>
+    <string name="dialog_removing_mess_birthday">Видалити день народження?</string>
+    <string name="empty_task_message">Введіть заголовок завдання</string>
+    <string name="empty_birthday_message">Введіть заголовок ДН</string>
+</resources>
