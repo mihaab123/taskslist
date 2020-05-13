@@ -23,4 +23,10 @@
         android:name="com.mihailovalex.reminder_room.ui.donetasks.DoneTasksFragment"
         android:label="@string/menu_done_tasks"
         tools:layout="@layout/fragment_current_tasks" />
+    <activity
+        android:id="@+id/nav_pref"
+        android:name="com.mihailovalex.reminder_room.SettingsActivity"
+        android:label="@string/action_settings"
+        tools:layout="@layout/settings_activity" />
+
 </navigation>

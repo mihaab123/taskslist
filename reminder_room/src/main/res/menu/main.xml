@@ -4,8 +4,11 @@
     xmlns:sabd="http://schemas.android.com/apk/res-auto" >
 
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_search"
+        android:icon="@android:drawable/ic_menu_search"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+        android:title="@string/action_search"
+        android:hint="@string/search_hint"
+        sabd:showAsAction="ifRoom"
+        app:actionViewClass="androidx.appcompat.widget.SearchView" />
 </menu>

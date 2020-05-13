@@ -18,12 +18,6 @@
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
-            <androidx.appcompat.widget.SearchView
-                android:id="@+id/search_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:searchIcon="@android:drawable/ic_menu_search"
-                app:theme="@style/Theme.AppCompat.NoActionBar"></androidx.appcompat.widget.SearchView>
         </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>

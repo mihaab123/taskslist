@@ -31,6 +31,7 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+    public static SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_current_tasks, R.id.nav_birthdays, R.id.nav_done_tasks)
+                R.id.nav_current_tasks, R.id.nav_birthdays, R.id.nav_done_tasks,R.id.nav_pref)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -70,8 +71,16 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        /*MenuItem searchItem = menu.findItem(R.id.action_search);
+        searchView = (SearchView) searchItem.getActionView();
 
-        return true;
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        if(null!=searchManager ) {
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        }
+        searchView.setIconifiedByDefault(false);*/
+        //return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -89,11 +98,11 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.action_feedback:
                 sendFeedback();
-                break;*/
+                break;
             case R.id.action_settings:
                 Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
                 startActivity(intent);
-                break;
+                break;*/
         }
 
         return true;

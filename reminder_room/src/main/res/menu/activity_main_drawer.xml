@@ -17,4 +17,16 @@
             android:icon="@drawable/ic_menu_done_tasks"
             android:title="@string/menu_done_tasks" />
     </group>
+    <item tools:ignore="MenuTitle">
+        <menu>
+                <!--<item
+                    android:id="@+id/nav_send"
+                    android:icon="@drawable/ic_send"
+                    android:title="@string/action_send"></item>-->
+        <item
+            android:id="@+id/nav_pref"
+            android:icon="@drawable/ic_pref"
+            android:title="@string/action_settings" />
+        </menu>
+    </item>
 </menu>

@@ -3,6 +3,9 @@ package com.mihailovalex.reminder_room.ui.birthdays;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -34,6 +37,7 @@ public class BirthdayFragment extends Fragment {
     private BirthdayAdapter adapter;
     public MainActivity activity;
     private BirthdayViewModel birthdayViewModel;
+    protected SearchView searchView;
 
     private FragmentBirthdaysBinding birthdaysFragBinding;
 
@@ -89,7 +93,14 @@ public class BirthdayFragment extends Fragment {
                 //}
             }
         });
-        SearchView searchView = getActivity().findViewById(R.id.search_view);
+        setHasOptionsMenu(true); // It's important here
+        return birthdaysFragBinding.getRoot();
+    }
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        searchView = (SearchView) searchItem.getActionView();
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -106,9 +117,7 @@ public class BirthdayFragment extends Fragment {
                 return true;
             }
         });
-        return birthdaysFragBinding.getRoot();
     }
-
     public void openBirthdayDetails(long birthdayId) {
         Intent intent = new Intent(getActivity(), AddEditBirthdayActivity.class);
         intent.putExtra(AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID, birthdayId);

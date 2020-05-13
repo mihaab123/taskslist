@@ -3,6 +3,9 @@ package com.mihailovalex.reminder_room.ui.donetasks;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -16,6 +19,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.mihailovalex.reminder_room.MainActivity;
 import com.mihailovalex.reminder_room.R;
 import com.mihailovalex.reminder_room.ViewModelFactory;
 import com.mihailovalex.reminder_room.adapter.CurrentTasksAdapter;
@@ -76,7 +80,14 @@ public class DoneTasksFragment extends TaskFragment {
                 //}
             }
         });
-        SearchView searchView = getActivity().findViewById(R.id.search_view);
+        setHasOptionsMenu(true); // It's important here
+        return tasksFragBinding.getRoot();
+    }
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        searchView = (SearchView) searchItem.getActionView();
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -93,7 +104,6 @@ public class DoneTasksFragment extends TaskFragment {
                 return true;
             }
         });
-        return tasksFragBinding.getRoot();
     }
     public void openTaskDetails(long taskId) {
         Intent intent = new Intent(getActivity(), AddEditTaskActivity.class);

@@ -52,4 +52,5 @@
     <string name="dialog_removing_mess_birthday">Видалити день народження?</string>
     <string name="empty_task_message">Введіть заголовок завдання</string>
     <string name="empty_birthday_message">Введіть заголовок ДН</string>
+    <string name="action_send">Send feedback</string>
 </resources>
