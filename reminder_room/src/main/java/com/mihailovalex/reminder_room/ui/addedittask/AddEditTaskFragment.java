@@ -6,8 +6,10 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -16,17 +18,23 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputLayout;
 import com.mihailovalex.reminder_room.R;
 import com.mihailovalex.reminder_room.SnackbarMessage;
 import com.mihailovalex.reminder_room.data.Task;
@@ -35,6 +43,7 @@ import com.mihailovalex.reminder_room.databinding.AddEditTaskFragmentBinding;
 import com.mihailovalex.reminder_room.utils.DateUtils;
 import com.mihailovalex.reminder_room.utils.SnackbarUtils;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 
@@ -141,6 +150,78 @@ public class AddEditTaskFragment extends Fragment {
                         .show();
             }
         });
+        mViewDataBinding.etReeat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mViewDataBinding.etReeat.length()==0){
+                    mViewDataBinding.etReeat.setText(" ");
+                }
+                getRepeat();
+            }
+        });
+    }
+
+    private void getRepeat() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(R.string.dialog_title);
+        LayoutInflater inflater = getLayoutInflater();
+        View container = inflater.inflate(R.layout.add_edit_time_repeat,null);
+        final NumberPicker npCountRepeat = container.findViewById(R.id.npCountRepeat);
+        npCountRepeat.setMinValue(0);
+        npCountRepeat.setMaxValue(365);
+        npCountRepeat.setWrapSelectorWheel(false);
+        final NumberPicker npTypeRepeat = container.findViewById(R.id.npTypeRepeat);
+        String[] arrayRepeat = getResources().getStringArray(R.array.repeat_values);
+        npTypeRepeat.setMinValue(0);
+        npTypeRepeat.setMaxValue(arrayRepeat.length-1);
+        npTypeRepeat.setWrapSelectorWheel(false);
+        npTypeRepeat.setDisplayedValues(arrayRepeat);
+        builder.setView(container);
+
+        builder.setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                /*task.setTitle(etTitle.getText().toString());
+                task.setStatus(ModelTask.STATUS_CURRENT);
+                if(etDate.length()!=0 && etTime.length()!=0){
+                    task.setDate(dateAndTime.getTimeInMillis());
+                    AlarmHelper alarmHelper =  AlarmHelper.getInstance();
+                    alarmHelper.setAlarm(task);
+                }
+                task.setStatus(ModelTask.STATUS_CURRENT);
+                addTaskListener.onTaskAdd(task);*/
+                if(npCountRepeat.getValue()!=0){
+                    mViewModel.repeat.set(Integer.toString(npCountRepeat.getValue())+getTextTypeRepeat(npTypeRepeat.getValue()));
+                }else mViewModel.repeat.set("");
+
+                dialog.dismiss();
+            }
+        });
+        builder.setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    private String getTextTypeRepeat(int value) {
+        switch (value){
+            case 0:
+                return "h";
+            case 1:
+                return "d";
+            case 2:
+                return "w";
+            case 3:
+                return "m";
+            case 4:
+                return "y";
+            default:
+                return "";
+        }
     }
 
 

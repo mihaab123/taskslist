@@ -30,6 +30,8 @@ public final class Task implements Item {
 
     private  boolean completed;
 
+    private String repeat;
+
     @Ignore
     private int dateStatus;
 
@@ -39,6 +41,23 @@ public final class Task implements Item {
         this.date = date;
         this.priority = priority;
         this.completed = completed;
+    }
+    @Ignore
+    public Task(long id, @NonNull String title, long date, int priority, String repeat, boolean completed) {
+        this.id = id;
+        this.title = title;
+        this.date = date;
+        this.priority = priority;
+        this.completed = completed;
+        this.repeat = repeat;
+    }
+    @Ignore
+    public Task(@NonNull String title, long date, int priority, String repeat) {
+
+        this.title = title;
+        this.date = date;
+        this.priority = priority;
+        this.repeat = repeat;
     }
 
     @Ignore
@@ -128,4 +147,14 @@ public final class Task implements Item {
         }
     }
 
+    public String getRepeat() {
+        return repeat;
+    }
+
+    public void setRepeat(String repeat) {
+        this.repeat = repeat;
+    }
+    public boolean isRepeated(){
+        return repeat != null && !repeat.isEmpty();
+    }
 }

@@ -24,6 +24,8 @@ public final class Birthday implements Item {
 
     private  boolean completed;
 
+    private String repeat;
+
     @Ignore
     private int dateStatus;
 
@@ -33,6 +35,7 @@ public final class Birthday implements Item {
         this.date = date;
         this.comment = comment;
         this.completed = completed;
+        this.repeat = "1y";
     }
 
     @Ignore
@@ -41,6 +44,7 @@ public final class Birthday implements Item {
         this.date = date;
         this.comment = comment;
         this.completed = false;
+        this.repeat = "1y";
     }
 
     @Override
@@ -104,5 +108,14 @@ public final class Birthday implements Item {
         return title.isEmpty(); //Strings.isNullOrEmpty(title);
     }
 
+    public String getRepeat() {
+        return repeat;
+    }
 
+    public void setRepeat(String repeat) {
+        this.repeat = repeat;
+    }
+    public boolean isRepeated(){
+        return !repeat.isEmpty();
+    }
 }

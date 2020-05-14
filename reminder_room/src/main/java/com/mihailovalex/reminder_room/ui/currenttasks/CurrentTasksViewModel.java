@@ -25,6 +25,7 @@ import com.mihailovalex.reminder_room.data.Item;
 import com.mihailovalex.reminder_room.data.Task;
 import com.mihailovalex.reminder_room.data.source.TasksDataSource;
 import com.mihailovalex.reminder_room.data.source.TasksRepository;
+import com.mihailovalex.reminder_room.utils.DateUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,10 +91,6 @@ public class CurrentTasksViewModel extends AndroidViewModel {
 
     public void setFiltering(TasksFilterType requestType) {
 
-                noTasksLabel.set(mContext.getResources().getString(R.string.no_tasks_all));
-                noTaskIconRes.set(mContext.getResources().getDrawable(
-                        R.drawable.ic_assignment_turned_in_24dp));
-                tasksAddViewVisible.set(false);
         mCurrentFiltering = requestType;
         switch (requestType) {
             case ALL_TASKS:
@@ -127,7 +124,11 @@ public class CurrentTasksViewModel extends AndroidViewModel {
     public void completeTask(Task task, boolean completed) {
         // Notify repository
         if (completed) {
-            mTasksRepository.completeTask(task);
+            if(task.isRepeated()){
+                task.setDate(DateUtils.repeatTask(task.getDate(),task.getRepeat()));
+                mTasksRepository.saveTask(task);
+            }
+            else mTasksRepository.completeTask(task);
             //showSnackbarMessage(R.string.task_marked_complete);
         } else {
             mTasksRepository.activateTask(task);

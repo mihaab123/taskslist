@@ -30,4 +30,11 @@
         <item>Normal priority</item>
         <item>High priority</item>
     </string-array>
+    <string-array name="repeat_values">
+        <item>Hour</item>
+        <item>Day</item>
+        <item>Week</item>
+        <item>Month</item>
+        <item>Year</item>
+    </string-array>
 </resources>

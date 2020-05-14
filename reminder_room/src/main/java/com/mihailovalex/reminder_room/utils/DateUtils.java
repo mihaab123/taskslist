@@ -1,6 +1,7 @@
 package com.mihailovalex.reminder_room.utils;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -36,5 +37,31 @@ public class DateUtils {
             return dateFormat.format(date);
         }
 
+    }
+    public static long repeatTask(long date, String repeat){
+        Calendar dateAndTime = Calendar.getInstance();
+        dateAndTime.setTimeInMillis(date);
+        if (!repeat.isEmpty()){
+           int count = Integer.parseInt(repeat.substring(0,repeat.length()-1));
+           String type = repeat.substring(repeat.length()-1,repeat.length());
+           switch (type){
+               case "h":
+                   dateAndTime.add(Calendar.HOUR,count);
+                   break;
+               case "d":
+                   dateAndTime.add(Calendar.DAY_OF_YEAR,count);
+                   break;
+               case "w":
+                   dateAndTime.add(Calendar.DAY_OF_YEAR,count*7);
+                   break;
+               case "m":
+                   dateAndTime.add(Calendar.MONTH,count);
+                   break;
+               case "y":
+                   dateAndTime.add(Calendar.YEAR,count);
+                   break;
+           }
+        }
+        return dateAndTime.getTimeInMillis();
     }
 }

@@ -103,7 +103,9 @@ public class CurrentTasksAdapter extends TaskAdapter {
                 @Override
                 public void onCompleteChanged(Task task, View v) {
                     boolean checked = task.isActive();
-                    tasksViewModel.completeTask(task, checked);
+                    if (!task.isRepeated()) {
+                        tasksViewModel.completeTask(task, checked);
+                    }
                     ObjectAnimator flipin = ObjectAnimator.ofFloat(holder.taskItemBinding.cvTaskPriority,"rotationY",-180f,0f);
                     flipin.addListener(new Animator.AnimatorListener() {
                         @Override
@@ -126,7 +128,9 @@ public class CurrentTasksAdapter extends TaskAdapter {
                                     @Override
                                     public void onAnimationEnd(Animator animation) {
                                         itemView.setVisibility(View.GONE);
-                                        removeItem(position);
+                                        if (!task.isRepeated()) {
+                                            removeItem(position);
+                                        }else notifyItemChanged(position);
                                     }
 
                                     @Override

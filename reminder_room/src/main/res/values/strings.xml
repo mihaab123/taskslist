@@ -53,4 +53,5 @@
     <string name="empty_task_message">Enter task title</string>
     <string name="empty_birthday_message">Enter birthday title</string>
     <string name="action_send">Send feedback</string>
+    <string name="task_repeat">Repeat</string>
 </resources>

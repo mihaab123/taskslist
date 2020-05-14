@@ -30,4 +30,11 @@
         <item>Средний приоритет</item>
         <item>Высокий приоритет</item>
     </string-array>
+    <string-array name="repeat_values">
+        <item>Час</item>
+        <item>День</item>
+        <item>Неделя</item>
+        <item>Месяц</item>
+        <item>Год</item>
+    </string-array>
 </resources>

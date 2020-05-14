@@ -100,6 +100,29 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="16dp"/>
 
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilDialogTaskRepeat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/spDialogTaskPriority"
+
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="16dp"
+                    android:hint="@string/task_repeat">
+
+                    <EditText
+                        android:id="@+id/etReeat"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:cursorVisible="false"
+                        android:focusable="false"
+                        android:inputType="none"
+                        android:text="@{viewmodel.repeat}">
+
+                    </EditText>
+                </com.google.android.material.textfield.TextInputLayout>
+
             </RelativeLayout>
         </ScrollView>
 </layout>

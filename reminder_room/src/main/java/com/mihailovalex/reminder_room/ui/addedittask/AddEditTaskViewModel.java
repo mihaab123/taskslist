@@ -26,6 +26,8 @@ public class AddEditTaskViewModel extends AndroidViewModel implements TasksDataS
 
     public final ObservableField<String> time = new ObservableField<>();
 
+    public final ObservableField<String> repeat = new ObservableField<>();
+
     public final ObservableField<Integer> priority = new ObservableField<>();
 
     public final ObservableBoolean dataLoading = new ObservableBoolean(false);
@@ -87,6 +89,7 @@ public class AddEditTaskViewModel extends AndroidViewModel implements TasksDataS
         date.set(DateUtils.getDate(task.getDate()));
         time.set(DateUtils.getTime(task.getDate(),get24TimeFormat()));
         priority.set(task.getPriority());
+        repeat.set(task.getRepeat());
         mTaskCompleted = task.isCompleted();
         dataLoading.set(false);
         mIsDataLoaded = true;
@@ -102,7 +105,7 @@ public class AddEditTaskViewModel extends AndroidViewModel implements TasksDataS
 
     // Called when clicking on fab.
     void saveTask() {
-        Task task = new Task(title.get(), dateAndTime.getTimeInMillis(),priority.get());
+        Task task = new Task(title.get(), dateAndTime.getTimeInMillis(),priority.get(),repeat.get());
         if (task.isEmpty()) {
             mSnackbarText.setValue(R.string.empty_task_message);
             return;
@@ -110,7 +113,7 @@ public class AddEditTaskViewModel extends AndroidViewModel implements TasksDataS
         if (isNewTask() || mTaskId == 0) {
             createTask(task);
         } else {
-            task = new Task(mTaskId,title.get(), dateAndTime.getTimeInMillis(), priority.get(), mTaskCompleted);
+            task = new Task(mTaskId,title.get(), dateAndTime.getTimeInMillis(), priority.get(), repeat.get(),mTaskCompleted);
             updateTask(task);
         }
 

@@ -34,7 +34,7 @@ import java.util.Date;
 /**
  * The Room Database that contains the Task table.
  */
-@Database(entities = {Task.class, Birthday.class}, version = 3)
+@Database(entities = {Task.class, Birthday.class}, version = 4)
 public abstract class TasksDatabase extends RoomDatabase {
 
     private static TasksDatabase INSTANCE;
@@ -49,9 +49,9 @@ public abstract class TasksDatabase extends RoomDatabase {
             INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                     TasksDatabase.class, "Tasks.db")
                     .addCallback(roomCallback)
-                    .fallbackToDestructiveMigration()
-                    //.addMigrations(TasksDatabase.MIGRATION_2_3)
-                    //.allowMainThreadQueries()
+                    //.fallbackToDestructiveMigration()
+                    .addMigrations(TasksDatabase.MIGRATION_3_4)
+                    .allowMainThreadQueries()
                     .build();
         }
         return INSTANCE;
@@ -84,6 +84,15 @@ public abstract class TasksDatabase extends RoomDatabase {
         public void migrate(final SupportSQLiteDatabase database) {
             // проблема с типом
             database.execSQL("CREATE TABLE Birthdays (id integer NOT NULL PRIMARY KEY AUTOINCREMENT DEFAULT 0, title text default '' not null, comment text default '' not null, date long default 0, completed boolean)");
+        }
+    };
+    public static final Migration MIGRATION_3_4 = new Migration(3, 4) {
+        @Override
+        public void migrate(final SupportSQLiteDatabase database) {
+            // проблема с типом
+
+            database.execSQL("alter table tasks add column repeat text;");
+            database.execSQL("alter table birthdays add column repeat text;");
         }
     };
 
