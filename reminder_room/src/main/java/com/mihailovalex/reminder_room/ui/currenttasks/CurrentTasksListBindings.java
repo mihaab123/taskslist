@@ -73,12 +73,12 @@ public class CurrentTasksListBindings {
     }
     @SuppressWarnings("unchecked")
     @BindingAdapter("android:src")
-    public static void setPriorityColor(CircleImageView priority, Task task) {
-        priority.setColorFilter(ContextCompat.getColor(priority.getContext(),task.getPriorityColor()));
-        if(task.isCompleted()){
+    public static void setPriorityColor(CircleImageView priority, Item item) {
+        priority.setColorFilter(ContextCompat.getColor(priority.getContext(),item.getPriorityColor()));
+        if(item.isCompleted()){
             priority.setImageResource(R.drawable.ic_circle_check);
         }
-        else if(task.isRepeated()) {
+        else if(item.isRepeated()) {
 
             priority.setImageResource(R.drawable.ic_circle_repeat);
         } else {

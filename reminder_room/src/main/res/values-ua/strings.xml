@@ -54,4 +54,5 @@
     <string name="empty_birthday_message">Введіть заголовок ДН</string>
     <string name="action_send">Send feedback</string>
     <string name="task_repeat">Повторювати</string>
+    <string name="task_completed">Завершено</string>
 </resources>

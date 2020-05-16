@@ -118,4 +118,9 @@ public final class Birthday implements Item {
     public boolean isRepeated(){
         return !repeat.isEmpty();
     }
+
+    @Override
+    public int getPriorityColor() {
+        return R.color.colorAccent;
+    }
 }

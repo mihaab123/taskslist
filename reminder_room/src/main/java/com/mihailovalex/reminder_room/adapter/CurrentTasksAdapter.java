@@ -28,6 +28,8 @@ import com.mihailovalex.reminder_room.databinding.TaskItemBinding;
 
 import com.mihailovalex.reminder_room.ui.currenttasks.CurrentTasksViewModel;
 import com.mihailovalex.reminder_room.ui.currenttasks.TaskItemUserActionsListener;
+import com.mihailovalex.reminder_room.utils.DateUtils;
+import com.mihailovalex.reminder_room.widget.TasksListWidget;
 
 
 import java.util.List;
@@ -130,7 +132,11 @@ public class CurrentTasksAdapter extends TaskAdapter {
                                         itemView.setVisibility(View.GONE);
                                         if (!task.isRepeated()) {
                                             removeItem(position);
-                                        }else notifyItemChanged(position);
+                                        }else {
+                                            task.setDate(DateUtils.repeatTask(task.getDate(),task.getRepeat()));
+                                            tasksViewModel.getTasksRepository().saveTask(task);
+                                            updateTask(task);
+                                        }
                                     }
 
                                     @Override
@@ -229,12 +235,13 @@ public class CurrentTasksAdapter extends TaskAdapter {
             Task removingTask = (Task)item;
             final long taksId = removingTask.getId();
             final boolean[] isRemoved = {false};
+            final int position =items.indexOf(item);
             builder.setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    tasksViewModel.getTasksRepository().deleteTask(taksId);
+                    removeItem(position);
                     isRemoved[0] = true;
-                    Snackbar snackbar = Snackbar.make(v.getRootView(),
+                    Snackbar snackbar = Snackbar.make(v,
                             R.string.removed, Snackbar.LENGTH_LONG);
                     snackbar.setAction(R.string.dialog_cancel, new View.OnClickListener() {
                         @Override
@@ -243,7 +250,7 @@ public class CurrentTasksAdapter extends TaskAdapter {
                             handler.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    tasksViewModel.getTasksRepository().saveTask(task);
+                                    setSeparator(task);
                                 }
                             },1000);
                             //tasksViewModel.getTasksRepository().saveTask(task);
@@ -261,6 +268,8 @@ public class CurrentTasksAdapter extends TaskAdapter {
                             if(isRemoved[0]){
                                 //activity.dbHelper.deleteTask(taksId);
                                 //alarmHelper.removeAlarm(taksId);
+                                tasksViewModel.getTasksRepository().deleteTask(taksId);
+                                TasksListWidget.sendRefreshBroadcast(v.getContext());
                             }
                         }
                     });

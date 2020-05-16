@@ -12,6 +12,7 @@ import android.os.Bundle;
 
 import com.mihailovalex.reminder_room.R;
 import com.mihailovalex.reminder_room.ViewModelFactory;
+import com.mihailovalex.reminder_room.ui.addeditbirthday.AddEditBirthdayViewModel;
 import com.mihailovalex.reminder_room.widget.TasksListWidget;
 
 public class AddEditTaskActivity extends AppCompatActivity implements AddEditTaskNavigator {

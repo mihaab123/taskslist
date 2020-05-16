@@ -151,7 +151,7 @@ public abstract class TaskAdapter extends RecyclerView.Adapter<RecyclerView.View
     public void replaceData(List<Item> tasks) {
         setList(tasks);
     }
-    private void setSeparator(Task newTask){
+    protected void setSeparator(Task newTask){
         int position = -1;
         Separator separator = null;
         for (int i = 0; i < getItemCount(); i++) {
@@ -166,7 +166,13 @@ public abstract class TaskAdapter extends RecyclerView.Adapter<RecyclerView.View
         if(newTask.getDate()!=0){
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(newTask.getDate());
-            if(calendar.get(Calendar.DAY_OF_YEAR)<Calendar.getInstance().get(Calendar.DAY_OF_YEAR)){
+            if(calendar.get(Calendar.YEAR)>Calendar.getInstance().get(Calendar.YEAR)){
+                newTask.setDateStatus(Separator.TYPE_FUTURE);
+                if(!containsSeparatorFuture){
+                    containsSeparatorFuture = true;
+                    separator = new Separator(Separator.TYPE_FUTURE);
+                }
+            }if(calendar.get(Calendar.DAY_OF_YEAR)<Calendar.getInstance().get(Calendar.DAY_OF_YEAR)){
                 newTask.setDateStatus(Separator.TYPE_OVERDUE);
                 if(!containsSeparatorOverdue){
                     containsSeparatorOverdue = true;

@@ -22,4 +22,5 @@ package com.mihailovalex.reminder_room.ui.addedittask;
 interface AddEditTaskNavigator {
 
     void onTaskSaved();
+
 }

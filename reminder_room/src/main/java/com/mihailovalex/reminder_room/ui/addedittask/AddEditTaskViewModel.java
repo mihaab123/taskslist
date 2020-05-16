@@ -144,4 +144,11 @@ public class AddEditTaskViewModel extends AndroidViewModel implements TasksDataS
         mTaskUpdated.call();
     }
 
+    public boolean ismTaskCompleted() {
+        return mTaskCompleted;
+    }
+
+    public void setmTaskCompleted(boolean mTaskCompleted) {
+        this.mTaskCompleted = mTaskCompleted;
+    }
 }

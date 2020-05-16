@@ -99,6 +99,7 @@ public class TasksListWidget extends AppWidgetProvider {
             }
             if (action.equals(ACTION_ON_ADD_CLICK)){
                 Intent addintent = new Intent(context, AddEditTaskActivity.class);
+                addintent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 Long taskId = null;
                 addintent.putExtra(AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID, taskId);
                 context.startActivity(addintent);
@@ -119,6 +120,7 @@ public class TasksListWidget extends AppWidgetProvider {
             if (!TextUtils.isEmpty(command)) {
                 //if (BuildConfig.DEBUG) Log.d(TAG, command);
                 Intent intent = new Intent(context, AddEditTaskActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 Long taskId = null;
                 switch (command) {
 

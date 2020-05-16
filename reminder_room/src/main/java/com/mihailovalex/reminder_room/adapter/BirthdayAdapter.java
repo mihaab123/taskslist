@@ -1,5 +1,8 @@
 package com.mihailovalex.reminder_room.adapter;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -25,6 +28,7 @@ import com.mihailovalex.reminder_room.databinding.SeparatorItemBinding;
 import com.mihailovalex.reminder_room.databinding.TaskItemBinding;
 import com.mihailovalex.reminder_room.ui.birthdays.BirthdayItemUserActionsListener;
 import com.mihailovalex.reminder_room.ui.birthdays.BirthdayViewModel;
+import com.mihailovalex.reminder_room.utils.DateUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -177,7 +181,13 @@ public  class BirthdayAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         if(newBirthday.getDate()!=0){
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(newBirthday.getDate());
-            if(calendar.get(Calendar.DAY_OF_YEAR)<Calendar.getInstance().get(Calendar.DAY_OF_YEAR)){
+            if(calendar.get(Calendar.YEAR)>Calendar.getInstance().get(Calendar.YEAR)){
+                newBirthday.setDateStatus(Separator.TYPE_FUTURE);
+                if(!containsSeparatorFuture){
+                    containsSeparatorFuture = true;
+                    separator = new Separator(Separator.TYPE_FUTURE);
+                }
+            }else if(calendar.get(Calendar.DAY_OF_YEAR)<Calendar.getInstance().get(Calendar.DAY_OF_YEAR)){
                 newBirthday.setDateStatus(Separator.TYPE_OVERDUE);
                 if(!containsSeparatorOverdue){
                     containsSeparatorOverdue = true;
@@ -290,6 +300,70 @@ public  class BirthdayAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 public void onLongBirthdayClicked(View v, Birthday birthday) {
                     removeBirthdayDialog(v,birthday,currentPosiotion);
                 }
+                @Override
+                public void onCompleteChanged(Birthday birthday, View v) {
+                    boolean checked = birthday.isActive();
+                    if(birthday.getDate()<Calendar.getInstance().getTimeInMillis()){
+                        ObjectAnimator flipin = ObjectAnimator.ofFloat(holder.birthdayItemBinding.cvBirthdayPriority,"rotationY",-180f,0f);
+                        flipin.addListener(new Animator.AnimatorListener() {
+                            @Override
+                            public void onAnimationStart(Animator animation) {
+
+                            }
+
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                if(birthday.isActive()){
+                                    holder.birthdayItemBinding.cvBirthdayPriority.setImageResource(R.drawable.ic_circle_check);
+                                    ObjectAnimator translationX = ObjectAnimator.ofFloat(itemView,"translationX",0f,itemView.getWidth());
+                                    ObjectAnimator translationXBack = ObjectAnimator.ofFloat(itemView,"translationX",itemView.getWidth(),0f);
+                                    translationX.addListener(new Animator.AnimatorListener() {
+                                        @Override
+                                        public void onAnimationStart(Animator animation) {
+
+                                        }
+
+                                        @Override
+                                        public void onAnimationEnd(Animator animation) {
+                                            itemView.setVisibility(View.GONE);
+                                            if (!birthday.isRepeated()) {
+                                                removeItem(position);
+                                            }else {
+                                                birthday.setDate(DateUtils.repeatTask(birthday.getDate(),birthday.getRepeat()));
+                                                birthdayViewModel.getBirthdayRepository().saveBirthday(birthday);
+                                                updateBirthday(birthday);
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onAnimationCancel(Animator animation) {
+
+                                        }
+
+                                        @Override
+                                        public void onAnimationRepeat(Animator animation) {
+
+                                        }
+                                    });
+                                    AnimatorSet animatorSet = new AnimatorSet();
+                                    animatorSet.play(translationX).before(translationXBack);
+                                    animatorSet.start();
+                                }
+                            }
+
+                            @Override
+                            public void onAnimationCancel(Animator animation) {
+
+                            }
+
+                            @Override
+                            public void onAnimationRepeat(Animator animation) {
+
+                            }
+                        });
+                        flipin.start();
+                    }
+                }
             };
             holder.birthdayItemBinding.setBirthday((Birthday) item);
             holder.birthdayItemBinding.setViewmodel(birthdayViewModel);
@@ -319,10 +393,10 @@ public  class BirthdayAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             builder.setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    birthdayViewModel.getBirthdayRepository().deleteBirthday(birthdayId);
-                    notifyItemRemoved(position);
+                    removeItem(position);
+
                     isRemoved[0] = true;
-                    Snackbar snackbar = Snackbar.make(v.getRootView(),
+                    Snackbar snackbar = Snackbar.make(v,
                             R.string.removed, Snackbar.LENGTH_LONG);
                     snackbar.setAction(R.string.dialog_cancel, new View.OnClickListener() {
                         @Override
@@ -331,8 +405,7 @@ public  class BirthdayAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                             handler.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    birthdayViewModel.getBirthdayRepository().saveBirthday(birthday);
-                                    notifyItemInserted(position);
+                                    setSeparator(birthday);
                                 }
                             },1000);
                             //tasksViewModel.getTasksRepository().saveTask(birthday);
@@ -348,9 +421,7 @@ public  class BirthdayAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                         @Override
                         public void onViewDetachedFromWindow(View v) {
                             if(isRemoved[0]){
-                                //activity.dbHelper.deleteTask(birthdayId);
-                                //alarmHelper.removeAlarm(birthdayId);
-                                notifyItemRemoved(position);
+                                birthdayViewModel.getBirthdayRepository().deleteBirthday(birthdayId);
                             }
                         }
                     });

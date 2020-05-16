@@ -45,7 +45,15 @@
                 android:layout_marginTop="19dp"
                 android:gravity="right"
                 android:text="@{DateUtils.getFullDate(birthday.date,viewmodel.get24TimeFormat())}"/>
-
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/cvBirthdayPriority"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:src="@{birthday}"
+                android:onClick="@{(view) -> listener.onCompleteChanged(birthday, view)}"/>
 
         </RelativeLayout>
     </RelativeLayout>

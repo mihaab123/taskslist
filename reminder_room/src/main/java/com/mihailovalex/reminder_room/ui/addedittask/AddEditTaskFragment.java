@@ -27,6 +27,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.NumberPicker;
@@ -74,7 +75,7 @@ public class AddEditTaskFragment extends Fragment {
         mViewModel = AddEditTaskActivity.obtainViewModel(getActivity());
         mViewDataBinding = AddEditTaskFragmentBinding.inflate(inflater, container, false);
         mViewDataBinding.setViewmodel(mViewModel);
-        //setupListAdapter(tasksFragBinding);
+
 
         setHasOptionsMenu(true);
         setRetainInstance(false);

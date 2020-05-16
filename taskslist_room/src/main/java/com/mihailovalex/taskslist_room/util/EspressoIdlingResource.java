@@ -16,11 +16,7 @@
 
 package com.mihailovalex.taskslist_room.util;
 
-import android.support.test.espresso.IdlingResource;
 
-/**
- * Contains a static reference to {@link IdlingResource}, only available in the 'mock' build type.
- */
 public class EspressoIdlingResource {
 
     private static final String RESOURCE = "GLOBAL";
@@ -36,7 +32,4 @@ public class EspressoIdlingResource {
         mCountingIdlingResource.decrement();
     }
 
-    public static IdlingResource getIdlingResource() {
-        return mCountingIdlingResource;
-    }
 }

@@ -14,6 +14,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 import com.mihailovalex.reminder_room.alarm.AlarmHelper;
+import com.splunk.mint.Mint;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setupLangApplication();
         setContentView(R.layout.activity_main);
-
+        //Mint.initAndStartSession(this.getApplication(), "473f5309");
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -109,12 +110,23 @@ public class MainActivity extends AppCompatActivity {
     }
     private void setupLangApplication() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String lang = preferences.getString("language", "english");
+        String lang = preferences.getString("language", "default");
         if (lang.equals("default")) {lang=getResources().getConfiguration().locale.getCountry();}
         Locale locale = new Locale(lang);
         Locale.setDefault(locale);
         Configuration config = new Configuration();
         config.locale = locale;
         getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MyApplication.activityResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MyApplication.activityPause();
     }
 }

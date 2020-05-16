@@ -79,6 +79,7 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
     private Intent createIntent(String cmd, Task wi) {
         Intent intent = new Intent();
         intent.setAction(TasksListWidget.ACTION_ON_ITEM_CLICK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // для андроид 6 и выше
         Bundle bundle = new Bundle();
         bundle.putString(TasksListWidget.COMMAND, cmd);
         bundle.putLong(TasksListWidget.ITEM, wi.getId());

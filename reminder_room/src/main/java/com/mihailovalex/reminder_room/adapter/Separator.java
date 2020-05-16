@@ -26,4 +26,19 @@ public class Separator implements Item {
     public boolean isTask() {
         return false;
     }
+
+    @Override
+    public boolean isCompleted() {
+        return false;
+    }
+
+    @Override
+    public boolean isRepeated() {
+        return false;
+    }
+
+    @Override
+    public int getPriorityColor() {
+        return 0;
+    }
 }

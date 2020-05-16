@@ -12,4 +12,6 @@ public interface BirthdayItemUserActionsListener {
     void onBirthdayClicked(Birthday birthday);
 
     void onLongBirthdayClicked(View v, Birthday birthday);
+
+    void onCompleteChanged(Birthday birthday, View v);
 }
