@@ -55,4 +55,10 @@
     <string name="action_send">Send feedback</string>
     <string name="task_repeat">Repeat</string>
     <string name="task_completed">Completed</string>
+    <string name="admin_email" translatable="false">mihailov.alex.dev@gmail.com</string>
+    <string name="feedback_title">Reminder-feedback</string>
+    <string name="feedback_device_info">"My device info: "</string>
+    <string name="feedback_app_version">"App version: "</string>
+    <string name="feedback">Feedback</string>
+    <string name="action_rate">Rate app</string>
 </resources>

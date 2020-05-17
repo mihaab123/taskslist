@@ -55,4 +55,9 @@
     <string name="action_send">Send feedback</string>
     <string name="task_repeat">Повторять</string>
     <string name="task_completed">Завершено</string>
+    <string name="feedback_title">Напоминалка-отзыв</string>
+    <string name="feedback_device_info">"Информация о моем устройстве: "</string>
+    <string name="feedback_app_version">"Версия приложения: "</string>
+    <string name="feedback">Отзыв</string>
+    <string name="action_rate">Оценить приложение</string>
 </resources>

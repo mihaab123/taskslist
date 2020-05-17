@@ -40,7 +40,7 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
     }
 
     @Override public void onDataSetChanged() {
-        allTasks = tasksDao.getTasks();
+        allTasks = tasksDao.getActiveTasks();
 
     }
 

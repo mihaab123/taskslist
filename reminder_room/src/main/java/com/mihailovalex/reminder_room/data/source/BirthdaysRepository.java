@@ -85,7 +85,12 @@ public class BirthdaysRepository implements BirthdaysDataSource {
 
                 @Override
                 public void onDataNotAvailable() {
-                    getBirthdaysFromRemoteDataSource(callback);
+                    // Do in memory cache update to keep the app UI up to date
+                    if (mCacheBirthdays == null) {
+                        mCacheBirthdays = new LinkedHashMap<>();
+                    }
+                    callback.onBirthdaysLoaded(new ArrayList<>(mCacheBirthdays.values()));
+                    //getBirthdaysFromRemoteDataSource(callback);
                 }
             },searchString);
         }

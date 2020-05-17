@@ -80,7 +80,7 @@ public class AddEditTaskActivity extends AppCompatActivity implements AddEditTas
     @Override
     public void onTaskSaved() {
         setResult(ADD_EDIT_RESULT_OK);
-        TasksListWidget.sendRefreshBroadcast(this);
+        //TasksListWidget.sendRefreshBroadcast(this);
         finish();
     }
 }

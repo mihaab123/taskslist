@@ -16,6 +16,7 @@ import com.mihailovalex.reminder_room.data.Task;
 import com.mihailovalex.reminder_room.data.source.TasksDataSource;
 import com.mihailovalex.reminder_room.data.source.TasksRepository;
 import com.mihailovalex.reminder_room.utils.DateUtils;
+import com.mihailovalex.reminder_room.widget.TasksListWidget;
 
 import java.util.Calendar;
 
@@ -133,6 +134,7 @@ public class AddEditTaskViewModel extends AndroidViewModel implements TasksDataS
 
     private void createTask(Task newTask) {
         mTasksRepository.saveTask(newTask);
+        TasksListWidget.sendRefreshBroadcast(getApplication());
         mTaskUpdated.call();
     }
 
@@ -141,6 +143,7 @@ public class AddEditTaskViewModel extends AndroidViewModel implements TasksDataS
             throw new RuntimeException("updateTask() was called but task is new.");
         }
         mTasksRepository.saveTask(task);
+        TasksListWidget.sendRefreshBroadcast(getApplication());
         mTaskUpdated.call();
     }
 

@@ -55,4 +55,9 @@
     <string name="action_send">Send feedback</string>
     <string name="task_repeat">Повторювати</string>
     <string name="task_completed">Завершено</string>
+    <string name="feedback_title">Нагадування-відгук</string>
+    <string name="feedback_device_info">"Інформація про моєму пристрої: "</string>
+    <string name="feedback_app_version">"Версія додатка: "</string>
+    <string name="feedback">Відгук</string>
+    <string name="action_rate">Оцінити додаток</string>
 </resources>

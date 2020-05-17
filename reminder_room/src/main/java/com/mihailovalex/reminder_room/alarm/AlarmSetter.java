@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 
 
+import androidx.legacy.content.WakefulBroadcastReceiver;
+
 import com.mihailovalex.reminder_room.data.Task;
 import com.mihailovalex.reminder_room.data.source.local.TasksDao;
 import com.mihailovalex.reminder_room.data.source.local.TasksDatabase;
@@ -12,7 +14,7 @@ import com.mihailovalex.reminder_room.data.source.local.TasksDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AlarmSetter extends BroadcastReceiver {
+public class AlarmSetter extends WakefulBroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         TasksDatabase database = TasksDatabase.getInstance(context.getApplicationContext());
@@ -21,11 +23,9 @@ public class AlarmSetter extends BroadcastReceiver {
         AlarmHelper alarmHelper = AlarmHelper.getInstance();
 
         List<Task> tasks = new ArrayList<>();
-        tasks.addAll(tasksDao.getTasks());
+        tasks.addAll(tasksDao.getActiveTasks());
         for(Task task : tasks){
-            if(task.isActive() && task.getDate()!=0){
-                alarmHelper.setAlarm(task);
-            }
+            alarmHelper.setAlarm(task);
         }
     }
 }

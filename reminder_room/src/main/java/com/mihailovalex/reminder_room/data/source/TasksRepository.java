@@ -103,7 +103,12 @@ public class TasksRepository implements TasksDataSource {
 
                 @Override
                 public void onDataNotAvailable() {
-                    getTasksFromRemoteDataSource(callback);
+                    // Do in memory cache update to keep the app UI up to date
+                    if (mCachedTasks == null) {
+                        mCachedTasks = new LinkedHashMap<>();
+                    }
+                    callback.onTasksLoaded(new ArrayList<>(mCachedTasks.values()));
+                    //getTasksFromRemoteDataSource(callback);
                 }
             },searchString);
         }

@@ -43,6 +43,9 @@ public interface TasksDao {
     @Query("SELECT * FROM Tasks order by date")
     List<Task> getTasks();
 
+    @Query("SELECT * FROM Tasks WHERE completed = 0 order by date")
+    List<Task> getActiveTasks();
+
     @Query("SELECT * FROM Tasks where title LIKE  :search order by date")
     List<Task> getTasksByTitle(String search);
     /**

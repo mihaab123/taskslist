@@ -28,5 +28,12 @@
         android:name="com.mihailovalex.reminder_room.SettingsActivity"
         android:label="@string/action_settings"
         tools:layout="@layout/settings_activity" />
-
+    <fragment
+        android:id="@+id/nav_send_feedback"
+        android:name="com.mihailovalex.reminder_room.FeedbackFragment"
+        android:label="@string/action_send" />
+    <fragment
+        android:id="@+id/nav_rate"
+        android:name="com.mihailovalex.reminder_room.RateFragment"
+        android:label="@string/action_rate" />
 </navigation>

@@ -16,10 +16,7 @@
             name="viewmodel"
             type="com.mihailovalex.reminder_room.ui.currenttasks.CurrentTasksViewModel" />
     </data>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/gray_50">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -56,5 +53,5 @@
                 android:src="@{task}"
                 android:onClick="@{(view) -> listener.onCompleteChanged(task, view)}"/>
         </RelativeLayout>
-    </RelativeLayout>
+
 </layout>
