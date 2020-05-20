@@ -29,5 +29,10 @@
             app:key="notify_time_delete"
             app:summary="@string/notify_time_delete_query"
             app:title="@string/notify_time_delete_title" />
+        <SwitchPreferenceCompat
+            app:key="confirm_app_termination"
+            app:defaultValue="false"
+            app:title="@string/confirm_app_termination" />
     </PreferenceCategory>
+
 </PreferenceScreen>

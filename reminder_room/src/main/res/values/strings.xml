@@ -64,4 +64,7 @@
     <string name="notify_header">Notification</string>
     <string name="notify_time_delete_title">"Number of days to keep completed tasks"</string>
     <string name="notify_time_delete_query">Nmber of days</string>
+    <string name="confirm_app_termination">Confirm app termination</string>
+    <string name="confirm_app_termination_title">"Sign out of the app?"</string>
+    <string name="confirm_app_termination_message">Do you really want to leave?</string>
 </resources>

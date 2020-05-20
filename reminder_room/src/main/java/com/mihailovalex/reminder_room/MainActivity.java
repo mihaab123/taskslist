@@ -2,6 +2,7 @@ package com.mihailovalex.reminder_room;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -18,6 +19,7 @@ import com.mihailovalex.reminder_room.alarm.AlarmHelper;
 import com.splunk.mint.Mint;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SearchView;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     public static SearchView searchView;
+    SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
     private void setupLangApplication() {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String lang = preferences.getString("language", "default");
         if (lang.equals("default")) {lang=getResources().getConfiguration().locale.getCountry();}
         Locale locale = new Locale(lang);
@@ -129,5 +132,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         MyApplication.activityPause();
+    }
+    @Override
+    public void onBackPressed() {
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        Boolean confirm = preferences.getBoolean("confirm_app_termination", false);
+        if (confirm){
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.confirm_app_termination_title)
+                    .setMessage(R.string.confirm_app_termination_message)
+                    .setNegativeButton(android.R.string.no, null)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface arg0, int arg1) {
+                            MainActivity.super.onBackPressed();
+                        }
+                    }).create().show();
+        }
     }
 }

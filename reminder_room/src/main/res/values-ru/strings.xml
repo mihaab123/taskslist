@@ -63,4 +63,7 @@
     <string name="notify_header">Уведомления</string>
     <string name="notify_time_delete_title">"Количество дней хранения завершенных задач"</string>
     <string name="notify_time_delete_query">Количество дней</string>
+    <string name="confirm_app_termination">Подтверждать завершение</string>
+    <string name="confirm_app_termination_title">"Выйти из приложения?"</string>
+    <string name="confirm_app_termination_message">Вы действительно хотите выйти?</string>
 </resources>
