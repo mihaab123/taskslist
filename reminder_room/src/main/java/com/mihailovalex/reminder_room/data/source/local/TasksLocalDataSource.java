@@ -179,11 +179,11 @@ public class TasksLocalDataSource implements TasksDataSource {
     }
 
     @Override
-    public void clearCompletedTasks() {
+    public void clearCompletedTasks(long date) {
         Runnable clearTasksRunnable = new Runnable() {
             @Override
             public void run() {
-                mTasksDao.deleteCompletedTasks();
+                mTasksDao.deleteCompletedTasks(date);
 
             }
         };

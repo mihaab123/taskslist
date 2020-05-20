@@ -102,6 +102,6 @@ public interface TasksDao {
      *
      * @return the number of tasks deleted.
      */
-    @Query("DELETE FROM Tasks WHERE completed = 1")
-    int deleteCompletedTasks();
+    @Query("DELETE FROM Tasks WHERE completed = 1 AND date<:date")
+    int deleteCompletedTasks(long date);
 }

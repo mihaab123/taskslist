@@ -108,6 +108,10 @@ public class AddEditBirthdayViewModel extends AndroidViewModel implements Birthd
             mSnackbarText.setValue(R.string.empty_birthday_message);
             return;
         }
+        if(mBirthdayCompleted && !birthday.getRepeat().isEmpty()){
+            mBirthdayCompleted = false;
+            dateAndTime.setTimeInMillis(DateUtils.repeatTask(birthday.getDate(),birthday.getRepeat()));
+        }
         if (isNewBirthday() || mBirthdayId == 0) {
             createBirthday(birthday);
         } else {

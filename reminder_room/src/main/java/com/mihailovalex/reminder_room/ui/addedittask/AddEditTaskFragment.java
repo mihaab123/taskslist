@@ -108,7 +108,7 @@ public class AddEditTaskFragment extends Fragment {
         final TimePickerDialog.OnTimeSetListener t=new TimePickerDialog.OnTimeSetListener() {
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 //dateAndTime.set(0,0,0,hourOfDay,minute,0);
-                mViewModel.dateAndTime.set(Calendar.HOUR,hourOfDay);
+                mViewModel.dateAndTime.set(Calendar.HOUR_OF_DAY,hourOfDay);
                 mViewModel.dateAndTime.set(Calendar.MINUTE,minute);
                 mViewModel.dateAndTime.set(Calendar.SECOND,0);
                 mViewModel.time.set(DateUtils.getTime(mViewModel.dateAndTime.getTimeInMillis(),mViewModel.get24TimeFormat()));

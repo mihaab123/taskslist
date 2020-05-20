@@ -121,6 +121,6 @@ public final class Birthday implements Item {
 
     @Override
     public int getPriorityColor() {
-        return R.color.colorAccent;
+        return R.color.priority_normal;
     }
 }

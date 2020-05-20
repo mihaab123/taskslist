@@ -61,4 +61,7 @@
     <string name="feedback_app_version">"App version: "</string>
     <string name="feedback">Feedback</string>
     <string name="action_rate">Rate app</string>
+    <string name="notify_header">Notification</string>
+    <string name="notify_time_delete_title">"Number of days to keep completed tasks"</string>
+    <string name="notify_time_delete_query">Nmber of days</string>
 </resources>

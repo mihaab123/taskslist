@@ -49,7 +49,7 @@ public class AddEditTaskViewModel extends AndroidViewModel implements TasksDataS
 
     private boolean mIsDataLoaded = false;
 
-    private boolean mTaskCompleted = false;
+    public boolean mTaskCompleted = false;
     private SharedPreferences sPref;
 
     public AddEditTaskViewModel(Application context,
@@ -107,6 +107,10 @@ public class AddEditTaskViewModel extends AndroidViewModel implements TasksDataS
     // Called when clicking on fab.
     void saveTask() {
         Task task = new Task(title.get(), dateAndTime.getTimeInMillis(),priority.get(),repeat.get());
+        if(mTaskCompleted && repeat.get()!=null && !repeat.get().isEmpty()){
+            mTaskCompleted = false;
+            dateAndTime.setTimeInMillis(DateUtils.repeatTask(task.getDate(),task.getRepeat()));
+        }
         if (task.isEmpty()) {
             mSnackbarText.setValue(R.string.empty_task_message);
             return;

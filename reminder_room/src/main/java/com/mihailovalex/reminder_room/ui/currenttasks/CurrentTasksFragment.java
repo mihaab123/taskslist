@@ -3,6 +3,7 @@ package com.mihailovalex.reminder_room.ui.currenttasks;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,6 +20,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,8 +35,10 @@ import com.mihailovalex.reminder_room.databinding.FragmentCurrentTasksBinding;
 import com.mihailovalex.reminder_room.ui.TaskFragment;
 import com.mihailovalex.reminder_room.ui.addedittask.AddEditTaskActivity;
 import com.mihailovalex.reminder_room.ui.addedittask.AddEditTaskFragment;
+import com.mihailovalex.reminder_room.utils.DateUtils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class CurrentTasksFragment extends TaskFragment {
 
@@ -187,4 +191,5 @@ public class CurrentTasksFragment extends TaskFragment {
         });
         fab.setVisibility(View.VISIBLE);
     }
+
 }

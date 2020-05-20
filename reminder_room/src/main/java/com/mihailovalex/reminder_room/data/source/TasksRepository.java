@@ -177,9 +177,9 @@ public class TasksRepository implements TasksDataSource {
     }
 
     @Override
-    public void clearCompletedTasks() {
+    public void clearCompletedTasks(long date) {
         //mTasksRemoteDataSource.clearCompletedTasks();
-        mTasksLocalDataSource.clearCompletedTasks();
+        mTasksLocalDataSource.clearCompletedTasks(date);
 
         // Do in memory cache update to keep the app UI up to date
         if (mCachedTasks == null) {

@@ -52,7 +52,7 @@
     <string name="dialog_removing_mess_birthday">Удалить день рождения?</string>
     <string name="empty_task_message">Введите заголовок задачи</string>
     <string name="empty_birthday_message">Введите заголовок ДР</string>
-    <string name="action_send">Send feedback</string>
+    <string name="action_send">Отправить отзыв</string>
     <string name="task_repeat">Повторять</string>
     <string name="task_completed">Завершено</string>
     <string name="feedback_title">Напоминалка-отзыв</string>
@@ -60,4 +60,7 @@
     <string name="feedback_app_version">"Версия приложения: "</string>
     <string name="feedback">Отзыв</string>
     <string name="action_rate">Оценить приложение</string>
+    <string name="notify_header">Уведомления</string>
+    <string name="notify_time_delete_title">"Количество дней хранения завершенных задач"</string>
+    <string name="notify_time_delete_query">Количество дней</string>
 </resources>

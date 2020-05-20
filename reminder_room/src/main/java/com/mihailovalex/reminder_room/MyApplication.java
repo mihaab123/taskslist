@@ -6,6 +6,13 @@ import android.content.res.Configuration;
 
 import androidx.preference.PreferenceManager;
 
+import com.mihailovalex.reminder_room.data.source.TasksRepository;
+import com.mihailovalex.reminder_room.data.source.local.TasksDatabase;
+import com.mihailovalex.reminder_room.data.source.local.TasksLocalDataSource;
+import com.mihailovalex.reminder_room.utils.AppExecutors;
+import com.mihailovalex.reminder_room.utils.DateUtils;
+
+import java.util.Calendar;
 import java.util.Locale;
 
 public class MyApplication extends Application {
@@ -36,6 +43,7 @@ public class MyApplication extends Application {
         Configuration config = new Configuration();
         config.locale = locale;
         getBaseContext().getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+        deleteDoneTasks();
 
     }
 
@@ -48,5 +56,16 @@ public class MyApplication extends Application {
         Configuration config = new Configuration();
         config.locale = locale;
         getBaseContext().getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+    }
+    private void deleteDoneTasks() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String countDays = preferences.getString("notify_time_delete", "0");
+        if (countDays!= "0") {
+            Calendar calendar = Calendar.getInstance();
+            TasksDatabase database = TasksDatabase.getInstance(getApplicationContext());
+            TasksRepository tasksRepository = TasksRepository.getInstance(TasksLocalDataSource.getInstance(new AppExecutors(),
+                    database.taskDao()));
+            tasksRepository.clearCompletedTasks(DateUtils.backTask(calendar.getTimeInMillis(),countDays+"d"));
+        }
     }
 }

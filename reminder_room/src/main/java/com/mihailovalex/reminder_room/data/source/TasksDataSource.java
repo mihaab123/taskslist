@@ -54,7 +54,7 @@ public interface TasksDataSource {
 
     void activateTask(@NonNull long taskId);
 
-    void clearCompletedTasks();
+    void clearCompletedTasks(@NonNull long date);
 
     void refreshTasks();
 

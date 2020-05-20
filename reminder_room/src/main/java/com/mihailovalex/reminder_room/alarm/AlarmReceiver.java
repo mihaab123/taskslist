@@ -47,7 +47,7 @@ public class AlarmReceiver extends BroadcastReceiver {
             notificationManager.createNotificationChannel(channel);
         }
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context,CHANNEL_ID);
-        builder.setContentTitle("Reminder");
+        builder.setContentTitle(context.getResources().getString(R.string.app_name));
         builder.setContentText(title);
         builder.setColor(context.getResources().getColor(color));
         builder.setSmallIcon(R.drawable.ic_circle_check);

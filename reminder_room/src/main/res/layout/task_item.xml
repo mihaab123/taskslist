@@ -22,6 +22,7 @@
             android:layout_height="wrap_content"
             android:background="@{task.completed ? @drawable/list_completed_touch_feedback : @drawable/touch_feedback}"
             android:onClick="@{() -> listener.onTaskClicked(task)}">
+
             <TextView
                 android:id="@+id/tvTaskTitle"
                 android:layout_width="match_parent"
@@ -30,8 +31,9 @@
                 android:layout_marginLeft="72dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
-                android:textColor="@color/design_default_color_primary"
-                android:text="@{task.title}"/>
+                android:layout_toStartOf="@+id/tvTaskDate"
+                android:text="@{task.title}"
+                android:textColor="@color/colorPrimary" />
 
             <TextView
                 android:id="@+id/tvTaskDate"

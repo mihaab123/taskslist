@@ -52,7 +52,7 @@
     <string name="dialog_removing_mess_birthday">Видалити день народження?</string>
     <string name="empty_task_message">Введіть заголовок завдання</string>
     <string name="empty_birthday_message">Введіть заголовок ДН</string>
-    <string name="action_send">Send feedback</string>
+    <string name="action_send">Відправити відгук</string>
     <string name="task_repeat">Повторювати</string>
     <string name="task_completed">Завершено</string>
     <string name="feedback_title">Нагадування-відгук</string>
@@ -60,4 +60,7 @@
     <string name="feedback_app_version">"Версія додатка: "</string>
     <string name="feedback">Відгук</string>
     <string name="action_rate">Оцінити додаток</string>
+    <string name="notify_header">Повідомлення</string>
+    <string name="notify_time_delete_title">"Кількість днів зберігання завершених завдань"</string>
+    <string name="notify_time_delete_query">Кількість днів</string>
 </resources>

@@ -1,4 +1,5 @@
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
    <PreferenceCategory app:title="@string/design_header">
         <ListPreference
@@ -23,5 +24,10 @@
 
 
     </PreferenceCategory>
-
+    <PreferenceCategory app:title="@string/notify_header">
+        <EditTextPreference
+            app:key="notify_time_delete"
+            app:summary="@string/notify_time_delete_query"
+            app:title="@string/notify_time_delete_title" />
+    </PreferenceCategory>
 </PreferenceScreen>

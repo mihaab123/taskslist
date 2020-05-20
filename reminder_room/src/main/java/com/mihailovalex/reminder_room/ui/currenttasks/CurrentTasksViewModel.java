@@ -102,21 +102,21 @@ public class CurrentTasksViewModel extends AndroidViewModel {
             case ACTIVE_TASKS:
                 noTasksLabel.set(mContext.getResources().getString(R.string.no_tasks_active));
                 noTaskIconRes.set(mContext.getResources().getDrawable(
-                        R.drawable.ic_check_circle_24dp));
+                        R.drawable.ic_menu_current_tasks));
                 tasksAddViewVisible.set(false);
                 break;
             case COMPLETED_TASKS:
                 noTasksLabel.set(mContext.getResources().getString(R.string.no_tasks_completed));
                 noTaskIconRes.set(mContext.getResources().getDrawable(
-                        R.drawable.ic_verified_user_24dp));
+                        R.drawable.ic_menu_done_tasks));
                 tasksAddViewVisible.set(false);
                 break;
         }
 
     }
 
-    public void clearCompletedTasks() {
-        mTasksRepository.clearCompletedTasks();
+    public void clearCompletedTasks(long date) {
+        mTasksRepository.clearCompletedTasks(date);
         //mSnackbarText.setValue(R.string.completed_tasks_cleared);
         loadTasks(false, false);
     }

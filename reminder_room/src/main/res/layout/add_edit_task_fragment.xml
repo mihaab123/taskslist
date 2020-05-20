@@ -33,6 +33,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/task_completed"
+                    android:checked="@{viewmodel.mTaskCompleted}"
                     android:onCheckedChanged="@{(v, checked)->viewmodel.setmTaskCompleted(checked)}"/>
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilDialogTaskTitle"
