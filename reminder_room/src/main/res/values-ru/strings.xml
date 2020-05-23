@@ -66,4 +66,5 @@
     <string name="confirm_app_termination">Подтверждать завершение</string>
     <string name="confirm_app_termination_title">"Выйти из приложения?"</string>
     <string name="confirm_app_termination_message">Вы действительно хотите выйти?</string>
+    <string name="birthday_at">ДР у</string>
 </resources>

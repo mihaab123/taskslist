@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 
+import com.mihailovalex.reminder_room.R;
 import com.mihailovalex.reminder_room.data.Birthday;
 import com.mihailovalex.reminder_room.data.Task;
 
@@ -51,8 +52,10 @@ public class AlarmHelper {
     }
     public void setAlarm(Birthday birthday){
         Intent intent = new Intent(context,AlarmReceiver.class);
-        intent.putExtra("title",birthday.getTitle());
+        intent.putExtra("title", context.getString(R.string.birthday_at)+" "+birthday.getTitle());
         intent.putExtra("taskId",birthday.getId());
+        intent.putExtra("type",1);
+        intent.putExtra("color",birthday.getPriorityColor());
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context.getApplicationContext(), (int) birthday.getId(),intent,PendingIntent.FLAG_UPDATE_CURRENT);
         //manager.set(AlarmManager.RTC_WAKEUP,birthday.getDate(),pendingIntent);

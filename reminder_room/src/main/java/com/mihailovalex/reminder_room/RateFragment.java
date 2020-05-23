@@ -14,9 +14,9 @@ public class RateFragment extends Fragment {
     private void RateApp() {
         String appPackageName  = getActivity().getPackageName();
         try {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(APP_PAGE_SHORT_LINK+appPackageName)));
+            startActivityForResult(new Intent(Intent.ACTION_VIEW, Uri.parse(APP_PAGE_SHORT_LINK+appPackageName)),1);
         } catch (Exception e) {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(APP_PAGE_LONG_LINK+appPackageName)));
+            startActivityForResult(new Intent(Intent.ACTION_VIEW, Uri.parse(APP_PAGE_LONG_LINK+appPackageName)),1);
         }
     }
 
@@ -24,5 +24,6 @@ public class RateFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         RateApp();
+        getActivity().onBackPressed();//.getSupportFragmentManager().popBackStack();
     }
 }

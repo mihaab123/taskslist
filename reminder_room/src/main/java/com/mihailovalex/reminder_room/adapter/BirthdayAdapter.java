@@ -181,7 +181,13 @@ public  class BirthdayAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         if(newBirthday.getDate()!=0){
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(newBirthday.getDate());
-            if(calendar.get(Calendar.YEAR)>Calendar.getInstance().get(Calendar.YEAR)){
+            if(calendar.get(Calendar.YEAR)<Calendar.getInstance().get(Calendar.YEAR)){
+                newBirthday.setDateStatus(Separator.TYPE_OVERDUE);
+                if(!containsSeparatorOverdue){
+                    containsSeparatorOverdue = true;
+                    separator = new Separator(Separator.TYPE_OVERDUE);
+                }
+            }else if(calendar.get(Calendar.YEAR)>Calendar.getInstance().get(Calendar.YEAR)){
                 newBirthday.setDateStatus(Separator.TYPE_FUTURE);
                 if(!containsSeparatorFuture){
                     containsSeparatorFuture = true;

@@ -108,9 +108,9 @@ public class BirthdaysRepository implements BirthdaysDataSource {
         }
         mCacheBirthdays.put(birthday.getId(), birthday);
         if(birthday.isActive()) {
-            //.setAlarm(birthday);
+            alarmHelper.setAlarm(birthday);
         } else {
-            //alarmHelper.removeAlarm(birthday.getId());
+            alarmHelper.removeAlarm(birthday.getId());
         }
     }
 
@@ -242,7 +242,7 @@ public class BirthdaysRepository implements BirthdaysDataSource {
         mBirthdaysLocalDataSource.deleteBirthday(checkNotNull(birthdayId));
 
         mCacheBirthdays.remove(birthdayId);
-        //alarmHelper.removeAlarm(birthdayId);
+        alarmHelper.removeAlarm(birthdayId);
     }
 
     private void getBirthdaysFromRemoteDataSource(@NonNull final LoadBirthdaysCallback callback) {

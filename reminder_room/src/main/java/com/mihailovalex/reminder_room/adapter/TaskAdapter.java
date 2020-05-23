@@ -166,13 +166,19 @@ public abstract class TaskAdapter extends RecyclerView.Adapter<RecyclerView.View
         if(newTask.getDate()!=0){
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(newTask.getDate());
-            if(calendar.get(Calendar.YEAR)>Calendar.getInstance().get(Calendar.YEAR)){
+            if(calendar.get(Calendar.YEAR)<Calendar.getInstance().get(Calendar.YEAR)){
+                newTask.setDateStatus(Separator.TYPE_OVERDUE);
+                if(!containsSeparatorOverdue){
+                    containsSeparatorOverdue = true;
+                    separator = new Separator(Separator.TYPE_OVERDUE);
+                }
+            }else if(calendar.get(Calendar.YEAR)>Calendar.getInstance().get(Calendar.YEAR)){
                 newTask.setDateStatus(Separator.TYPE_FUTURE);
                 if(!containsSeparatorFuture){
                     containsSeparatorFuture = true;
                     separator = new Separator(Separator.TYPE_FUTURE);
                 }
-            }if(calendar.get(Calendar.DAY_OF_YEAR)<Calendar.getInstance().get(Calendar.DAY_OF_YEAR)){
+            }else if(calendar.get(Calendar.DAY_OF_YEAR)<Calendar.getInstance().get(Calendar.DAY_OF_YEAR)){
                 newTask.setDateStatus(Separator.TYPE_OVERDUE);
                 if(!containsSeparatorOverdue){
                     containsSeparatorOverdue = true;

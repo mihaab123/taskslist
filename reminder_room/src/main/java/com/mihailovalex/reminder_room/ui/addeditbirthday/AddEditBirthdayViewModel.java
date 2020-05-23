@@ -47,7 +47,7 @@ public class AddEditBirthdayViewModel extends AndroidViewModel implements Birthd
 
     private boolean mIsDataLoaded = false;
 
-    private boolean mBirthdayCompleted = false;
+    public boolean mBirthdayCompleted = false;
     private SharedPreferences sPref;
 
     public AddEditBirthdayViewModel(Application context,
@@ -92,8 +92,7 @@ public class AddEditBirthdayViewModel extends AndroidViewModel implements Birthd
         dataLoading.set(false);
         mIsDataLoaded = true;
 
-        // Note that there's no need to notify that the values changed because we're using
-        // ObservableFields.
+
     }
 
     @Override
@@ -145,5 +144,11 @@ public class AddEditBirthdayViewModel extends AndroidViewModel implements Birthd
         mBirthdaysRepository.saveBirthday(birthday);
         mBirthdayUpdated.call();
     }
+    public boolean isBirthdayCompleted() {
+        return mBirthdayCompleted;
+    }
 
+    public void setBirthdayCompleted(boolean mBirthdayCompleted) {
+        this.mBirthdayCompleted = mBirthdayCompleted;
+    }
 }

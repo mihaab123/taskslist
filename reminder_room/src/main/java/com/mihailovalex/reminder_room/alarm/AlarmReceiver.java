@@ -15,6 +15,8 @@ import androidx.legacy.content.WakefulBroadcastReceiver;
 import com.mihailovalex.reminder_room.MainActivity;
 import com.mihailovalex.reminder_room.MyApplication;
 import com.mihailovalex.reminder_room.R;
+import com.mihailovalex.reminder_room.ui.addeditbirthday.AddEditBirthdayActivity;
+import com.mihailovalex.reminder_room.ui.addeditbirthday.AddEditBirthdayFragment;
 import com.mihailovalex.reminder_room.ui.addedittask.AddEditTaskActivity;
 import com.mihailovalex.reminder_room.ui.addedittask.AddEditTaskFragment;
 
@@ -26,9 +28,17 @@ public class AlarmReceiver extends BroadcastReceiver {
         String title = intent.getStringExtra("title");
         long taskId = intent.getLongExtra("taskId",0);
         int color = intent.getIntExtra("color",0);
+        int type = intent.getIntExtra("type",0);
 
-        Intent resultIntent = new Intent(context, AddEditTaskActivity.class);
-        resultIntent.putExtra(AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID,taskId);
+        Intent resultIntent =null;
+        if (type == 0) {
+            resultIntent = new Intent(context, AddEditTaskActivity.class);
+            resultIntent.putExtra(AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID,taskId);
+        }
+        else  {
+            resultIntent = new Intent(context, AddEditBirthdayActivity.class);
+            resultIntent.putExtra(AddEditBirthdayFragment.ARGUMENT_EDIT_TASK_ID,taskId);
+        }
         if(MyApplication.isActivityVisible()){
             resultIntent = intent;
         }
