@@ -1,6 +1,7 @@
 package com.mihailovalex.onlineshoping.prevalent;
 
-import com.example.productapp.Model.Users;
+
+import com.mihailovalex.onlineshoping.model.Users;
 
 public class Prevalent {
     public static Users currentOnlineUser;

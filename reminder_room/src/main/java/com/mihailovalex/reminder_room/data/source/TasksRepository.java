@@ -118,6 +118,7 @@ public class TasksRepository implements TasksDataSource {
     public void saveTask(@NonNull Task task) {
         checkNotNull(task);
         //mTasksRemoteDataSource.saveTask(task);
+        Task oldTask = getTaskWithId(task.getId());
         mTasksLocalDataSource.saveTask(task);
 
         // Do in memory cache update to keep the app UI up to date
@@ -126,6 +127,9 @@ public class TasksRepository implements TasksDataSource {
         }
         mCachedTasks.put(task.getId(), task);
         if(task.isActive()) {
+            if(oldTask!=null){
+                alarmHelper.removeAlarm(task.getId());
+            }
             alarmHelper.setAlarm(task);
         } else {
             alarmHelper.removeAlarm(task.getId());

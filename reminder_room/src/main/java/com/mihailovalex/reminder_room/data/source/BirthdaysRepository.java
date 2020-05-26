@@ -100,6 +100,7 @@ public class BirthdaysRepository implements BirthdaysDataSource {
     public void saveBirthday(@NonNull Birthday birthday) {
         checkNotNull(birthday);
         //mTasksRemoteDataSource.saveTask(task);
+        Birthday oldBirthday = getBirthdayWithId(birthday.getId());
         mBirthdaysLocalDataSource.saveBirthday(birthday);
 
         // Do in memory cache update to keep the app UI up to date
@@ -108,6 +109,9 @@ public class BirthdaysRepository implements BirthdaysDataSource {
         }
         mCacheBirthdays.put(birthday.getId(), birthday);
         if(birthday.isActive()) {
+            if(oldBirthday!=null){
+                alarmHelper.removeAlarm(birthday.getId());
+            }
             alarmHelper.setAlarm(birthday);
         } else {
             alarmHelper.removeAlarm(birthday.getId());
