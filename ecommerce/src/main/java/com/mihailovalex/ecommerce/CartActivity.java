@@ -26,7 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.mihailovalex.ecommerce.model.Cart;
-import com.mihailovalex.ecommerce.prevalent.CartViewHolder;
+import com.mihailovalex.ecommerce.viewholder.CartViewHolder;
 import com.mihailovalex.ecommerce.prevalent.Prevalent;
 
 

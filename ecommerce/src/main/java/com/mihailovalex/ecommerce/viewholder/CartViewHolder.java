@@ -1,4 +1,4 @@
-package com.mihailovalex.ecommerce.prevalent;
+package com.mihailovalex.ecommerce.viewholder;
 
 
 import android.view.View;

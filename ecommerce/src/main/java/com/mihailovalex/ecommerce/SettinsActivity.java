@@ -101,7 +101,7 @@ public class SettinsActivity extends AppCompatActivity {
         HashMap<String, Object> userMap = new HashMap<>();
         userMap. put("name", fullNameEditText.getText().toString());
         userMap. put("address", addressEditText.getText().toString());
-        userMap. put("phoneOrder", userPhoneEditText.getText().toString());
+        userMap. put("phone", userPhoneEditText.getText().toString());
         ref.child(Prevalent.currentUser.getPhone()).updateChildren(userMap);
         startActivity(new Intent(SettinsActivity.this, HomeActivity.class));
         Toast.makeText(SettinsActivity.this, "Profile Info update successfully.", Toast.LENGTH_SHORT).show();
@@ -216,14 +216,15 @@ public class SettinsActivity extends AppCompatActivity {
                     if (dataSnapshot.child("image").exists())
                     {
                         String image = dataSnapshot.child("image").getValue().toString();
-                        String name = dataSnapshot.child("name").getValue().toString();
-                        String phone = dataSnapshot.child("phone").getValue().toString();
-                        String address = dataSnapshot.child("address").getValue().toString();
                         Picasso.get().load(image).into(profileImageView);
-                        fullNameEditText.setText(name);
-                        userPhoneEditText.setText(phone);
-                        addressEditText.setText(address);
                     }
+                    String name = dataSnapshot.child("name").getValue().toString();
+                    String phone = dataSnapshot.child("phone").getValue().toString();
+                    String address = dataSnapshot.child("address").getValue().toString();
+
+                    fullNameEditText.setText(name);
+                    userPhoneEditText.setText(phone);
+                    addressEditText.setText(address);
                 }
 
             }
