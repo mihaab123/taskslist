@@ -12,14 +12,11 @@ import android.widget.TextView;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.mihailovalex.ecommerce.CartActivity;
-import com.mihailovalex.ecommerce.MainActivity;
 
-import com.mihailovalex.ecommerce.R;
+import com.mihailovalex.ecommerce.admin.AdminMaintainProductsActivity;
 import com.mihailovalex.ecommerce.model.Products;
 import com.mihailovalex.ecommerce.prevalent.Prevalent;
 import com.mihailovalex.ecommerce.viewholder.ProductViewHolder;
@@ -70,8 +67,10 @@ public class HomeActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(HomeActivity.this, CartActivity.class);
-                startActivity(intent);
+                if (!type.equals("Admin")){
+                    Intent intent = new Intent(HomeActivity.this, CartActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -117,7 +116,7 @@ public class HomeActivity extends AppCompatActivity
                             @Override
                             public void onClick(View view) {
                                 if (type.equals("Admin")){
-                                    Intent intent =new Intent(HomeActivity.this,AdminMaintainProductsActivity.class);
+                                    Intent intent =new Intent(HomeActivity.this, AdminMaintainProductsActivity.class);
                                     intent.putExtra("pid",model.getPid());
                                     startActivity(intent);
                                 }
@@ -183,25 +182,32 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_cart) {
-            Intent intent = new Intent(HomeActivity.this,CartActivity.class);
-            startActivity(intent);
+            if (!type.equals("Admin")){
+                Intent intent = new Intent(HomeActivity.this,CartActivity.class);
+                startActivity(intent);
+            }
         } else if (id == R.id.nav_search) {
-            Intent intent = new Intent(HomeActivity.this,SearchProductsActivity.class);
-            startActivity(intent);
+            if (!type.equals("Admin")) {
+                Intent intent = new Intent(HomeActivity.this, SearchProductsActivity.class);
+                startActivity(intent);
+            }
 
         } else if (id == R.id.nav_categories) {
 
         } else if (id == R.id.nav_settings) {
-            Intent intent=new Intent(HomeActivity.this,SettinsActivity.class);
-            startActivity(intent);
+            if (!type.equals("Admin")) {
+                Intent intent = new Intent(HomeActivity.this, SettinsActivity.class);
+                startActivity(intent);
+            }
 
         } else if (id == R.id.nav_logout) {
-            Paper.book().destroy();
-            Intent intent=new Intent(HomeActivity.this, MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TASK );
-            startActivity(intent);
-            finish();
-
+            if (!type.equals("Admin")) {
+                Paper.book().destroy();
+                Intent intent = new Intent(HomeActivity.this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
+            }
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

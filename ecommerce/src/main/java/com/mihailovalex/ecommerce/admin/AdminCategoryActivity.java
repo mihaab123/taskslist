@@ -1,4 +1,4 @@
-package com.mihailovalex.ecommerce;
+package com.mihailovalex.ecommerce.admin;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+
+import com.mihailovalex.ecommerce.HomeActivity;
+import com.mihailovalex.ecommerce.MainActivity;
+import com.mihailovalex.ecommerce.R;
 
 public class AdminCategoryActivity extends AppCompatActivity {
 
