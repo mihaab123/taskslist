@@ -1,4 +1,4 @@
-package com.mihailovalex.ecommerce;
+package com.mihailovalex.ecommerce.buyers;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,9 +19,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.mihailovalex.ecommerce.R;
 
 import java.util.HashMap;
-import java.util.HashSet;
 
 
 public class RegisterActivity extends AppCompatActivity {
@@ -86,7 +86,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     if (task.isSuccessful()){
                                         Toast.makeText(RegisterActivity.this,"Congratulation, your account register",Toast.LENGTH_SHORT).show();
                                         loadingBar.dismiss();
-                                        Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
+                                        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                                         startActivity(intent);
                                     } else {
                                         loadingBar.dismiss();

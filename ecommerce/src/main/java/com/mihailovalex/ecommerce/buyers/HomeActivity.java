@@ -1,4 +1,4 @@
-package com.mihailovalex.ecommerce;
+package com.mihailovalex.ecommerce.buyers;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +16,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import com.mihailovalex.ecommerce.R;
 import com.mihailovalex.ecommerce.admin.AdminMaintainProductsActivity;
 import com.mihailovalex.ecommerce.model.Products;
 import com.mihailovalex.ecommerce.prevalent.Prevalent;
@@ -121,7 +122,7 @@ public class HomeActivity extends AppCompatActivity
                                     startActivity(intent);
                                 }
                                 else {
-                                    Intent intent =new Intent(HomeActivity.this,ProductDetailsActivity.class);
+                                    Intent intent =new Intent(HomeActivity.this, ProductDetailsActivity.class);
                                     intent.putExtra("pid",model.getPid());
                                     startActivity(intent);
                                 }

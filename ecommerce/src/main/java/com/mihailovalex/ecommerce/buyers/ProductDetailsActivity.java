@@ -1,4 +1,4 @@
-package com.mihailovalex.ecommerce;
+package com.mihailovalex.ecommerce.buyers;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.mihailovalex.ecommerce.R;
 import com.mihailovalex.ecommerce.model.Products;
 import com.mihailovalex.ecommerce.prevalent.Prevalent;
 import com.squareup.picasso.Picasso;
@@ -96,7 +97,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()){
                                         Toast.makeText(ProductDetailsActivity.this,"Added to cart List",Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(ProductDetailsActivity.this,HomeActivity.class);
+                                        Intent intent = new Intent(ProductDetailsActivity.this, HomeActivity.class);
                                         startActivity(intent);
                                     }
                                 }

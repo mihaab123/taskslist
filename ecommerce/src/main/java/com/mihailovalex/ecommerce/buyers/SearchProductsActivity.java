@@ -1,4 +1,4 @@
-package com.mihailovalex.ecommerce;
+package com.mihailovalex.ecommerce.buyers;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +17,7 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.mihailovalex.ecommerce.R;
 import com.mihailovalex.ecommerce.model.Products;
 import com.mihailovalex.ecommerce.viewholder.ProductViewHolder;
 import com.squareup.picasso.Picasso;
@@ -66,7 +67,7 @@ public class SearchProductsActivity extends AppCompatActivity {
                         holder.itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                Intent intent =new Intent(SearchProductsActivity.this,ProductDetailsActivity.class);
+                                Intent intent =new Intent(SearchProductsActivity.this, ProductDetailsActivity.class);
                                 intent.putExtra("pid",model.getPid());
                                 startActivity(intent);
                             }

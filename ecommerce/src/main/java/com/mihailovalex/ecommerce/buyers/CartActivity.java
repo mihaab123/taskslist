@@ -1,4 +1,4 @@
-package com.mihailovalex.ecommerce;
+package com.mihailovalex.ecommerce.buyers;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -25,6 +25,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.mihailovalex.ecommerce.R;
 import com.mihailovalex.ecommerce.model.Cart;
 import com.mihailovalex.ecommerce.viewholder.CartViewHolder;
 import com.mihailovalex.ecommerce.prevalent.Prevalent;
@@ -51,7 +52,7 @@ public class CartActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 txtTotalAmount.setText("Total Price = $"+String.valueOf(overTotalPrice));
-                Intent intent = new Intent(CartActivity.this,ConfirmFinalOrderActivity.class);
+                Intent intent = new Intent(CartActivity.this, ConfirmFinalOrderActivity.class);
                 intent.putExtra("Total Price", String.valueOf(overTotalPrice));
                 startActivity(intent);
                 finish();
@@ -93,7 +94,7 @@ public class CartActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 if (i==0){
-                                    Intent intent = new Intent(CartActivity.this,ProductDetailsActivity.class);
+                                    Intent intent = new Intent(CartActivity.this, ProductDetailsActivity.class);
                                     intent.putExtra("pid", model.getPid());
                                     startActivity(intent);
                                 }
@@ -108,7 +109,7 @@ public class CartActivity extends AppCompatActivity {
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     if (task.isSuccessful()){
                                                         Toast.makeText(CartActivity.this,"Item removed Successfully.",Toast.LENGTH_SHORT).show();
-                                                        Intent intent = new Intent(CartActivity.this,HomeActivity.class);
+                                                        Intent intent = new Intent(CartActivity.this, HomeActivity.class);
                                                         startActivity(intent);
                                                     }
                                                 }

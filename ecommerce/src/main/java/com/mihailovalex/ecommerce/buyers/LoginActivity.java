@@ -1,4 +1,4 @@
-package com.mihailovalex.ecommerce;
+package com.mihailovalex.ecommerce.buyers;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.mihailovalex.ecommerce.R;
 import com.mihailovalex.ecommerce.admin.AdminCategoryActivity;
 import com.mihailovalex.ecommerce.model.User;
 import com.mihailovalex.ecommerce.prevalent.Prevalent;
@@ -119,7 +120,7 @@ public class LoginActivity extends AppCompatActivity {
                         }else  if (parentDBName.equals("Users")){
                             Toast.makeText(LoginActivity.this,"Logged successfully",Toast.LENGTH_SHORT).show();
                             loadingBar.dismiss();
-                            Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
+                            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                             Prevalent.currentUser = userData;
                             startActivity(intent);
                         }

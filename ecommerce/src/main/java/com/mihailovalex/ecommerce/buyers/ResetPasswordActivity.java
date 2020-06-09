@@ -1,4 +1,4 @@
-package com.mihailovalex.ecommerce;
+package com.mihailovalex.ecommerce.buyers;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -20,6 +20,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.mihailovalex.ecommerce.R;
 import com.mihailovalex.ecommerce.prevalent.Prevalent;
 
 import java.util.HashMap;
@@ -105,7 +106,8 @@ public class ResetPasswordActivity extends AppCompatActivity {
                                                     public void onComplete(@NonNull Task<Void> task) {
                                                         if(task.isSuccessful()){
                                                             Toast.makeText(ResetPasswordActivity.this,"password change successfully",Toast.LENGTH_SHORT).show();
-                                                            dialog.cancel();
+                                                            Intent intent = new Intent(ResetPasswordActivity.this, LoginActivity.class);
+                                                            startActivity(intent);
                                                         }
                                                     }
                                                 });
