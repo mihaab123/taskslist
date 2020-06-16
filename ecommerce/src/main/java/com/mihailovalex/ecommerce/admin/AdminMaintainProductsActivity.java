@@ -25,6 +25,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.mihailovalex.ecommerce.R;
 import com.mihailovalex.ecommerce.model.Products;
+import com.mihailovalex.ecommerce.sellers.SellerProductCategoryActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
@@ -94,7 +95,7 @@ public class AdminMaintainProductsActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()){
                             Toast.makeText(AdminMaintainProductsActivity.this,"Item removed Successfully.",Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(AdminMaintainProductsActivity.this,AdminCategoryActivity.class);
+                            Intent intent = new Intent(AdminMaintainProductsActivity.this, SellerProductCategoryActivity.class);
                             startActivity(intent);
                             finish();
                         }
@@ -159,7 +160,7 @@ public class AdminMaintainProductsActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
                     Toast.makeText(AdminMaintainProductsActivity.this, "Changes apply successfully", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(AdminMaintainProductsActivity.this,AdminCategoryActivity.class);
+                    Intent intent = new Intent(AdminMaintainProductsActivity.this, SellerProductCategoryActivity.class);
                     startActivity(intent);
                 }
             }

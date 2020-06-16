@@ -29,17 +29,20 @@ public class SellerHomeActivity extends AppCompatActivity {
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        Intent intent = null;
                         switch (item.getItemId()) {
                             case R.id.navigation_home:
 
                                 break;
                             case R.id.navigation_add:
-
+                                intent =new Intent(SellerHomeActivity.this, SellerProductCategoryActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
                                 break;
                             case R.id.navigation_logout:
                                 final FirebaseAuth mAuth = FirebaseAuth.getInstance();
                                 mAuth.signOut();
-                                Intent intent =new Intent(SellerHomeActivity.this, MainActivity.class);
+                                intent =new Intent(SellerHomeActivity.this, MainActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(intent);
                                 break;

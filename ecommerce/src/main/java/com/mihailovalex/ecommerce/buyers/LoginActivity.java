@@ -19,7 +19,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.mihailovalex.ecommerce.R;
-import com.mihailovalex.ecommerce.admin.AdminCategoryActivity;
+import com.mihailovalex.ecommerce.admin.AdminHomeActivity;
+import com.mihailovalex.ecommerce.sellers.SellerProductCategoryActivity;
 import com.mihailovalex.ecommerce.model.User;
 import com.mihailovalex.ecommerce.prevalent.Prevalent;
 import com.rey.material.widget.CheckBox;
@@ -115,7 +116,7 @@ public class LoginActivity extends AppCompatActivity {
                         if (parentDBName.equals("Admins")){
                             Toast.makeText(LoginActivity.this,"Logged successfully",Toast.LENGTH_SHORT).show();
                             loadingBar.dismiss();
-                            Intent intent = new Intent(LoginActivity.this, AdminCategoryActivity.class);
+                            Intent intent = new Intent(LoginActivity.this, AdminHomeActivity.class);
                             startActivity(intent);
                         }else  if (parentDBName.equals("Users")){
                             Toast.makeText(LoginActivity.this,"Logged successfully",Toast.LENGTH_SHORT).show();
