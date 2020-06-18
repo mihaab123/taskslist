@@ -63,9 +63,9 @@ public class SellerAddNewProductActivity extends AppCompatActivity {
 
         AddNewProductButton = (Button) findViewById(R.id.add_new_product);
         InputProductImage = (ImageView) findViewById(R.id.select_product_image);
-        InputProductName = (EditText) findViewById(R.id.product_name);
+        InputProductName = (EditText) findViewById(R.id.product_seller_name);
         InputProductDescription = (EditText) findViewById(R.id.product_description);
-        InputProductPrice = (EditText) findViewById(R.id.product_price);
+        InputProductPrice = (EditText) findViewById(R.id.product_seller_price);
         loadingBar = new ProgressDialog(this);
 
 
