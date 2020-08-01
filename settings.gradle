@@ -1,3 +1,4 @@
+include ':lapitchat'
 rootProject.name='TasksList'
 include ':app'
 include ':taskslist_room'

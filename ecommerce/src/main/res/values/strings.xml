@@ -17,4 +17,10 @@
     <string name="title_home">Home</string>
     <string name="title_add">Add</string>
     <string name="title_logout">Logout</string>
+    <string name="signed_in">Signed In</string>
+    <string name="anonymous_auth_failed_msg">
+        Anonymous authentication failed, various components of the demo will not work.
+        Make sure your device is online and that Anonymous Auth is configured in your Firebase project
+        (https://console.firebase.google.com/project/_/authentication/providers)
+    </string>
 </resources>
