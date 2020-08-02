@@ -19,6 +19,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,6 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private ProgressDialog progressBar;
+    private DatabaseReference myRef;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,10 +69,33 @@ public class RegisterActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                progressBar.dismiss();
-                                Intent reg_intent = new Intent(RegisterActivity.this,MainActivity.class);
-                                startActivity(reg_intent);
-                                finish();
+                                FirebaseUser currentUser = mAuth.getCurrentUser();
+                                String uId = currentUser.getUid();
+                                final HashMap<String, Object> userMap = new HashMap<>();
+                                userMap.put("name",textDisplayName);
+                                userMap.put("image","default");
+                                userMap.put("thumb_image","default");
+                                userMap.put("status","New");
+                                myRef = FirebaseDatabase.getInstance().getReference().child("Users").child(uId);
+                                myRef.setValue(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if(task.isSuccessful()){
+                                            progressBar.dismiss();
+                                            Intent reg_intent = new Intent(RegisterActivity.this,MainActivity.class);
+                                            reg_intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                            startActivity(reg_intent);
+                                            finish();
+                                        }else {
+                                            progressBar.hide();
+                                            Toast.makeText(RegisterActivity.this, R.string.reg_error,
+                                                    Toast.LENGTH_SHORT).show();
+
+                                        }
+                                    }
+                                });
+
+
 
                             } else {
                                 progressBar.hide();

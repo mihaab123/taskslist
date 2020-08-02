@@ -17,4 +17,12 @@
     <string name="reg_message">Please wait...</string>
     <string name="reg_title">Registering user</string>
     <string name="log_title">Login user</string>
+    <string name="tab_requests">Requests</string>
+    <string name="tab_chats">Chats</string>
+    <string name="tab_friends">Friends</string>
+    <string name="change_image">Change image</string>
+    <string name="change_status">Change status</string>
+    <string name="default_status">Status</string>
+    <string name="account_status">Acoount status</string>
+
 </resources>

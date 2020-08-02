@@ -4,12 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,6 +25,12 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     @BindView(R.id.main_page_toolbar)
     Toolbar toolbar;
+    @BindView(R.id.main_tabPager)
+    ViewPager viewPager;
+    @BindView(R.id.main_tabs)
+    TabLayout tabLayout;
+
+    SectionsPagerAdapter sectionsPagerAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(R.string.app_name);
+        sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),this);
+        viewPager.setAdapter(sectionsPagerAdapter);
+        tabLayout.setupWithViewPager(viewPager);
     }
 
     @Override
@@ -63,6 +74,10 @@ public class MainActivity extends AppCompatActivity {
         if(item.getItemId() == R.id.main_logout_item){
             FirebaseAuth.getInstance().signOut();
             sendToStart();
+        }
+        if(item.getItemId() == R.id.main_settings_item){
+            Intent intent = new Intent(MainActivity.this,SettingsActivity.class);
+            startActivity(intent);
         }
         return true;
     }

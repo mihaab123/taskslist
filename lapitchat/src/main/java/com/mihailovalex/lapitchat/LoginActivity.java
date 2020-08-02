@@ -60,6 +60,7 @@ public class LoginActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 progressBar.dismiss();
                                 Intent log_intent = new Intent(LoginActivity.this,MainActivity.class);
+                                log_intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(log_intent);
                                 finish();
 
