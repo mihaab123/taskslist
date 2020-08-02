@@ -22,4 +22,9 @@ public class StartActivity extends AppCompatActivity {
         Intent reg_intent = new Intent(StartActivity.this,RegisterActivity.class);
         startActivity(reg_intent);
     }
+    @OnClick(R.id.start_log_button)
+    public void startLogin() {
+        Intent log_intent = new Intent(StartActivity.this,LoginActivity.class);
+        startActivity(log_intent);
+    }
 }

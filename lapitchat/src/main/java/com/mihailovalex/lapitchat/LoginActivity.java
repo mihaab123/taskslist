@@ -6,13 +6,9 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.TextUtils;
-
-import android.widget.ProgressBar;
 import android.widget.Toast;
-
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -24,15 +20,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class RegisterActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
+
     private static final String TAG = "MyChat" ;
-    @BindView(R.id.reg_display_name)
-    TextInputLayout displayName;
-    @BindView(R.id.reg_email)
+    @BindView(R.id.log_email)
     TextInputLayout email;
-    @BindView(R.id.reg_password)
+    @BindView(R.id.log_password)
     TextInputLayout password;
-    @BindView(R.id.register_toolbar)
+    @BindView(R.id.login_toolbar)
     Toolbar toolbar;
 
     private FirebaseAuth mAuth;
@@ -40,43 +35,42 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         mAuth = FirebaseAuth.getInstance();
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(R.string.create_account);
+        getSupportActionBar().setTitle(R.string.login_account);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         progressBar = new ProgressDialog(this);
-        progressBar.setTitle(getString(R.string.reg_title));
+        progressBar.setTitle(getString(R.string.log_title));
         progressBar.setMessage(getString(R.string.reg_message));
         progressBar.setCanceledOnTouchOutside(false);
     }
-    @OnClick(R.id.reg_create_button)
-    public void createAccount() {
-        String textDisplayName = displayName.getEditText().getText().toString();
+    @OnClick(R.id.login_button)
+    public void loginAccount() {
+
         String textEmail = email.getEditText().getText().toString();
         String textPassword = password.getEditText().getText().toString();
-        if(!TextUtils.isEmpty(textDisplayName)&&!TextUtils.isEmpty(textEmail)&&!TextUtils.isEmpty(textPassword)){
+        if(!TextUtils.isEmpty(textEmail)&&!TextUtils.isEmpty(textPassword)){
             progressBar.show();
-            mAuth.createUserWithEmailAndPassword(textEmail,textPassword)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>(){
+            mAuth.signInWithEmailAndPassword(textEmail, textPassword)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 progressBar.dismiss();
-                                Intent reg_intent = new Intent(RegisterActivity.this,MainActivity.class);
-                                startActivity(reg_intent);
+                                Intent log_intent = new Intent(LoginActivity.this,MainActivity.class);
+                                startActivity(log_intent);
                                 finish();
 
                             } else {
                                 progressBar.hide();
-                                Toast.makeText(RegisterActivity.this, R.string.reg_error,
+                                Toast.makeText(LoginActivity.this, R.string.reg_error,
                                         Toast.LENGTH_SHORT).show();
 
                             }
-                        }});
-
+                        }
+                    });
         }
-
     }
 }

@@ -2,9 +2,19 @@
     <string name="app_name">Lapit chat</string>
     <string name="welcome_to_lapit_chat">Welcome to lapit chat</string>
     <string name="RegisterButton">Need a new account?</string>
+    <string name="loginButton">Allready have account</string>
     <string name="password">Password</string>
     <string name="email">E-mail</string>
     <string name="display_name">Display name</string>
     <string name="create_account">Create account</string>
+    <string name="login_account">Login</string>
     <string name="logout">Logout</string>
+    <string name="all_users">All users</string>
+    <string name="account_settings">Account settings</string>
+    <string name="reg_main_text">Create a new account</string>
+    <string name="log_main_text">Login to your account</string>
+    <string name="reg_error">Authentication failed.</string>
+    <string name="reg_message">Please wait...</string>
+    <string name="reg_title">Registering user</string>
+    <string name="log_title">Login user</string>
 </resources>

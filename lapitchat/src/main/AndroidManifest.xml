@@ -9,9 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.mihailovalex.lapitchat.RegisterActivity"></activity>
-        <activity android:name="com.mihailovalex.lapitchat.StartActivity" />
-        <activity android:name="com.mihailovalex.lapitchat.MainActivity">
+        <activity android:name=".LoginActivity"
+            android:parentActivityName=".StartActivity" ></activity>
+        <activity
+            android:name=".RegisterActivity"
+            android:parentActivityName=".StartActivity" />
+        <activity android:name=".StartActivity" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
