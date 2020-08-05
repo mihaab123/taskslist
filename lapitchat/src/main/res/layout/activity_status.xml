@@ -6,4 +6,26 @@
     android:layout_height="match_parent"
     tools:context="com.mihailovalex.lapitchat.StatusActivity">
     <include layout="@layout/app_bar_layout" android:id="@+id/status_change_toolbar"/>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/status_status"
+        android:layout_width="match_parent"
+        android:layout_below="@id/status_change_toolbar"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="40dp"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/your_status" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <Button
+        android:id="@+id/status_change_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/status_status"
+        android:layout_marginRight="8dp"
+        android:text="@string/save_change" />
 </RelativeLayout>

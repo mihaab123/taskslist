@@ -24,5 +24,10 @@
     <string name="change_status">Change status</string>
     <string name="default_status">Status</string>
     <string name="account_status">Acoount status</string>
+    <string name="your_status">Your status</string>
+    <string name="save_change">Save change</string>
+    <string name="status_title">Change status</string>
+    <string name="select_image">SELECT IMAGE</string>
+    <string name="image_title">Upload image</string>
 
 </resources>
