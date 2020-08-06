@@ -44,4 +44,8 @@ public class Users {
         this.image = image;
         this.thumb_image = thumb_image;
     }
+
+    public Users() {
+
+    }
 }

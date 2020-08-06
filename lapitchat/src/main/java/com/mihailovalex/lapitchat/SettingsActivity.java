@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -31,6 +32,9 @@ import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.util.Objects;
 import java.util.Random;
 
@@ -38,6 +42,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
+import id.zelory.compressor.Compressor;
 
 public class SettingsActivity extends AppCompatActivity {
     private DatabaseReference myRef;
@@ -72,7 +77,10 @@ public class SettingsActivity extends AppCompatActivity {
                 String status = snapshot.child("status").getValue().toString();
                 displayName.setText(name);
                 statusText.setText(status);
-                Picasso.get().load(image).into(profileImage);
+                if(!image.equals("default")){
+                    Picasso.get().load(image).placeholder(R.drawable.blank_profile).into(profileImage);
+                }
+
             }
 
             @Override
@@ -126,6 +134,18 @@ public class SettingsActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 progressBar.show();
                 Uri resultUri = result.getUri();
+                File thumb_file = new File(resultUri.getPath());
+                try {
+                    Bitmap thumb_bitmap = new Compressor(this)
+                            .setMaxWidth(200)
+                            .setMaxHeight(200)
+                            .setQuality(75).compressToBitmap(thumb_file);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                //thumb_bitmap.com
+
                 final StorageReference userImg = UserImagesRef.child(currentUser.getUid()+".jpg");
                 final UploadTask uploadTask = userImg.putFile(resultUri);
 

@@ -49,14 +49,14 @@ public class AllUsersActivity extends AppCompatActivity {
         super.onStart();
         FirebaseRecyclerOptions<Users> options =
                 new FirebaseRecyclerOptions.Builder<Users>()
-                        .setQuery(myRef.orderByChild("Users"), Users.class)
+                        .setQuery(myRef, Users.class)
                         .build();
         FirebaseRecyclerAdapter<Users, UsersViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Users, UsersViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull UsersViewHolder usersViewHolder, int i, @NonNull Users users) {
                 usersViewHolder.txtName.setText(users.getName());
                 usersViewHolder.txtStatus.setText(users.getStatus());
-                Picasso.get().load(users.getImage()).into(usersViewHolder.imageView);
+                Picasso.get().load(users.getImage()).placeholder(R.drawable.blank_profile).into(usersViewHolder.imageView);
                 usersViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -84,19 +84,20 @@ public class AllUsersActivity extends AppCompatActivity {
             }
         };
         recyclerView.setAdapter(firebaseRecyclerAdapter);
+        firebaseRecyclerAdapter.startListening();
     }
     public class UsersViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         View mView;
-        @BindView(R.id.all_users_name)
         public TextView txtName;
-        @BindView(R.id.all_users_status)
         public TextView txtStatus;
-        @BindView(R.id.profile_image)
         public CircleImageView imageView;
         public ItemClickListner listner;
         public UsersViewHolder(@NonNull View itemView) {
             super(itemView);
             mView = itemView;
+            txtName = mView.findViewById(R.id.all_users_name);
+            txtStatus =  mView.findViewById(R.id.all_users_status);
+            imageView =  mView.findViewById(R.id.profile_image);
         }
         public void setItemClickListner(ItemClickListner listner)
         {
