@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    tools:context="com.mihailovalex.lapitchat.ProfileActivity">
+
+    <ImageView
+        android:id="@+id/profile_image1"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/blank_profile" />
+
+    <TextView
+        android:id="@+id/profile_display_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/profile_image1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:textColor="@android:color/white"
+        android:text="Display name"
+        android:textSize="30dp" />
+
+    <TextView
+        android:id="@+id/profile_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/profile_display_name"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="@string/default_status"
+        android:textColor="@android:color/white"
+        android:textSize="20dp" />
+    <Button
+        android:layout_width="wrap_content"
+        android:id="@+id/proffle_send_request"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/profile_status"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="200dp"
+        android:text="@string/send_friend_request"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:id="@+id/proffle_decline_request"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/proffle_send_request"
+        android:layout_centerHorizontal="true"
+        android:text="@string/decline_friend_request"/>
+
+    <TextView
+        android:id="@+id/profile_total_friends"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/profile_status"
+        android:layout_marginTop="150dp"
+        android:layout_centerHorizontal="true"
+        android:text="@string/all_friends"
+        android:textColor="@android:color/white"
+        android:textSize="30dp" />
+
+</RelativeLayout>

@@ -53,23 +53,16 @@ public class AllUsersActivity extends AppCompatActivity {
                         .build();
         FirebaseRecyclerAdapter<Users, UsersViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Users, UsersViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull UsersViewHolder usersViewHolder, int i, @NonNull Users users) {
+            protected void onBindViewHolder(@NonNull UsersViewHolder usersViewHolder, int position, @NonNull Users users) {
                 usersViewHolder.txtName.setText(users.getName());
                 usersViewHolder.txtStatus.setText(users.getStatus());
-                Picasso.get().load(users.getImage()).placeholder(R.drawable.blank_profile).into(usersViewHolder.imageView);
-                usersViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                Picasso.get().load(users.getThumb_image()).placeholder(R.drawable.blank_profile).into(usersViewHolder.imageView);
+                usersViewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        /*if (type.equals("Admin")){
-                            Intent intent =new Intent(HomeActivity.this, AdminMaintainProductsActivity.class);
-                            intent.putExtra("pid",model.getPid());
-                            startActivity(intent);
-                        }
-                        else {
-                            Intent intent =new Intent(HomeActivity.this, ProductDetailsActivity.class);
-                            intent.putExtra("pid",model.getPid());
-                            startActivity(intent);
-                        }*/
+                        Intent intent =new Intent(AllUsersActivity.this, ProfileActivity.class);
+                        intent.putExtra("user_id",getRef(position).getKey());
+                        startActivity(intent);
 
                     }
                 });

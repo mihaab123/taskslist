@@ -29,5 +29,12 @@
     <string name="status_title">Change status</string>
     <string name="select_image">SELECT IMAGE</string>
     <string name="image_title">Upload image</string>
+    <string name="send_friend_request">Send friend request</string>
+    <string name="profile_title">Profile image</string>
+    <string name="all_friends">All friends</string>
+    <string name="decline_friend_request">Decline friend request</string>
+    <string name="cancel_friend_request">Cancel friend request</string>
+    <string name="accept_friend_request">Accept friend request</string>
+    <string name="unfriend_request">Unfriend request</string>
 
 </resources>

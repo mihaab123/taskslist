@@ -28,6 +28,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -68,17 +70,29 @@ public class SettingsActivity extends AppCompatActivity {
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         UserImagesRef = FirebaseStorage.getInstance().getReference().child("profile_images");
         myRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid());
+        myRef.keepSynced(true);
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String name = snapshot.child("name").getValue().toString();
-                String image = snapshot.child("image").getValue().toString();
+                final String image = snapshot.child("image").getValue().toString();
                 String thumb_image = snapshot.child("thumb_image").getValue().toString();
                 String status = snapshot.child("status").getValue().toString();
                 displayName.setText(name);
                 statusText.setText(status);
                 if(!image.equals("default")){
-                    Picasso.get().load(image).placeholder(R.drawable.blank_profile).into(profileImage);
+                    //Picasso.get().load(image).placeholder(R.drawable.blank_profile).into(profileImage);
+                    Picasso.get().load(image).networkPolicy(NetworkPolicy.OFFLINE).placeholder(R.drawable.blank_profile).into(profileImage, new Callback() {
+                        @Override
+                        public void onSuccess() {
+
+                        }
+
+                        @Override
+                        public void onError(Exception e) {
+                            Picasso.get().load(image).placeholder(R.drawable.blank_profile).into(profileImage);
+                        }
+                    });
                 }
 
             }
@@ -135,8 +149,10 @@ public class SettingsActivity extends AppCompatActivity {
                 progressBar.show();
                 Uri resultUri = result.getUri();
                 File thumb_file = new File(resultUri.getPath());
+
+                Bitmap thumb_bitmap = null;
                 try {
-                    Bitmap thumb_bitmap = new Compressor(this)
+                    thumb_bitmap = new Compressor(this)
                             .setMaxWidth(200)
                             .setMaxHeight(200)
                             .setQuality(75).compressToBitmap(thumb_file);
@@ -144,11 +160,16 @@ public class SettingsActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                //thumb_bitmap.com
+                    thumb_bitmap.compress(Bitmap.CompressFormat.JPEG,100,baos);
+                    byte[] thumb_byte = baos.toByteArray();
+
+
+
 
                 final StorageReference userImg = UserImagesRef.child(currentUser.getUid()+".jpg");
-                final UploadTask uploadTask = userImg.putFile(resultUri);
+                final StorageReference userThumbImg = UserImagesRef.child("thumb").child(currentUser.getUid()+".jpg");
 
+                final UploadTask uploadTask = userImg.putFile(resultUri);
                 uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -181,6 +202,46 @@ public class SettingsActivity extends AppCompatActivity {
                                                     }
                                                 }
                                             });
+                                    final UploadTask uploadTask1 = userThumbImg.putBytes(thumb_byte);
+                                    uploadTask1.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                        @Override
+                                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                            Task<Uri> urlTask1 = uploadTask1.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                                                @Override
+                                                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                                                    if (!task.isSuccessful())
+                                                    {
+                                                        throw task.getException();
+
+                                                    }
+
+                                                    return userThumbImg.getDownloadUrl();
+                                                }
+                                            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Uri> task) {
+                                                    if(task.isSuccessful()){
+                                                        myRef.child("thumb_image").setValue(task.getResult().toString())
+                                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                    @Override
+                                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                                        if(task.isSuccessful()){
+                                                                            Toast.makeText(SettingsActivity.this,"Success uploading thumb",Toast.LENGTH_SHORT).show();
+                                                                            progressBar.dismiss();
+                                                                        }else {
+                                                                            Toast.makeText(SettingsActivity.this,"Error uploading thumb",Toast.LENGTH_SHORT).show();
+                                                                            progressBar.hide();
+                                                                        }
+                                                                    }
+                                                                });
+                                                    }else {
+                                                        Toast.makeText(SettingsActivity.this,"Error uploading thumb",Toast.LENGTH_SHORT).show();
+                                                        progressBar.hide();
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    });
                                 }
                             }
                         });
