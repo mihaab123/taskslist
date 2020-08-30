@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">QR scanner</string>
+    <string name="generate">Generate</string>
 </resources>

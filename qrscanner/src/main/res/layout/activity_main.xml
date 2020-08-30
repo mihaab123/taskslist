@@ -15,16 +15,125 @@
         app:layout_constraintTop_toBottomOf="@+id/main_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
-    
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/main_layout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@color/colorPrimary"
-        app:layout_constraintBottom_toTopOf="@+id/view_drop_shadow"
-        app:layout_constraintTop_toTopOf="@+id/image_view_generate_active"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+    android:id="@+id/coordinator_layout_icon_extra_part_container"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:background="@color/colorPrimary"
+    app:layout_constraintBottom_toTopOf="@+id/view_drop_shadow"
+    app:layout_constraintTop_toTopOf="@+id/image_view_generate_active"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent">
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_layout_generate_container"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/height_56"
+        android:background="@android:color/white"
+        app:layout_constraintBottom_toTopOf="@+id/banner_ad"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintTop_toBottomOf="@+id/view_drop_shadow"
+        app:layout_constraintEnd_toStartOf="@+id/constraint_layout_scan_container"
+        app:layout_constraintStart_toStartOf="parent">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_layout_scan_container"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/height_56"
+        android:background="@android:color/white"
+        app:layout_constraintBottom_toTopOf="@+id/banner_ad"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintTop_toBottomOf="@+id/view_drop_shadow"
+        app:layout_constraintEnd_toStartOf="@+id/constraint_layout_history_container"
+        app:layout_constraintStart_toEndOf="@+id/constraint_layout_generate_container">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_layout_history_container"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/height_56"
+        android:background="@android:color/white"
+        app:layout_constraintBottom_toTopOf="@+id/banner_ad"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintTop_toBottomOf="@+id/view_drop_shadow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/constraint_layout_scan_container">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/image_view_generate_active"
+        android:layout_width="@dimen/weight_24"
+        android:layout_height="@dimen/height_24"
+        android:scr="@drawable/ic_generate_inactive"
+        app:layout_constraintBottom_toTopOf="@+id/text_view_generate"
+        app:layout_constraintEnd_toEndOf="@+id/constraint_layout_generate_container"
+        app:layout_constraintStart_toStartOf="@+id/constraint_layout_generate_container"
+        app:layout_constraintTop_toTopOf="@+id/constraint_layout_generate_container"
+        app:layout_constraintVErtical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/text_view_generate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/generate"
+        android:textSize="@dimen/text_smaller_body"
+        app:layout_constraintBottom_toTopOf="@+id/image_view_generate_active"
+        app:layout_constraintEnd_toEndOf="@+id/constraint_layout_generate_container"
+        app:layout_constraintStart_toStartOf="@+id/constraint_layout_generate_container"
+        app:layout_constraintTop_toTopOf="@+id/constraint_layout_generate_container"/>
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/image_view_scan"
+        android:layout_width="@dimen/weight_24"
+        android:layout_height="@dimen/height_24"
+        android:scr="@drawable/ic_scan_inactive"
+        app:layout_constraintBottom_toTopOf="@+id/text_view_scan"
+        app:layout_constraintEnd_toEndOf="@+id/constraint_layout_scan_container"
+        app:layout_constraintStart_toStartOf="@+id/constraint_layout_scan_container"
+        app:layout_constraintTop_toTopOf="@+id/constraint_layout_scan_container"
+        app:layout_constraintVErtical_chainStyle="packed" />
+    <TextView
+        android:id="@+id/text_view_scan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/generate"
+        android:textSize="@dimen/text_smaller_body"
+        app:layout_constraintBottom_toTopOf="@+id/image_view_scan"
+        app:layout_constraintEnd_toEndOf="@+id/constraint_layout_scan_container"
+        app:layout_constraintStart_toStartOf="@+id/constraint_layout_scan_container"
+        app:layout_constraintTop_toTopOf="@+id/constraint_layout_scan_container"/>
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/image_view_history"
+        android:layout_width="@dimen/weight_24"
+        android:layout_height="@dimen/height_24"
+        android:scr="@drawable/ic_history_inactive"
+        app:layout_constraintBottom_toTopOf="@+id/text_view_history"
+        app:layout_constraintEnd_toEndOf="@+id/constraint_layout_history_container"
+        app:layout_constraintStart_toStartOf="@+id/constraint_layout_history_container"
+        app:layout_constraintTop_toTopOf="@+id/constraint_layout_history_container"
+        app:layout_constraintVErtical_chainStyle="packed" />
+    <TextView
+        android:id="@+id/text_view_history"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/generate"
+        android:textSize="@dimen/text_smaller_body"
+        app:layout_constraintBottom_toTopOf="@+id/image_view_history"
+        app:layout_constraintEnd_toEndOf="@+id/constraint_layout_history_container"
+        app:layout_constraintStart_toStartOf="@+id/constraint_layout_history_container"
+        app:layout_constraintTop_toTopOf="@+id/constraint_layout_history_container"/>
+
+    <View
+        android:id="@+id/view_drop_shadow"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/height_1"
+        android:background="@color/shadow"
+        app:layout_constraintBottom_toTopOf="@+id/constraint_layout_generate_container"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/coordinator_layout_icon_extra_part_container" />
 </layout>

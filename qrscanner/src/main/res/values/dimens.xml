@@ -1,0 +1,9 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="height_56">56dp</dimen>
+    <dimen name="height_24">24dp</dimen>
+    <dimen name="weight_24">24dp</dimen>
+    <dimen name="height_1">1dp</dimen>
+    <dimen name="text_smaller_body">14sp</dimen>
+
+</resources>

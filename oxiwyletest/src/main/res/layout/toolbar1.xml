@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:toucharea="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="@mipmap/bg_main_2160x3840">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="10">
+
+        <com.mihailovalex.oxiwyletest.IrregularButton
+            android:id="@+id/menu_btn"
+            android:layout_width="193dp"
+            android:layout_height="99dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="100dp"
+            android:background="@drawable/button_menu"
+            android:scaleType="fitCenter"
+            toucharea:toucharea="@array/touch_area_btnmenu">
+
+        </com.mihailovalex.oxiwyletest.IrregularButton>
+
+        <com.mihailovalex.oxiwyletest.IrregularButton
+            android:id="@+id/shop_btn"
+            android:layout_width="193dp"
+            android:layout_height="99dp"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/menu_btn"
+            android:background="@drawable/button_shop"
+            android:scaleType="fitCenter"
+
+            toucharea:toucharea="@array/touch_area_btnshop">
+
+        </com.mihailovalex.oxiwyletest.IrregularButton>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="8">
+
+
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="289dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="63dp"
+            android:background="@drawable/tb_ph_flag" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="234dp"
+            android:layout_height="60dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="43dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="37dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/tb_ph_date"/>
+
+        <TextView
+
+            android:layout_width="223dp"
+            android:layout_height="49dp"
+            android:layout_alignEnd="@+id/imageView2"
+            android:layout_alignBottom="@+id/imageView2"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="49dp"
+            android:layout_marginTop="57dp"
+            android:layout_marginEnd="6dp"
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/unifrakturmaguntia"
+            android:text="01.01.1917"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="40sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="10">
+        <com.mihailovalex.oxiwyletest.IrregularButton
+            android:id="@+id/normal_btn"
+            android:layout_width="201dp"
+            android:layout_height="102dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/button_normal"
+            android:scaleType="fitCenter"
+            android:layout_marginTop="155dp"
+            toucharea:toucharea="@array/touch_area_btnnormal"></com.mihailovalex.oxiwyletest.IrregularButton>
+
+        <com.mihailovalex.oxiwyletest.IrregularButton
+            android:id="@+id/pause_btn"
+            android:layout_width="218dp"
+            android:layout_height="118dp"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/button_pause"
+            android:scaleType="fitCenter"
+            toucharea:toucharea="@array/touch_area_btnpause"></com.mihailovalex.oxiwyletest.IrregularButton>
+
+
+        <com.mihailovalex.oxiwyletest.IrregularButton
+            android:id="@+id/accelerate_btn"
+            android:layout_width="216dp"
+            android:layout_height="110dp"
+            android:background="@drawable/button_accelearate"
+            android:scaleType="fitCenter"
+            android:layout_marginTop="235dp"
+            android:layout_marginLeft="5dp"
+            toucharea:toucharea="@array/touch_area_btnaccelerate"></com.mihailovalex.oxiwyletest.IrregularButton>
+
+    </RelativeLayout>
+
+</LinearLayout>

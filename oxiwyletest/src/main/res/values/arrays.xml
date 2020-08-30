@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <array name="touch_area_btnmenu">
+        <item>30 168 455 80</item>
+        <item>50 32 179 213</item>
+        <item>44 83 457 87</item>
+        <item>231 51 16 135</item>
+   </array>
+   <array name="touch_area_btnshop">
+        <item>23 13 450 64</item>
+        <item>27 81 450 96</item>
+        <item>44 13 89 222</item>
+        <item>134 13 153 194</item>
+        <item>282 13 137 176</item>
+   </array>
+   <array name="touch_area_btnpause">
+        <item>49 132 100 150</item>
+        <item>109 115 135 154</item>
+        <item>160 95 172 159</item>
+        <item>210 77 237 163</item>
+        <item>276 52 165 190</item>
+        <item>351 29 74 213</item>
+        <item>21 141 455 92</item>
+   </array>
+    <array name="touch_area_btnnormal">
+        <item>20 72 445 137</item>
+        <item>115 60 348 160</item>
+        <item>250 30 214 194</item>
+        <item>375 17 92 220</item>
+    </array>
+    <array name="touch_area_btnaccelerate">
+        <item>27 81 453 85</item>
+        <item>51 20 100 137</item>
+        <item>99 41 200 155</item>
+        <item>222 52 160 176</item>
+        <item>266 77 185 150</item>
+        <item>311 72 145 175</item>
+    </array>
+</resources>

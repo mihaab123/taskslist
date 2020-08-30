@@ -1,3 +1,5 @@
+include ':roundbutton'
+include ':oxiwyletest'
 include ':qrscanner'
 include ':lapitchat'
 rootProject.name='TasksList'
