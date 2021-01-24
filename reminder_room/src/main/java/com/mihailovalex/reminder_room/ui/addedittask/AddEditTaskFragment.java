@@ -21,6 +21,7 @@ import androidx.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,7 @@ import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
@@ -241,9 +243,10 @@ public class AddEditTaskFragment extends Fragment {
 
             }
         });
+        /*Log.d("MyLogs", "setupPriorityAdapter");
         if (mViewModel.priority.get()!=null){
             spPriprity.setSelection(mViewModel.priority.get());
-        } else spPriprity.setSelection(0);
+        } else spPriprity.setSelection(0);*/
     }
 
     private void loadData() {

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android" >
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <data>
         <import type="android.view.View.OnClickListener" />
@@ -32,9 +33,8 @@
                 android:layout_alignParentLeft="true"
                 android:layout_marginLeft="72dp"
                 android:layout_centerVertical="true"
-                android:layout_toStartOf="@+id/tvTaskDate"
                 android:textColor="@color/colorPrimary"
-                android:text="@{birthday.title}"/>
+                android:text="@{birthday.title}" />
 
             <TextView
                 android:id="@+id/tvBirthdayDate"

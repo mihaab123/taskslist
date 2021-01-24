@@ -14,7 +14,7 @@ public class FeedbackFragment extends Fragment {
         emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{getString(R.string.admin_email)});
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.feedback_title));
         emailIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.feedback_device_info) + "\n" + Build.MODEL + " API "+Integer.toString(Build.VERSION.SDK_INT) + " Android "+ Build.VERSION.RELEASE
-                + "\n" + getString(R.string.feedback_app_version) + BuildConfig.VERSION_NAME
+                + "\n" + getString(R.string.feedback_app_version) + Build.VERSION.CODENAME//.VERSION_NAME
                 + "\n" + getString(R.string.feedback));
         emailIntent.setType("text/plain");
         startActivityForResult(emailIntent,1);
