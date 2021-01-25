@@ -58,6 +58,7 @@ public abstract class TaskAdapter extends RecyclerView.Adapter<RecyclerView.View
                     removeItem(i);
                     //getTaskFragment().addTask(updateTask,false);
                     setSeparator(updateTask);
+                    break;
                 }
             }
         }

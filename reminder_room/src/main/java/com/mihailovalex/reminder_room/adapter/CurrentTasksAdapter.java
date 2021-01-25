@@ -131,7 +131,7 @@ public class CurrentTasksAdapter extends TaskAdapter {
                                     public void onAnimationEnd(Animator animation) {
                                         itemView.setVisibility(View.GONE);
                                         if (!task.isRepeated()) {
-                                            removeItem(position);
+                                            removeItem(items.indexOf(task));
                                         }else {
                                             task.setDate(DateUtils.repeatTask(task.getDate(),task.getRepeat()));
                                             tasksViewModel.getTasksRepository().saveTask(task);
@@ -165,7 +165,7 @@ public class CurrentTasksAdapter extends TaskAdapter {
                                     @Override
                                     public void onAnimationEnd(Animator animation) {
                                         itemView.setVisibility(View.GONE);
-                                        removeItem(position);
+                                        removeItem(items.indexOf(task));
                                     }
 
                                     @Override

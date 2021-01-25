@@ -73,6 +73,7 @@ public  class BirthdayAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     removeItem(i);
                     //getTaskFragment().addTask(updateBirthday,false);
                     setSeparator(updateBirthday);
+                    break;
                 }
             }
         }
