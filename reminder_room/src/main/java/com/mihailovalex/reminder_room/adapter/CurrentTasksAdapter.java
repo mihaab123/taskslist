@@ -210,14 +210,14 @@ public class CurrentTasksAdapter extends TaskAdapter {
                     removeTaskDialog(v,task);
                 }
             };
-            holder.taskItemBinding.setTask((Task) item);
+            holder.taskItemBinding.setTask(task);
             holder.taskItemBinding.setViewmodel(tasksViewModel);
             holder.taskItemBinding.setListener(userActionsListener);
            // holder.taskItemBinding.executePendingBindings();
         } else {
             Separator separator = (Separator) item;
             SeparatorViewHolder separatorViewHolder = (SeparatorViewHolder) rawHolder;
-            separatorViewHolder.separatorItemBinding.setTask((Separator) item);
+            separatorViewHolder.separatorItemBinding.setTask(separator);
             //separatorViewHolder.type.setText(resources.getString(separator.getType()));
         }
     }

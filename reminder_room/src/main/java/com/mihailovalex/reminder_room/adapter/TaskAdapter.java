@@ -51,16 +51,10 @@ public abstract class TaskAdapter extends RecyclerView.Adapter<RecyclerView.View
         notifyItemInserted(location);
     }
     public void updateTask(Task updateTask){
-        for (int i = 0; i < getItemCount(); i++) {
-            if(getItem(i).isTask()){
-                Task task = (Task) getItem(i);
-                if(task.getId()==updateTask.getId()){
-                    removeItem(i);
-                    //getTaskFragment().addTask(updateTask,false);
-                    setSeparator(updateTask);
-                    break;
-                }
-            }
+        int position = items.indexOf(updateTask);
+        if(getItem(position).isTask()){
+            removeItem(position);
+            setSeparator(updateTask);
         }
     }
     public void removeItem(int location){
